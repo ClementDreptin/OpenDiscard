@@ -1,0 +1,15 @@
+{
+  "require": {
+    "php": ">=7.2",
+    "slim/slim": "^3.0",
+    "ramsey/uuid": "^3.7",
+    "firebase/php-jwt": "^5.0.0",
+    "illuminate/database": "^6.0",
+    "davidepastore/slim-validation": "^0.5.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "OpenDiscard\\api\\": "."
+    }
+  }
+}

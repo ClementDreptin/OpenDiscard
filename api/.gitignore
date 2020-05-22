@@ -1,3 +1,4 @@
-/vendor/
+/src/vendor/
 composer.lock
 docker-compose.yml
+config.ini
