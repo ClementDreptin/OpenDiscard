@@ -2,6 +2,9 @@
 require '../src/vendor/autoload.php';
 
 use OpenDiscard\api\common\database\DatabaseConnection;
+use OpenDiscard\api\common\middleware\CORS;
+use OpenDiscard\api\common\middleware\Validator;
+use OpenDiscard\api\control\UserController;
 
 $settings = require_once "../src/config/settings.php";
 $errorsHandlers = require_once "../src/common/error/errorHandlers.php";
@@ -11,5 +14,10 @@ $container = new \Slim\Container($app_config);
 $app = new \Slim\App($container);
 
 DatabaseConnection::startEloquent(($app->getContainer())->settings['dbconf']);
+
+$app->post('/users/signup[/]', UserController::class.':signUp')
+    ->add(Validator::class.':dataFormatErrorHandler')
+    ->add(Validator::createUserValidator())
+    ->add(CORS::class.':addCORSHeaders');
 
 $app->run();

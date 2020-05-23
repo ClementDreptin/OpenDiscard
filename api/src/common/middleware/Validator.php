@@ -1,7 +1,7 @@
 <?php
 namespace OpenDiscard\api\common\middleware;
 
-use OpenDiscard\api\commons\writer\JSON;
+use OpenDiscard\api\common\writer\JSON;
 use Respect\Validation\Validator as RespectValidator;
 use DavidePastore\Slim\Validation\Validation;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -13,10 +13,10 @@ class Validator {
 
     public static function createUserValidator() {
         $validator = [
-            'firstname' => RespectValidator::alpha(self::ACCENTS),
-            'lastname' => RespectValidator::alpha(self::ACCENTS),
+            'username' => RespectValidator::alpha(),
             'email' => RespectValidator::email(),
             'password' => RespectValidator::notOptional(),
+            'avatar_url' => RespectValidator::optional(RespectValidator::url())
         ];
 
         return new Validation($validator);
@@ -24,7 +24,18 @@ class Validator {
 
     public static function dataFormatErrorHandler(Request $request, Response $response, callable $next) {
         if ($request->getAttribute('has_errors')) {
-            return JSON::errorResponse($response, 400, "Incorrect format in parameters.");
+            $errors = $request->getAttribute('errors');
+            $error_string = "";
+
+            foreach ($errors as $field => $field_errors) {
+                $field_errors_string = "";
+                foreach ($field_errors as $field_error) {
+                    $field_errors_string .= "$field_error, ";
+                }
+                $error_string .= "$field: $field_errors_string ";
+            }
+
+            return JSON::errorResponse($response, 400, "Incorrect format in parameters. $error_string");
         } else {
             return $next($request, $response);
         }
