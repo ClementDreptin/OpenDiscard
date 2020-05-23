@@ -1,0 +1,9 @@
+{
+  "name": "OpenDiscard - API",
+  "version": "1.0.0",
+  "description": "OpenDiscard API to interact with the back-end service.",
+  "apidoc": {
+    "title": "OpenDiscard - API",
+    "url" : "https://github.com/ClementDreptin/OpenDiscard/tree/master/api"
+  }
+}
