@@ -20,4 +20,7 @@ $app->post('/users/signup[/]', UserController::class.':signUp')
     ->add(Validator::createUserValidator())
     ->add(CORS::class.':addCORSHeaders');
 
+$app->options('/{routes:.+}', function ($request, $response, $args) { return $response; })
+    ->add(CORS::class.':addCORSHeaders');
+
 $app->run();
