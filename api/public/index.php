@@ -2,6 +2,7 @@
 require '../src/vendor/autoload.php';
 
 use OpenDiscard\api\common\database\DatabaseConnection;
+use OpenDiscard\api\common\middleware\BasicAuth;
 use OpenDiscard\api\common\middleware\CORS;
 use OpenDiscard\api\common\middleware\Validator;
 use OpenDiscard\api\control\DocsController;
@@ -19,6 +20,10 @@ DatabaseConnection::startEloquent(($app->getContainer())->settings['dbconf']);
 $app->post('/users/signup[/]', UserController::class.':signUp')
     ->add(Validator::class.':dataFormatErrorHandler')
     ->add(Validator::createUserValidator())
+    ->add(CORS::class.':addCORSHeaders');
+
+$app->post('/users/signin[/]', UserController::class.':signIn')
+    ->add(BasicAuth::class.':decodeBasicAuth')
     ->add(CORS::class.':addCORSHeaders');
 
 $app->options('/{routes:.+}', function ($request, $response, $args) { return $response; })
