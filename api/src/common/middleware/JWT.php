@@ -1,7 +1,7 @@
 <?php
 namespace OpenDiscard\api\common\middleware;
 
-use OpenDiscard\api\commons\writer\JSON;
+use OpenDiscard\api\common\writer\JSON;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Firebase\JWT\JWT as FirebaseJWT;
