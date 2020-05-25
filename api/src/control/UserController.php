@@ -157,4 +157,78 @@ class UserController {
             return JSON::errorResponse($response, 500, "The user update failed.");
         }
     }
+
+    /**
+     * @api {patch} /users/:id/ Update
+     * @apiGroup Users
+     *
+     * @apiDescription Updates a User's information.
+     *
+     * @apiParam {String} [username] The new User's username.
+     * @apiParam {String} [avatar_url] The new URL of the User's avatar.
+     *
+     * @apiParamExample {json} Request-Example:
+     *     {
+     *       "username": "AlbertEinsteinUpdated",
+     *       "avatar_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d"
+     *     }
+     *
+     * @apiHeader {String} Authorization The User's token.
+     *
+     * @apiHeaderExample {json} Bearer Token:
+     *     {
+     *       "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJhcGlfcGxheWVyIiwic3ViIjoiZ2FtZSIsImF1ZCI6InBsYXllciIsImlhdCI6MTU4NDc0NTQ0NywiZXhwIjoxNTg0NzU2MjQ3fQ.vkaSPuOdb95IHWRFda9RGszEflYh8CGxhaKVHS3vredJSl2WyqqNTg_VUbfkx60A3cdClmcBqmyQdJnV3-l1xA"
+     *     }
+     *
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *       "type": "resource",
+     *       "user": {
+     *         "id": "db0916fa-934b-4981-9980-d53bed190db3",
+     *         "username": "AlbertEinsteinUpdated",
+     *         "email": "albert.einstein@physics.com",
+     *         "avatar_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d",
+     *         "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJhcGlfcGxheWVyIiwic3ViIjoiZ2FtZSIsImF1ZCI6InBsYXllciIsImlhdCI6MTU4NDc0NTQ0NywiZXhwIjoxNTg0NzU2MjQ3fQ.vkaSPuOdb95IHWRFda9RGszEflYh8CGxhaKVHS3vredJSl2WyqqNTg_VUbfkx60A3cdClmcBqmyQdJnV3-l1xA"
+     *       }
+     *     }
+     *
+     * @apiError UserNotFound The UUID of the User was not found.
+     * @apiError InvalidToken The User's token is not valid.
+     *
+     * @apiErrorExample UserNotFound-Response:
+     *     HTTP/1.1 404 NOT FOUND
+     *     {
+     *       "type": "error",
+     *       "error": 404,
+     *       "message": "User with ID db0916fa-934b-4981-9980-d53bed190db3 doesn't exist."
+     *     }
+     *
+     * @apiErrorExample InvalidToken-Response:
+     *     HTTP/1.1 401 UNAUTHORIZED
+     *     {
+     *       "type": "error",
+     *       "error": 401,
+     *       "message": "Token expired."
+     *     }
+     */
+    public function update(Request $request, Response $response, $args) {
+        $user = $request->getAttribute('user');
+        $body = $request->getParsedBody();
+
+        try {
+            $user->username = isset($body['username']) ? $body['username'] : $user->username;
+            $user->avatar_url = isset($body['avatar_url']) ? $body['avatar_url'] : $user->avatar_url;
+            $user->saveOrFail();
+
+            unset($user->password);
+
+            return JSON::successResponse($response, 200, [
+                "type" => "resource",
+                "user" => $user
+            ]);
+        } catch (\Throwable $exception) {
+            return JSON::errorResponse($response, 500, "The user update failed.");
+        }
+    }
 }

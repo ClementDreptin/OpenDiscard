@@ -3,7 +3,9 @@ require '../src/vendor/autoload.php';
 
 use OpenDiscard\api\common\database\DatabaseConnection;
 use OpenDiscard\api\common\middleware\BasicAuth;
+use OpenDiscard\api\common\middleware\Checker;
 use OpenDiscard\api\common\middleware\CORS;
+use OpenDiscard\api\common\middleware\JWT;
 use OpenDiscard\api\common\middleware\Validator;
 use OpenDiscard\api\control\DocsController;
 use OpenDiscard\api\control\UserController;
@@ -24,6 +26,13 @@ $app->post('/users/signup[/]', UserController::class.':signUp')
 
 $app->post('/users/signin[/]', UserController::class.':signIn')
     ->add(BasicAuth::class.':decodeBasicAuth')
+    ->add(CORS::class.':addCORSHeaders');
+
+$app->patch('/users/{id}[/]', UserController::class.':update')
+    ->add(JWT::class.':checkJWT')
+    ->add(Checker::class.':userExists')
+    ->add(Validator::class.':dataFormatErrorHandler')
+    ->add(Validator::updateUserValidator())
     ->add(CORS::class.':addCORSHeaders');
 
 $app->options('/{routes:.+}', function ($request, $response, $args) { return $response; })

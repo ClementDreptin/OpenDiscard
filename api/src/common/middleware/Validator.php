@@ -13,9 +13,18 @@ class Validator {
 
     public static function createUserValidator() {
         $validator = [
-            'username' => RespectValidator::alpha(),
+            'username' => RespectValidator::alnum(),
             'email' => RespectValidator::email(),
             'password' => RespectValidator::notOptional(),
+            'avatar_url' => RespectValidator::optional(RespectValidator::url())
+        ];
+
+        return new Validation($validator);
+    }
+
+    public static function updateUserValidator() {
+        $validator = [
+            'username' => RespectValidator::optional(RespectValidator::alnum()),
             'avatar_url' => RespectValidator::optional(RespectValidator::url())
         ];
 
@@ -32,10 +41,11 @@ class Validator {
                 foreach ($field_errors as $field_error) {
                     $field_errors_string .= "$field_error, ";
                 }
-                $error_string .= "$field: $field_errors_string ";
+                $error_string .= "$field: $field_errors_string | ";
             }
+            $error_string = substr($error_string, 0, -3);
 
-            return JSON::errorResponse($response, 400, "Incorrect format in parameters. $error_string");
+            return JSON::errorResponse($response, 400, "Incorrect format in parameters. Details: $error_string");
         } else {
             return $next($request, $response);
         }
