@@ -28,7 +28,7 @@ class JWT {
 
                 User::query()->select('id')->where('id', '=', $token->aud)->firstOrFail();
 
-                $request = $request->withAttribute('user_id', $token->aud);
+                $request = $request->withAttribute('token_owner_id', $token->aud);
 
                 return $next($request, $response);
             } catch (ModelNotFoundException $e) {
