@@ -9,7 +9,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class Validator {
     const ACCENTS = "À à Â â Ä ä Ç ç É é È è Ê ê Ë ë Î î Ï ï Ô ô Ö ö Ù ù Û û Ü ü";
-    const PONCTUATION = ". ; : ! ? , - _ \" / ' ( ) [ ] { } + = % * $ € £ & # @";
+    const PUNCTUATION = ". ; : ! ? , - _ \" / ' ( ) [ ] { } + = % * $ € £ & # @";
 
     public static function createUserValidator() {
         $validator = [
@@ -26,6 +26,15 @@ class Validator {
         $validator = [
             'username' => RespectValidator::optional(RespectValidator::alnum()),
             'avatar_url' => RespectValidator::optional(RespectValidator::url())
+        ];
+
+        return new Validation($validator);
+    }
+
+    public static function createServerValidator() {
+        $validator = [
+            'name' => RespectValidator::alnum(self::ACCENTS." ".self::PUNCTUATION),
+            'image_url' => RespectValidator::optional(RespectValidator::url())
         ];
 
         return new Validation($validator);

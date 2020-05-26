@@ -8,6 +8,7 @@ use OpenDiscard\api\common\middleware\CORS;
 use OpenDiscard\api\common\middleware\JWT;
 use OpenDiscard\api\common\middleware\Validator;
 use OpenDiscard\api\control\DocsController;
+use OpenDiscard\api\control\ServerController;
 use OpenDiscard\api\control\UserController;
 
 $settings = require_once "../src/config/settings.php";
@@ -33,6 +34,12 @@ $app->patch('/users/{id}[/]', UserController::class.':update')
     ->add(Checker::class.':userExists')
     ->add(Validator::class.':dataFormatErrorHandler')
     ->add(Validator::updateUserValidator())
+    ->add(CORS::class.':addCORSHeaders');
+
+$app->post('/servers[/]', ServerController::class.':create')
+    ->add(JWT::class.':checkJWT')
+    ->add(Validator::class.':dataFormatErrorHandler')
+    ->add(Validator::createServerValidator())
     ->add(CORS::class.':addCORSHeaders');
 
 $app->options('/{routes:.+}', function ($request, $response, $args) { return $response; })
