@@ -7,6 +7,7 @@
 ### As a Member I want to be able to:
 - Create a server.
 - Join an existing server.
+- Leave an existing server.
 - Modify my username.
 - Modify my profile picture.
 
