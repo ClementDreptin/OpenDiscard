@@ -1,5 +1,91 @@
 define({ "api": [
   {
+    "type": "post",
+    "url": "/servers/",
+    "title": "Create",
+    "group": "Servers",
+    "description": "<p>Creates a Server.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>The Server's name.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "image_url",
+            "description": "<p>The URL of the Server's image.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n  \"name\": \"My Super Cool Server\",\n  \"image_url\": \"/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>The User's token.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Bearer Token:",
+          "content": "{\n  \"Authorization\": \"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJhcGlfcGxheWVyIiwic3ViIjoiZ2FtZSIsImF1ZCI6InBsYXllciIsImlhdCI6MTU4NDc0NTQ0NywiZXhwIjoxNTg0NzU2MjQ3fQ.vkaSPuOdb95IHWRFda9RGszEflYh8CGxhaKVHS3vredJSl2WyqqNTg_VUbfkx60A3cdClmcBqmyQdJnV3-l1xA\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 201 CREATED\n{\n  \"type\": \"resource\",\n  \"server\": {\n    \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n    \"name\": \"My Super Cool Server\",\n    \"avatar_url\": \"/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d\",\n    \"owner_id\": \"db0916fa-934b-4981-9980-d53bed190db3\"\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "InvalidToken",
+            "description": "<p>The User's token is not valid.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "InvalidToken-Response:",
+          "content": "HTTP/1.1 401 UNAUTHORIZED\n{\n  \"type\": \"error\",\n  \"error\": 401,\n  \"message\": \"Token expired.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/control/ServerController.php",
+    "groupTitle": "Servers",
+    "name": "PostServers"
+  },
+  {
     "type": "patch",
     "url": "/users/:id/",
     "title": "Update",
