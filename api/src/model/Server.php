@@ -8,4 +8,8 @@ class Server extends Model {
     protected $primaryKey = 'id';
     public $timestamps = false;
     public $incrementing = false;
+
+    public function members() {
+        return $this->belongsToMany(User::class, "User_Server", "server_id", "user_id");
+    }
 }
