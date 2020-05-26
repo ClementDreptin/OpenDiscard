@@ -214,7 +214,12 @@ class UserController {
      */
     public function update(Request $request, Response $response, $args) {
         $user = $request->getAttribute('user');
+        $user_id = $request->getAttribute('user_id');
         $body = $request->getParsedBody();
+
+        if ($user->id !== $user_id) {
+            return JSON::errorResponse($response, 401, "The User ID and the token don't match.");
+        }
 
         try {
             $user->username = isset($body['username']) ? $body['username'] : $user->username;

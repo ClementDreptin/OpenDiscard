@@ -24,13 +24,9 @@ class JWT {
                 $tokenString = sscanf($authHeader, "Bearer %s")[0];
                 $token = FirebaseJWT::decode($tokenString, $this->container->settings['JWT_secret'], ['HS512']);
 
-                $user_id = isset($request->getAttribute('routeInfo')[2]['id']) ? $request->getAttribute('routeInfo')[2]['id'] : $request->getAttribute('routeInfo')[2]['id_user'];
+                $request = $request->withAttribute('user_id', $token->aud);
 
-                if ($token->aud === $user_id) {
-                    return $next($request, $response);
-                } else {
-                    return JSON::errorResponse($response, 401, "This token doesn't belong to you.");
-                }
+                return $next($request, $response);
             } catch (ExpiredException $e) {
                 return JSON::errorResponse($response, 401, "Token expired.");
 
