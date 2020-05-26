@@ -42,6 +42,12 @@ $app->post('/servers[/]', ServerController::class.':create')
     ->add(Validator::createServerValidator())
     ->add(CORS::class.':addCORSHeaders');
 
+$app->put('/servers/{server_id}/users/{user_id}', ServerController::class.':addUser')
+    ->add(JWT::class.':checkJWT')
+    ->add(Checker::class.':userExists')
+    ->add(Checker::class.':serverExists')
+    ->add(CORS::class.':addCORSHeaders');
+
 $app->options('/{routes:.+}', function ($request, $response, $args) { return $response; })
     ->add(CORS::class.':addCORSHeaders');
 
