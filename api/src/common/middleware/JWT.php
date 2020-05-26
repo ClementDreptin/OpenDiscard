@@ -1,7 +1,9 @@
 <?php
 namespace OpenDiscard\api\common\middleware;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use OpenDiscard\api\common\writer\JSON;
+use OpenDiscard\api\model\User;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Firebase\JWT\JWT as FirebaseJWT;
@@ -24,9 +26,14 @@ class JWT {
                 $tokenString = sscanf($authHeader, "Bearer %s")[0];
                 $token = FirebaseJWT::decode($tokenString, $this->container->settings['JWT_secret'], ['HS512']);
 
+                User::query()->select('id')->where('id', '=', $token->aud)->firstOrFail();
+
                 $request = $request->withAttribute('user_id', $token->aud);
 
                 return $next($request, $response);
+            } catch (ModelNotFoundException $e) {
+                return JSON::errorResponse($response, 401, "The ID in the token doesn't match with any registered User.");
+
             } catch (ExpiredException $e) {
                 return JSON::errorResponse($response, 401, "Token expired.");
 
