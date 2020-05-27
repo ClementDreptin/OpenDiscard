@@ -48,7 +48,7 @@ class ServerController {
      *       }
      *     }
      *
-     * @apiError InvalidToken The User's token is not valid.
+     * @apiError InvalidToken The token is not valid.
      *
      * @apiErrorExample InvalidToken-Response:
      *     HTTP/1.1 401 UNAUTHORIZED
@@ -113,14 +113,14 @@ class ServerController {
      *
      * @apiError UserAlreadyInServer The User is already in the Server.
      * @apiError NotMemberOfServer The token Owner is not a Member of the Server.
-     * @apiError InvalidToken The User's token is not valid.
+     * @apiError InvalidToken The token is not valid.
      *
      * @apiErrorExample UserAlreadyInServer-Response:
      *     HTTP/1.1 422 UNPROCESSABLE ENTITY
      *     {
      *       "type": "error",
      *       "error": 422,
-     *       "message": "The User with ID db0916fa-934b-4981-9980-d53bed190db3 is already a Member of the Server with ID db0916fa-934b-4981-9980-d53bed190db3"
+     *       "message": "The User with ID db0916fa-934b-4981-9980-d53bed190db3 is already a Member of the Server with ID db0916fa-934b-4981-9980-d53bed190db3."
      *     }
      *
      * @apiErrorExample NotMemberOfServer-Response:
@@ -158,9 +158,120 @@ class ServerController {
                 "user" => $user
             ]);
         } else if ($userAlreadyInServer && $tokenOwnerInServer) {
-            return JSON::errorResponse($response, 422, "The User with ID ".$user->id." is already a Member of the Server with ID ".$server->id);
+            return JSON::errorResponse($response, 422, "The User with ID ".$user->id." is already a Member of the Server with ID ".$server->id.".");
         } else if (!$tokenOwnerInServer) {
             return JSON::errorResponse($response, 401, "You are not allowed to add Users to a Server you are not a Member of.");
+        }
+    }
+
+    /**
+     * @api {delete} /servers/:server_id/users/:user_id/ Remove User
+     * @apiGroup Servers
+     *
+     * @apiDescription Removes a User from a Server.
+     *
+     * @apiHeader {String} Authorization The User's token.
+     *
+     * @apiHeaderExample {json} Bearer Token:
+     *     {
+     *       "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJhcGlfcGxheWVyIiwic3ViIjoiZ2FtZSIsImF1ZCI6InBsYXllciIsImlhdCI6MTU4NDc0NTQ0NywiZXhwIjoxNTg0NzU2MjQ3fQ.vkaSPuOdb95IHWRFda9RGszEflYh8CGxhaKVHS3vredJSl2WyqqNTg_VUbfkx60A3cdClmcBqmyQdJnV3-l1xA"
+     *     }
+     *
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *       "type": "resource",
+     *       "server": {
+     *         "id": "db0916fa-934b-4981-9980-d53bed190db3",
+     *         "name": "My Super Cool Server",
+     *         "avatar_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d",
+     *         "owner_id": "db0916fa-934b-4981-9980-d53bed190db3"
+     *       },
+     *       "user": {
+     *         "id": "db0916fa-934b-4981-9980-d53bed190db3",
+     *         "username": "AlbertEinsteinUpdated",
+     *         "email": "albert.einstein@physics.com",
+     *         "avatar_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d"
+     *       }
+     *     }
+     *
+     * @apiError UserNotInServer The User is not a Member of the Server.
+     * @apiError NotMemberOfServer The token Owner is not a Member of the Server.
+     * @apiError ServerOwnerLeaves The Server Owner tries to leave the Server.
+     * @apiError MemberKicksMember A Member tries to kick another Member from the Server.
+     * @apiError InvalidToken The token is not valid.
+     *
+     * @apiErrorExample UserNotInServer-Response:
+     *     HTTP/1.1 401 UNAUTHORIZED
+     *     {
+     *       "type": "error",
+     *       "error": 401,
+     *       "message": "The User with ID db0916fa-934b-4981-9980-d53bed190db3 is not a Member of the Server with ID db0916fa-934b-4981-9980-d53bed190db3."
+     *     }
+     *
+     * @apiErrorExample NotMemberOfServer-Response:
+     *     HTTP/1.1 401 UNAUTHORIZED
+     *     {
+     *       "type": "error",
+     *       "error": 401,
+     *       "message": "You are not allowed to kick Members from a Server you are not a Member of."
+     *     }
+     *
+     * @apiErrorExample ServerOwnerLeaves-Response:
+     *     HTTP/1.1 401 UNAUTHORIZED
+     *     {
+     *       "type": "error",
+     *       "error": 401,
+     *       "message": "Server Owners can't leave their own servers."
+     *     }
+     *
+     * @apiErrorExample MemberKicksMember-Response:
+     *     HTTP/1.1 401 UNAUTHORIZED
+     *     {
+     *       "type": "error",
+     *       "error": 401,
+     *       "message": "Only the Server's Owner can kick Members."
+     *     }
+     *
+     * @apiErrorExample InvalidToken-Response:
+     *     HTTP/1.1 401 UNAUTHORIZED
+     *     {
+     *       "type": "error",
+     *       "error": 401,
+     *       "message": "Token expired."
+     *     }
+     */
+    public function kickUser(Request $request, Response $response, $args) {
+        $server = $request->getAttribute('server');
+        $user = $request->getAttribute('user');
+        $token_owner_id = $request->getAttribute('token_owner_id');
+
+        if (!$server->members()->where('user_id', '=', $token_owner_id)->exists()) {
+            // When the token Owner is not a Member of the Server.
+            return JSON::errorResponse($response, 401, "You are not allowed to kick Members from a Server you are not a Member of.");
+        }
+        if (!$server->members()->where('user_id', '=', $user->id)->exists()) {
+            // When the User is not a Member of the Server.
+            return JSON::errorResponse($response, 401, "The User with ID ".$user->id." is not a Member of the Server with ID ".$server->id.".");
+        }
+
+        if (($user->id === $token_owner_id && $server->owner_id !== $token_owner_id) || ($user->id !== $token_owner_id && $server->owner_id === $token_owner_id)) {
+            // When a Member wants to leave the server OR when the Server's Owner wants to kick a Member from the Server
+            $server->members()->detach($user->id);
+            echo $token_owner_id." tried to kick ".$user->username." from ".$server->name;
+
+            return JSON::successResponse($response, 200, [
+                "type" => "resource",
+                "server" => $server,
+                "user" => $user
+            ]);
+        } else if ($server->owner_id === $token_owner_id && $user->id === $token_owner_id) {
+            // When the Server's Owner tries to leave their own Server.
+            return JSON::errorResponse($response, 401, "Server Owners can't leave their own servers.");
+
+        } else if ($user->id !== $token_owner_id && $server->owner_id !== $token_owner_id) {
+            // When a Member of the Server tries to kick someone without being the Server's Owner.
+            return JSON::errorResponse($response, 401, "Only the Server's Owner can kick Members.");
         }
     }
 }

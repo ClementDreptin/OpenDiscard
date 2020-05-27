@@ -48,6 +48,12 @@ $app->put('/servers/{server_id}/users/{user_id}', ServerController::class.':addU
     ->add(Checker::class.':serverExists')
     ->add(CORS::class.':addCORSHeaders');
 
+$app->delete('/servers/{server_id}/users/{user_id}', ServerController::class.':kickUser')
+    ->add(JWT::class.':checkJWT')
+    ->add(Checker::class.':userExists')
+    ->add(Checker::class.':serverExists')
+    ->add(CORS::class.':addCORSHeaders');
+
 $app->options('/{routes:.+}', function ($request, $response, $args) { return $response; })
     ->add(CORS::class.':addCORSHeaders');
 
