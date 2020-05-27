@@ -40,6 +40,18 @@ define({ "api": [
           {
             "group": "Error 4xx",
             "optional": false,
+            "field": "ServerNotFound",
+            "description": "<p>The UUID of the Server was not found.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "UserNotFound",
+            "description": "<p>The UUID of the User was not found.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
             "field": "UserNotInServer",
             "description": "<p>The User is not a Member of the Server.</p>"
           },
@@ -70,6 +82,16 @@ define({ "api": [
         ]
       },
       "examples": [
+        {
+          "title": "ServerNotFound-Response:",
+          "content": "HTTP/1.1 404 NOT FOUND\n{\n  \"type\": \"error\",\n  \"error\": 404,\n  \"message\": \"Server with ID db0916fa-934b-4981-9980-d53bed190db3 doesn't exist.\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "UserNotFound-Response:",
+          "content": "HTTP/1.1 404 NOT FOUND\n{\n  \"type\": \"error\",\n  \"error\": 404,\n  \"message\": \"User with ID db0916fa-934b-4981-9980-d53bed190db3 doesn't exist.\"\n}",
+          "type": "json"
+        },
         {
           "title": "UserNotInServer-Response:",
           "content": "HTTP/1.1 401 UNAUTHORIZED\n{\n  \"type\": \"error\",\n  \"error\": 401,\n  \"message\": \"The User with ID db0916fa-934b-4981-9980-d53bed190db3 is not a Member of the Server with ID db0916fa-934b-4981-9980-d53bed190db3.\"\n}",
@@ -189,7 +211,7 @@ define({ "api": [
       },
       "examples": [
         {
-          "title": "UserNotFound-Response:",
+          "title": "ServerNotFound-Response:",
           "content": "HTTP/1.1 404 NOT FOUND\n{\n  \"type\": \"error\",\n  \"error\": 404,\n  \"message\": \"Server with ID db0916fa-934b-4981-9980-d53bed190db3 doesn't exist.\"\n}",
           "type": "json"
         },
@@ -337,6 +359,18 @@ define({ "api": [
           {
             "group": "Error 4xx",
             "optional": false,
+            "field": "ServerNotFound",
+            "description": "<p>The UUID of the Server was not found.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "UserNotFound",
+            "description": "<p>The UUID of the User was not found.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
             "field": "UserAlreadyInServer",
             "description": "<p>The User is already in the Server.</p>"
           },
@@ -355,6 +389,16 @@ define({ "api": [
         ]
       },
       "examples": [
+        {
+          "title": "ServerNotFound-Response:",
+          "content": "HTTP/1.1 404 NOT FOUND\n{\n  \"type\": \"error\",\n  \"error\": 404,\n  \"message\": \"Server with ID db0916fa-934b-4981-9980-d53bed190db3 doesn't exist.\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "UserNotFound-Response:",
+          "content": "HTTP/1.1 404 NOT FOUND\n{\n  \"type\": \"error\",\n  \"error\": 404,\n  \"message\": \"User with ID db0916fa-934b-4981-9980-d53bed190db3 doesn't exist.\"\n}",
+          "type": "json"
+        },
         {
           "title": "UserAlreadyInServer-Response:",
           "content": "HTTP/1.1 422 UNPROCESSABLE ENTITY\n{\n  \"type\": \"error\",\n  \"error\": 422,\n  \"message\": \"The User with ID db0916fa-934b-4981-9980-d53bed190db3 is already a Member of the Server with ID db0916fa-934b-4981-9980-d53bed190db3.\"\n}",

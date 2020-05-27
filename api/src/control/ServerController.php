@@ -118,7 +118,7 @@ class ServerController {
      * @apiError NotServerOwner A Member tries to modify the Server.
      * @apiError InvalidToken The token is not valid.
      *
-     * @apiErrorExample UserNotFound-Response:
+     * @apiErrorExample ServerNotFound-Response:
      *     HTTP/1.1 404 NOT FOUND
      *     {
      *       "type": "error",
@@ -196,9 +196,27 @@ class ServerController {
      *       }
      *     }
      *
+     * @apiError ServerNotFound The UUID of the Server was not found.
+     * @apiError UserNotFound The UUID of the User was not found.
      * @apiError UserAlreadyInServer The User is already in the Server.
      * @apiError NotMemberOfServer The token Owner is not a Member of the Server.
      * @apiError InvalidToken The token is not valid.
+     *
+     * @apiErrorExample ServerNotFound-Response:
+     *     HTTP/1.1 404 NOT FOUND
+     *     {
+     *       "type": "error",
+     *       "error": 404,
+     *       "message": "Server with ID db0916fa-934b-4981-9980-d53bed190db3 doesn't exist."
+     *     }
+     *
+     * @apiErrorExample UserNotFound-Response:
+     *     HTTP/1.1 404 NOT FOUND
+     *     {
+     *       "type": "error",
+     *       "error": 404,
+     *       "message": "User with ID db0916fa-934b-4981-9980-d53bed190db3 doesn't exist."
+     *     }
      *
      * @apiErrorExample UserAlreadyInServer-Response:
      *     HTTP/1.1 422 UNPROCESSABLE ENTITY
@@ -280,11 +298,29 @@ class ServerController {
      *       }
      *     }
      *
+     * @apiError ServerNotFound The UUID of the Server was not found.
+     * @apiError UserNotFound The UUID of the User was not found.
      * @apiError UserNotInServer The User is not a Member of the Server.
      * @apiError NotMemberOfServer The token Owner is not a Member of the Server.
      * @apiError ServerOwnerLeaves The Server Owner tries to leave the Server.
      * @apiError MemberKicksMember A Member tries to kick another Member from the Server.
      * @apiError InvalidToken The token is not valid.
+     *
+     * @apiErrorExample ServerNotFound-Response:
+     *     HTTP/1.1 404 NOT FOUND
+     *     {
+     *       "type": "error",
+     *       "error": 404,
+     *       "message": "Server with ID db0916fa-934b-4981-9980-d53bed190db3 doesn't exist."
+     *     }
+     *
+     * @apiErrorExample UserNotFound-Response:
+     *     HTTP/1.1 404 NOT FOUND
+     *     {
+     *       "type": "error",
+     *       "error": 404,
+     *       "message": "User with ID db0916fa-934b-4981-9980-d53bed190db3 doesn't exist."
+     *     }
      *
      * @apiErrorExample UserNotInServer-Response:
      *     HTTP/1.1 401 UNAUTHORIZED
