@@ -1,5 +1,108 @@
 [
   {
+    "type": "delete",
+    "url": "/servers/:server_id/users/:user_id/",
+    "title": "Remove User",
+    "group": "Servers",
+    "description": "<p>Removes a User from a Server.</p>",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>The User's token.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Bearer Token:",
+          "content": "{\n  \"Authorization\": \"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJhcGlfcGxheWVyIiwic3ViIjoiZ2FtZSIsImF1ZCI6InBsYXllciIsImlhdCI6MTU4NDc0NTQ0NywiZXhwIjoxNTg0NzU2MjQ3fQ.vkaSPuOdb95IHWRFda9RGszEflYh8CGxhaKVHS3vredJSl2WyqqNTg_VUbfkx60A3cdClmcBqmyQdJnV3-l1xA\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"type\": \"resource\",\n  \"server\": {\n    \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n    \"name\": \"My Super Cool Server\",\n    \"avatar_url\": \"/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d\",\n    \"owner_id\": \"db0916fa-934b-4981-9980-d53bed190db3\"\n  },\n  \"user\": {\n    \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n    \"username\": \"AlbertEinsteinUpdated\",\n    \"email\": \"albert.einstein@physics.com\",\n    \"avatar_url\": \"/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d\"\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "UserNotInServer",
+            "description": "<p>The User is not a Member of the Server.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotMemberOfServer",
+            "description": "<p>The token Owner is not a Member of the Server.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "ServerOwnerLeaves",
+            "description": "<p>The Server Owner tries to leave the Server.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "MemberKicksMember",
+            "description": "<p>A Member tries to kick another Member from the Server.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "InvalidToken",
+            "description": "<p>The token is not valid.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "UserNotInServer-Response:",
+          "content": "HTTP/1.1 401 UNAUTHORIZED\n{\n  \"type\": \"error\",\n  \"error\": 401,\n  \"message\": \"The User with ID db0916fa-934b-4981-9980-d53bed190db3 is not a Member of the Server with ID db0916fa-934b-4981-9980-d53bed190db3.\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "NotMemberOfServer-Response:",
+          "content": "HTTP/1.1 401 UNAUTHORIZED\n{\n  \"type\": \"error\",\n  \"error\": 401,\n  \"message\": \"You are not allowed to kick Members from a Server you are not a Member of.\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "ServerOwnerLeaves-Response:",
+          "content": "HTTP/1.1 401 UNAUTHORIZED\n{\n  \"type\": \"error\",\n  \"error\": 401,\n  \"message\": \"Server Owners can't leave their own servers.\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "MemberKicksMember-Response:",
+          "content": "HTTP/1.1 401 UNAUTHORIZED\n{\n  \"type\": \"error\",\n  \"error\": 401,\n  \"message\": \"Only the Server's Owner can kick Members.\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "InvalidToken-Response:",
+          "content": "HTTP/1.1 401 UNAUTHORIZED\n{\n  \"type\": \"error\",\n  \"error\": 401,\n  \"message\": \"Token expired.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/control/ServerController.php",
+    "groupTitle": "Servers",
+    "name": "DeleteServersServer_idUsersUser_id"
+  },
+  {
     "type": "post",
     "url": "/servers/",
     "title": "Create",
@@ -68,7 +171,7 @@
             "group": "Error 4xx",
             "optional": false,
             "field": "InvalidToken",
-            "description": "<p>The User's token is not valid.</p>"
+            "description": "<p>The token is not valid.</p>"
           }
         ]
       },
@@ -139,14 +242,14 @@
             "group": "Error 4xx",
             "optional": false,
             "field": "InvalidToken",
-            "description": "<p>The User's token is not valid.</p>"
+            "description": "<p>The token is not valid.</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "UserAlreadyInServer-Response:",
-          "content": "HTTP/1.1 422 UNPROCESSABLE ENTITY\n{\n  \"type\": \"error\",\n  \"error\": 422,\n  \"message\": \"The User with ID db0916fa-934b-4981-9980-d53bed190db3 is already a Member of the Server with ID db0916fa-934b-4981-9980-d53bed190db3\"\n}",
+          "content": "HTTP/1.1 422 UNPROCESSABLE ENTITY\n{\n  \"type\": \"error\",\n  \"error\": 422,\n  \"message\": \"The User with ID db0916fa-934b-4981-9980-d53bed190db3 is already a Member of the Server with ID db0916fa-934b-4981-9980-d53bed190db3.\"\n}",
           "type": "json"
         },
         {
@@ -241,7 +344,7 @@
             "group": "Error 4xx",
             "optional": false,
             "field": "InvalidToken",
-            "description": "<p>The User's token is not valid.</p>"
+            "description": "<p>The token is not valid.</p>"
           }
         ]
       },
