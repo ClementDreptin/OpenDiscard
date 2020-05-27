@@ -81,6 +81,91 @@ class ServerController {
     }
 
     /**
+     * @api {patch} /servers/:id/ Update
+     * @apiGroup Servers
+     *
+     * @apiDescription Updates a Server's information.
+     *
+     * @apiParam {String} [name] The new Server's name.
+     * @apiParam {String} [image_url] The new URL of the Server's image.
+     *
+     * @apiParamExample {json} Request-Example:
+     *     {
+     *       "name": "My Super Cool Server Updated",
+     *       "image_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d"
+     *     }
+     *
+     * @apiHeader {String} Authorization The User's token.
+     *
+     * @apiHeaderExample {json} Bearer Token:
+     *     {
+     *       "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJhcGlfcGxheWVyIiwic3ViIjoiZ2FtZSIsImF1ZCI6InBsYXllciIsImlhdCI6MTU4NDc0NTQ0NywiZXhwIjoxNTg0NzU2MjQ3fQ.vkaSPuOdb95IHWRFda9RGszEflYh8CGxhaKVHS3vredJSl2WyqqNTg_VUbfkx60A3cdClmcBqmyQdJnV3-l1xA"
+     *     }
+     *
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *       "type": "resource",
+     *       "server": {
+     *         "id": "db0916fa-934b-4981-9980-d53bed190db3",
+     *         "name": "My Super Cool Server Updated",
+     *         "avatar_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d",
+     *         "owner_id": "db0916fa-934b-4981-9980-d53bed190db3"
+     *       }
+     *     }
+     *
+     * @apiError ServerNotFound The UUID of the Server was not found.
+     * @apiError NotServerOwner A Member tries to modify the Server.
+     * @apiError InvalidToken The token is not valid.
+     *
+     * @apiErrorExample UserNotFound-Response:
+     *     HTTP/1.1 404 NOT FOUND
+     *     {
+     *       "type": "error",
+     *       "error": 404,
+     *       "message": "Server with ID db0916fa-934b-4981-9980-d53bed190db3 doesn't exist."
+     *     }
+     *
+     * @apiErrorExample NotServerOwner-Response:
+     *     HTTP/1.1 401 UNAUTHORIZED
+     *     {
+     *       "type": "error",
+     *       "error": 401,
+     *       "message": "Only the Server's Owner can modify the Server."
+     *     }
+     *
+     * @apiErrorExample InvalidToken-Response:
+     *     HTTP/1.1 401 UNAUTHORIZED
+     *     {
+     *       "type": "error",
+     *       "error": 401,
+     *       "message": "Token expired."
+     *     }
+     */
+    public function update(Request $request, Response $response, $args) {
+        $server = $request->getAttribute('server');
+        $token_owner_id = $request->getAttribute('token_owner_id');
+        $body = $request->getParsedBody();
+
+        if ($server->owner_id !== $token_owner_id) {
+            return JSON::errorResponse($response, 401, "Only the Server's Owner can modify the Server.");
+        }
+
+        try {
+            $server->name = isset($body['name']) ? $body['name'] : $server->name;
+            $server->image_url = isset($body['image_url']) ? $body['image_url'] : $server->image_url;
+            $server->saveOrFail();
+
+            return JSON::successResponse($response, 200, [
+                "type" => "resource",
+                "user" => $server
+            ]);
+        } catch (\Throwable $exception) {
+            return JSON::errorResponse($response, 500, "The Server update failed.");
+        }
+    }
+
+    /**
      * @api {put} /servers/:server_id/users/:user_id/ Add User
      * @apiGroup Servers
      *
