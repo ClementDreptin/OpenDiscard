@@ -194,7 +194,7 @@ class UserController {
      *     }
      *
      * @apiError UserNotFound The UUID of the User was not found.
-     * @apiError InvalidToken The User's token is not valid.
+     * @apiError InvalidToken The token is not valid.
      *
      * @apiErrorExample UserNotFound-Response:
      *     HTTP/1.1 404 NOT FOUND
