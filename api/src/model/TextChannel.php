@@ -8,4 +8,8 @@ class TextChannel extends Model {
     protected $primaryKey = 'id';
     public $timestamps = false;
     public $incrementing = false;
+
+    public function server() {
+        return $this->belongsTo(Server::class, 'server_id', 'id');
+    }
 }

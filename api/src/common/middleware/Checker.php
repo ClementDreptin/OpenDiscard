@@ -54,7 +54,10 @@ class Checker {
         $text_channel_id = isset($request->getAttribute('routeInfo')[2]['id']) ? $request->getAttribute('routeInfo')[2]['id'] : $request->getAttribute('routeInfo')[2]['text_channel_id'];
 
         try {
-            $text_channel = TextChannel::query()->where('id', '=', $text_channel_id)->firstOrFail();
+            $text_channel = TextChannel::query()
+                ->where('id', '=', $text_channel_id)
+                ->with('server')
+                ->firstOrFail();
             $request = $request->withAttribute('text_channel', $text_channel);
 
             return $next($request, $response);
