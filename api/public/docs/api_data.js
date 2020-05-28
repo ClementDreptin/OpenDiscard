@@ -13,14 +13,14 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "content",
-            "description": "<p>The Server's name.</p>"
+            "description": "<p>The Message's content.</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Request-Example:",
-          "content": "{\n  \"name\": \"My Super Cool Text Channel\"\n}",
+          "content": "{\n  \"content\": \"My Super Cool Message\"\n}",
           "type": "json"
         }
       ]
@@ -49,7 +49,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 201 CREATED\n{\n  \"type\": \"resource\",\n  \"text_channel\": {\n    \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n    \"name\": \"My Super Cool Text Channel\",\n    \"server_id\": \"db0916fa-934b-4981-9980-d53bed190db3\"\n  }\n}",
+          "content": "HTTP/1.1 201 CREATED\n{\n  \"type\": \"resource\",\n  \"message\": {\n    \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n    \"content\": \"My Super Cool Message\",\n    \"created_at\": \"2020-05-28 17:05:47\",\n    \"updated_at\": \"2020-05-28 17:05:47\",\n    \"user_id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n    \"channel_id\": \"db0916fa-934b-4981-9980-d53bed190db3\"\n  }\n}",
           "type": "json"
         }
       ]
@@ -60,14 +60,14 @@ define({ "api": [
           {
             "group": "Error 4xx",
             "optional": false,
-            "field": "ServerNotFound",
-            "description": "<p>The UUID of the Server was not found.</p>"
+            "field": "TextChannelNotFound",
+            "description": "<p>The UUID of the Text Channel was not found.</p>"
           },
           {
             "group": "Error 4xx",
             "optional": false,
-            "field": "NotServerOwner",
-            "description": "<p>A Member tries to create a Text Channel.</p>"
+            "field": "NotServerMember",
+            "description": "<p>A Non-Member tries to create a Message.</p>"
           },
           {
             "group": "Error 4xx",
@@ -80,12 +80,12 @@ define({ "api": [
       "examples": [
         {
           "title": "ServerNotFound-Response:",
-          "content": "HTTP/1.1 404 NOT FOUND\n{\n  \"type\": \"error\",\n  \"error\": 404,\n  \"message\": \"Server with ID db0916fa-934b-4981-9980-d53bed190db3 doesn't exist.\"\n}",
+          "content": "HTTP/1.1 404 NOT FOUND\n{\n  \"type\": \"error\",\n  \"error\": 404,\n  \"message\": \"Text Channel with ID db0916fa-934b-4981-9980-d53bed190db3 doesn't exist.\"\n}",
           "type": "json"
         },
         {
-          "title": "NotServerOwner-Response:",
-          "content": "HTTP/1.1 401 UNAUTHORIZED\n{\n  \"type\": \"error\",\n  \"error\": 401,\n  \"message\": \"Only the Server's Owner can create Text Channels.\"\n}",
+          "title": "NotServerMember-Response:",
+          "content": "HTTP/1.1 401 UNAUTHORIZED\n{\n  \"type\": \"error\",\n  \"error\": 401,\n  \"message\": \"Only Members can create Messages.\"\n}",
           "type": "json"
         },
         {
