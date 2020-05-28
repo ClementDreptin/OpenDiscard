@@ -12,4 +12,10 @@ class TextChannel extends Model {
     public function server() {
         return $this->belongsTo(Server::class, 'server_id', 'id');
     }
+
+    public function delete() {
+        Message::query()->where('channel_id', '=', $this->id)->delete();
+
+        parent::delete();
+    }
 }
