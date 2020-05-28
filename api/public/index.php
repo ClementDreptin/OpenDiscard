@@ -9,6 +9,7 @@ use OpenDiscard\api\common\middleware\JWT;
 use OpenDiscard\api\common\middleware\Validator;
 use OpenDiscard\api\control\DocsController;
 use OpenDiscard\api\control\ServerController;
+use OpenDiscard\api\control\TextChannelController;
 use OpenDiscard\api\control\UserController;
 
 $settings = require_once "../src/config/settings.php";
@@ -20,6 +21,7 @@ $app = new \Slim\App($container);
 
 DatabaseConnection::startEloquent(($app->getContainer())->settings['dbconf']);
 
+// Users Routes
 $app->post('/users/signup[/]', UserController::class.':signUp')
     ->add(Validator::class.':dataFormatErrorHandler')
     ->add(Validator::createUserValidator())
@@ -36,6 +38,7 @@ $app->patch('/users/{id}[/]', UserController::class.':update')
     ->add(Validator::updateUserValidator())
     ->add(CORS::class.':addCORSHeaders');
 
+// Servers Routes
 $app->post('/servers[/]', ServerController::class.':create')
     ->add(JWT::class.':checkJWT')
     ->add(Validator::class.':dataFormatErrorHandler')
@@ -66,6 +69,15 @@ $app->delete('/servers/{server_id}/users/{user_id}', ServerController::class.':k
     ->add(Checker::class.':serverExists')
     ->add(CORS::class.':addCORSHeaders');
 
+// TextChannels Routes
+$app->post('/servers/{id}/channels[/]', TextChannelController::class.':create')
+    ->add(JWT::class.':checkJWT')
+    ->add(Checker::class.':serverExists')
+    ->add(Validator::class.':dataFormatErrorHandler')
+    ->add(Validator::createTextChannelValidator())
+    ->add(CORS::class.':addCORSHeaders');
+
+// Other Routes
 $app->options('/{routes:.+}', function ($request, $response, $args) { return $response; })
     ->add(CORS::class.':addCORSHeaders');
 

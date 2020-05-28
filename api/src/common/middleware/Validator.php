@@ -11,6 +11,7 @@ class Validator {
     const ACCENTS = "À à Â â Ä ä Ç ç É é È è Ê ê Ë ë Î î Ï ï Ô ô Ö ö Ù ù Û û Ü ü";
     const PUNCTUATION = ". ; : ! ? , - _ \" / ' ( ) [ ] { } + = % * $ € £ & # @";
 
+    // Users validators
     public static function createUserValidator() {
         $validator = [
             'username' => RespectValidator::alnum(),
@@ -31,6 +32,7 @@ class Validator {
         return new Validation($validator);
     }
 
+    // Servers validators
     public static function createServerValidator() {
         $validator = [
             'name' => RespectValidator::alnum(self::ACCENTS." ".self::PUNCTUATION),
@@ -44,6 +46,15 @@ class Validator {
         $validator = [
             'name' => RespectValidator::optional(RespectValidator::alnum(self::ACCENTS." ".self::PUNCTUATION)),
             'avatar_url' => RespectValidator::optional(RespectValidator::url())
+        ];
+
+        return new Validation($validator);
+    }
+
+    // TextChannels validators
+    public static function createTextChannelValidator() {
+        $validator = [
+            'name' => RespectValidator::alnum(self::ACCENTS." ".self::PUNCTUATION)
         ];
 
         return new Validation($validator);
