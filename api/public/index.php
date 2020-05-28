@@ -105,6 +105,11 @@ $app->patch('/messages/{id}[/]', MessageController::class.':update')
     ->add(Validator::updateMessageValidator())
     ->add(CORS::class.':addCORSHeaders');
 
+$app->delete('/messages/{id}[/]', MessageController::class.':delete')
+    ->add(JWT::class.':checkJWT')
+    ->add(Checker::class.':messageExists')
+    ->add(CORS::class.':addCORSHeaders');
+
 // Other Routes
 $app->options('/{routes:.+}', function ($request, $response, $args) { return $response; })
     ->add(CORS::class.':addCORSHeaders');
