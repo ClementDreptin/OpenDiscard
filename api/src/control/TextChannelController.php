@@ -20,7 +20,7 @@ class TextChannelController {
      *
      * @apiDescription Creates a Text Channel.
      *
-     * @apiParam {String} name The Server's name.
+     * @apiParam {String} name The Text Channel's name.
      *
      * @apiParamExample {json} Request-Example:
      *     {
