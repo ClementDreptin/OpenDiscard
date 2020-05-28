@@ -235,7 +235,7 @@ class ServerController {
                 "user" => $server
             ]);
         } catch (\Exception $exception) {
-            return JSON::errorResponse($response, 500, "The Server deletion failed.");
+            return JSON::errorResponse($response, 500, "The Server failed to delete.");
         }
     }
 
