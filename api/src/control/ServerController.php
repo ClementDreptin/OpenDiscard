@@ -227,8 +227,9 @@ class ServerController {
         }
 
         try {
-            $server->members()->detach();
             $server->delete();
+
+            unset($server->textChannels);
 
             return JSON::successResponse($response, 200, [
                 "type" => "resource",

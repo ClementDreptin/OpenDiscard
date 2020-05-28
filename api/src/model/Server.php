@@ -16,4 +16,13 @@ class Server extends Model {
     public function textChannels() {
         return $this->hasMany(TextChannel::class, "server_id", "id");
     }
+
+    public function delete() {
+        $this->members()->detach();
+        $this->textChannels()->each(function(TextChannel $textChannel) {
+            $textChannel->delete();
+        });
+
+        parent::delete();
+    }
 }
