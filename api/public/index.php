@@ -98,6 +98,13 @@ $app->post('/channels/{id}/messages[/]', MessageController::class.':create')
     ->add(Validator::createMessageValidator())
     ->add(CORS::class.':addCORSHeaders');
 
+$app->patch('/messages/{id}[/]', MessageController::class.':update')
+    ->add(JWT::class.':checkJWT')
+    ->add(Checker::class.':messageExists')
+    ->add(Validator::class.':dataFormatErrorHandler')
+    ->add(Validator::updateMessageValidator())
+    ->add(CORS::class.':addCORSHeaders');
+
 // Other Routes
 $app->options('/{routes:.+}', function ($request, $response, $args) { return $response; })
     ->add(CORS::class.':addCORSHeaders');
