@@ -68,6 +68,15 @@ class Validator {
         return new Validation($validator);
     }
 
+    // Messages Validators
+    public static function createMessageValidator() {
+        $validator = [
+            'content' => RespectValidator::alnum(self::ACCENTS." ".self::PUNCTUATION)
+        ];
+
+        return new Validation($validator);
+    }
+
     public static function dataFormatErrorHandler(Request $request, Response $response, callable $next) {
         if ($request->getAttribute('has_errors')) {
             $errors = $request->getAttribute('errors');

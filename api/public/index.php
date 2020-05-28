@@ -8,6 +8,7 @@ use OpenDiscard\api\common\middleware\CORS;
 use OpenDiscard\api\common\middleware\JWT;
 use OpenDiscard\api\common\middleware\Validator;
 use OpenDiscard\api\control\DocsController;
+use OpenDiscard\api\control\MessageController;
 use OpenDiscard\api\control\ServerController;
 use OpenDiscard\api\control\TextChannelController;
 use OpenDiscard\api\control\UserController;
@@ -87,6 +88,14 @@ $app->patch('/channels/{id}[/]', TextChannelController::class.':update')
 $app->delete('/channels/{id}[/]', TextChannelController::class.':delete')
     ->add(JWT::class.':checkJWT')
     ->add(Checker::class.':textChannelExists')
+    ->add(CORS::class.':addCORSHeaders');
+
+// Messages Routes
+$app->post('/channels/{id}/messages[/]', MessageController::class.':create')
+    ->add(JWT::class.':checkJWT')
+    ->add(Checker::class.':textChannelExists')
+    ->add(Validator::class.':dataFormatErrorHandler')
+    ->add(Validator::createMessageValidator())
     ->add(CORS::class.':addCORSHeaders');
 
 // Other Routes
