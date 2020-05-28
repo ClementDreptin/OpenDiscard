@@ -12,4 +12,8 @@ class Server extends Model {
     public function members() {
         return $this->belongsToMany(User::class, "User_Server", "server_id", "user_id");
     }
+
+    public function textChannels() {
+        return $this->hasMany(TextChannel::class, "server_id", "id");
+    }
 }

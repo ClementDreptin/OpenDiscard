@@ -41,7 +41,10 @@ class Checker {
         $server_id = isset($request->getAttribute('routeInfo')[2]['id']) ? $request->getAttribute('routeInfo')[2]['id'] : $request->getAttribute('routeInfo')[2]['server_id'];
 
         try {
-            $server = Server::query()->where('id', '=', $server_id)->firstOrFail();
+            $server = Server::query()
+                ->where('id', '=', $server_id)
+                ->with('textChannels')
+                ->firstOrFail();
             $request = $request->withAttribute('server', $server);
 
             return $next($request, $response);
