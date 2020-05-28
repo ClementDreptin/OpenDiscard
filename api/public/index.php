@@ -77,6 +77,13 @@ $app->post('/servers/{id}/channels[/]', TextChannelController::class.':create')
     ->add(Validator::createTextChannelValidator())
     ->add(CORS::class.':addCORSHeaders');
 
+$app->patch('/channels/{id}[/]', TextChannelController::class.':update')
+    ->add(JWT::class.':checkJWT')
+    ->add(Checker::class.':textChannelExists')
+    ->add(Validator::class.':dataFormatErrorHandler')
+    ->add(Validator::updateTextChannelValidator())
+    ->add(CORS::class.':addCORSHeaders');
+
 // Other Routes
 $app->options('/{routes:.+}', function ($request, $response, $args) { return $response; })
     ->add(CORS::class.':addCORSHeaders');
