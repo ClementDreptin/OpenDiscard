@@ -15,6 +15,71 @@ class TextChannelController {
     }
 
     /**
+     * @api {get} /servers/:id/channels/ Get
+     * @apiGroup Text Channels
+     *
+     * @apiDescription Gets all the Text Channels from a Server.
+     *
+     * @apiHeader {String} Authorization The User's token.
+     *
+     * @apiHeaderExample {json} Bearer Token:
+     *     {
+     *       "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJhcGlfcGxheWVyIiwic3ViIjoiZ2FtZSIsImF1ZCI6InBsYXllciIsImlhdCI6MTU4NDc0NTQ0NywiZXhwIjoxNTg0NzU2MjQ3fQ.vkaSPuOdb95IHWRFda9RGszEflYh8CGxhaKVHS3vredJSl2WyqqNTg_VUbfkx60A3cdClmcBqmyQdJnV3-l1xA"
+     *     }
+     *
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *       "type": "resources",
+     *       "text_channels": [
+     *         {
+     *           "id": "db0916fa-934b-4981-9980-d53bed190db3",
+     *           "name": "My Super Cool Text Channel",
+     *           "server_id": "db0916fa-934b-4981-9980-d53bed190db3"
+     *         },
+     *         {
+     *           "id": "db0916fa-934b-4981-9980-d53bed190db3",
+     *           "name": "My Other Super Cool Text Channel",
+     *           "server_id": "db0916fa-934b-4981-9980-d53bed190db3"
+     *         }
+     *       ]
+     *     }
+     *
+     * @apiError ServerNotFound The UUID of the Server was not found.
+     * @apiError InvalidToken The token is not valid.
+     *
+     * @apiErrorExample ServerNotFound-Response:
+     *     HTTP/1.1 404 NOT FOUND
+     *     {
+     *       "type": "error",
+     *       "error": 404,
+     *       "message": "Server with ID db0916fa-934b-4981-9980-d53bed190db3 doesn't exist."
+     *     }
+     *
+     * @apiErrorExample InvalidToken-Response:
+     *     HTTP/1.1 401 UNAUTHORIZED
+     *     {
+     *       "type": "error",
+     *       "error": 401,
+     *       "message": "Token expired."
+     *     }
+     */
+    public function get(Request $request, Response $response, $args) {
+        $server = $request->getAttribute('server');
+        $token_owner_id = $request->getAttribute('token_owner_id');
+        $tokenOwnerInServer = $server->members()->where('user_id', '=', $token_owner_id)->exists();
+
+        if (!$tokenOwnerInServer) {
+            return JSON::errorResponse($response, 401, "Only Members can get Text Channels from this Server.");
+        }
+
+        return JSON::successResponse($response, 200, [
+            "type" => "resources",
+            "text_channels" => $server->textChannels
+        ]);
+    }
+
+    /**
      * @api {post} /servers/:id/channels/ Create
      * @apiGroup Text Channels
      *

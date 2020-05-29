@@ -75,6 +75,11 @@ $app->delete('/servers/{server_id}/users/{user_id}', ServerController::class.':k
     ->add(CORS::class.':addCORSHeaders');
 
 // TextChannels Routes
+$app->get('/servers/{id}/channels[/]', TextChannelController::class.':get')
+    ->add(JWT::class.':checkJWT')
+    ->add(Checker::class.':serverExists')
+    ->add(CORS::class.':addCORSHeaders');
+
 $app->post('/servers/{id}/channels[/]', TextChannelController::class.':create')
     ->add(JWT::class.':checkJWT')
     ->add(Checker::class.':serverExists')
