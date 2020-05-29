@@ -20,10 +20,9 @@ class MessageController {
      *
      * @apiDescription Gets Messages from a Text Channel.
      *
-     * @apiParam {Number} page The page.
-     * @apiParam {Number} size The amount of Messages per page.
-     * @apiParam {Number} size The amount of Messages per page.
-     * @apiParam {String=asc,desc} order The order.
+     * @apiParam {Number} [page] The page number.
+     * @apiParam {Number} [size] The amount of Messages per page.
+     * @apiParam {String=asc,desc} [order] The order.
      *
      * @apiHeader {String} Authorization The User's token.
      *
@@ -71,7 +70,7 @@ class MessageController {
      *     }
      *
      * @apiError TextChannelNotFound The UUID of the Text Channel was not found.
-     * @apiError NotServerMember A Non-Member tries to create a Message.
+     * @apiError NotServerMember A Non-Member tries to get Messages.
      * @apiError InvalidToken The token is not valid.
      *
      * @apiErrorExample TextChannelNotFound-Response:
@@ -109,6 +108,8 @@ class MessageController {
         $page = $request->getQueryParam('page', 1);
         $size = $request->getQueryParam('size', 10);
         $order = $request->getQueryParam('order', 'desc');
+
+        $order = $order !== 'asc' || $order !== 'desc' ? 'desc' : $order;
 
         $messages = $textChannel->messages();
         $total = $messages->count();
@@ -230,7 +231,7 @@ class MessageController {
      *
      * @apiDescription Updates a Message.
      *
-     * @apiParam {String} content The new Message's content.
+     * @apiParam {String} [content] The new Message's content.
      *
      * @apiParamExample {json} Request-Example:
      *     {
@@ -245,7 +246,7 @@ class MessageController {
      *     }
      *
      * @apiSuccessExample Success-Response:
-     *     HTTP/1.1 201 CREATED
+     *     HTTP/1.1 200 OK
      *     {
      *       "type": "resource",
      *       "message": {

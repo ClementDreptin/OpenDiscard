@@ -92,14 +92,14 @@ define({ "api": [
           {
             "group": "Parameter",
             "type": "Number",
-            "optional": false,
+            "optional": true,
             "field": "page",
-            "description": "<p>The page.</p>"
+            "description": "<p>The page number.</p>"
           },
           {
             "group": "Parameter",
             "type": "Number",
-            "optional": false,
+            "optional": true,
             "field": "size",
             "description": "<p>The amount of Messages per page.</p>"
           },
@@ -110,7 +110,7 @@ define({ "api": [
               "asc",
               "desc"
             ],
-            "optional": false,
+            "optional": true,
             "field": "order",
             "description": "<p>The order.</p>"
           }
@@ -159,7 +159,7 @@ define({ "api": [
             "group": "Error 4xx",
             "optional": false,
             "field": "NotServerMember",
-            "description": "<p>A Non-Member tries to create a Message.</p>"
+            "description": "<p>A Non-Member tries to get Messages.</p>"
           },
           {
             "group": "Error 4xx",
@@ -204,7 +204,7 @@ define({ "api": [
           {
             "group": "Parameter",
             "type": "String",
-            "optional": false,
+            "optional": true,
             "field": "content",
             "description": "<p>The new Message's content.</p>"
           }
@@ -242,7 +242,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 201 CREATED\n{\n  \"type\": \"resource\",\n  \"message\": {\n    \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n    \"content\": \"My Super Cool Message Updated\",\n    \"created_at\": \"2020-05-28 17:05:47\",\n    \"updated_at\": \"2020-05-28 17:10:34\",\n    \"user_id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n    \"channel_id\": \"db0916fa-934b-4981-9980-d53bed190db3\"\n  }\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"type\": \"resource\",\n  \"message\": {\n    \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n    \"content\": \"My Super Cool Message Updated\",\n    \"created_at\": \"2020-05-28 17:05:47\",\n    \"updated_at\": \"2020-05-28 17:10:34\",\n    \"user_id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n    \"channel_id\": \"db0916fa-934b-4981-9980-d53bed190db3\"\n  }\n}",
           "type": "json"
         }
       ]
@@ -460,7 +460,7 @@ define({ "api": [
         },
         {
           "title": "NotServerOwner-Response:",
-          "content": "HTTP/1.1 401 UNAUTHORIZED\n{\n  \"type\": \"error\",\n  \"error\": 401,\n  \"message\": \"Only the Server's Owner can modify the Server.\"\n}",
+          "content": "HTTP/1.1 401 UNAUTHORIZED\n{\n  \"type\": \"error\",\n  \"error\": 401,\n  \"message\": \"Only the Server's Owner can delete the Server.\"\n}",
           "type": "json"
         },
         {
@@ -580,7 +580,7 @@ define({ "api": [
         },
         {
           "title": "ServerOwnerLeaves-Response:",
-          "content": "HTTP/1.1 401 UNAUTHORIZED\n{\n  \"type\": \"error\",\n  \"error\": 401,\n  \"message\": \"Server Owners can't leave their own servers.\"\n}",
+          "content": "HTTP/1.1 401 UNAUTHORIZED\n{\n  \"type\": \"error\",\n  \"error\": 401,\n  \"message\": \"Server Owners can't leave their own Servers.\"\n}",
           "type": "json"
         },
         {

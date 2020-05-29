@@ -266,7 +266,7 @@ class ServerController {
      *     {
      *       "type": "error",
      *       "error": 401,
-     *       "message": "Only the Server's Owner can modify the Server."
+     *       "message": "Only the Server's Owner can delete the Server."
      *     }
      *
      * @apiErrorExample InvalidToken-Response:
@@ -478,7 +478,7 @@ class ServerController {
      *     {
      *       "type": "error",
      *       "error": 401,
-     *       "message": "Server Owners can't leave their own servers."
+     *       "message": "Server Owners can't leave their own Servers."
      *     }
      *
      * @apiErrorExample MemberKicksMember-Response:
