@@ -10,7 +10,11 @@ class TextChannel extends Model {
     public $incrementing = false;
 
     public function server() {
-        return $this->belongsTo(Server::class, 'server_id', 'id');
+        return $this->belongsTo(Server::class, "server_id", "id");
+    }
+
+    public function messages() {
+        return $this->hasMany(Message::class, "channel_id", "id");
     }
 
     public function delete() {
