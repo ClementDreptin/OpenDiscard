@@ -81,6 +81,118 @@ define({ "api": [
     "name": "DeleteMessagesId"
   },
   {
+    "type": "get",
+    "url": "/channels/:id/messages?page=:page&size=:size&order=:order",
+    "title": "Get",
+    "group": "Messages",
+    "description": "<p>Gets Messages from a Text Channel.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "page",
+            "description": "<p>The page.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "size",
+            "description": "<p>The amount of Messages per page.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "allowedValues": [
+              "asc",
+              "desc"
+            ],
+            "optional": false,
+            "field": "order",
+            "description": "<p>The order.</p>"
+          }
+        ]
+      }
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>The User's token.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Bearer Token:",
+          "content": "{\n  \"Authorization\": \"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJhcGlfcGxheWVyIiwic3ViIjoiZ2FtZSIsImF1ZCI6InBsYXllciIsImlhdCI6MTU4NDc0NTQ0NywiZXhwIjoxNTg0NzU2MjQ3fQ.vkaSPuOdb95IHWRFda9RGszEflYh8CGxhaKVHS3vredJSl2WyqqNTg_VUbfkx60A3cdClmcBqmyQdJnV3-l1xA\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"type\": \"resources\",\n  \"links\": {\n    \"next\": {\n      \"href\": \"/channels/db0916fa-934b-4981-9980-d53bed190db3/messages?page=2&size=2&order=desc\"\n    },\n    \"prev\": {\n      \"href\": \"/channels/db0916fa-934b-4981-9980-d53bed190db3/messages?page=1&size=2&order=desc\"\n    },\n    \"last\": {\n      \"href\": \"/channels/db0916fa-934b-4981-9980-d53bed190db3/messages?page=5&size=2&order=desc\"\n    },\n    \"first\": {\n      \"href\": \"/channels/db0916fa-934b-4981-9980-d53bed190db3/messages?page=1&size=2&order=desc\"\n    }\n  },\n  \"messages\": [\n    {\n      \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"content\": \"My Other Super Cool Message\",\n      \"created_at\": \"2020-05-28 17:07:30\",\n      \"updated_at\": \"2020-05-28 17:07:30\",\n      \"user_id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"channel_id\": \"db0916fa-934b-4981-9980-d53bed190db3\"\n    },\n    {\n      \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"content\": \"My Super Cool Message\",\n      \"created_at\": \"2020-05-28 17:05:47\",\n      \"updated_at\": \"2020-05-28 17:05:47\",\n      \"user_id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"channel_id\": \"db0916fa-934b-4981-9980-d53bed190db3\"\n    }\n  ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "TextChannelNotFound",
+            "description": "<p>The UUID of the Text Channel was not found.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotServerMember",
+            "description": "<p>A Non-Member tries to create a Message.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "InvalidToken",
+            "description": "<p>The token is not valid.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "TextChannelNotFound-Response:",
+          "content": "HTTP/1.1 404 NOT FOUND\n{\n  \"type\": \"error\",\n  \"error\": 404,\n  \"message\": \"Text Channel with ID db0916fa-934b-4981-9980-d53bed190db3 doesn't exist.\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "NotServerMember-Response:",
+          "content": "HTTP/1.1 401 UNAUTHORIZED\n{\n  \"type\": \"error\",\n  \"error\": 401,\n  \"message\": \"Only Members can get Messages.\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "InvalidToken-Response:",
+          "content": "HTTP/1.1 401 UNAUTHORIZED\n{\n  \"type\": \"error\",\n  \"error\": 401,\n  \"message\": \"Token expired.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/control/MessageController.php",
+    "groupTitle": "Messages",
+    "name": "GetChannelsIdMessagesPagePageSizeSizeOrderOrder"
+  },
+  {
     "type": "patch",
     "url": "/messages/:id/",
     "title": "Update",
@@ -261,7 +373,7 @@ define({ "api": [
       },
       "examples": [
         {
-          "title": "ServerNotFound-Response:",
+          "title": "TextChannelNotFound-Response:",
           "content": "HTTP/1.1 404 NOT FOUND\n{\n  \"type\": \"error\",\n  \"error\": 404,\n  \"message\": \"Text Channel with ID db0916fa-934b-4981-9980-d53bed190db3 doesn't exist.\"\n}",
           "type": "json"
         },
