@@ -1,8 +1,10 @@
 <?php
 namespace OpenDiscard\api\control;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use OpenDiscard\api\common\writer\JSON;
 use OpenDiscard\api\model\Server;
+use OpenDiscard\api\model\User;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Ramsey\Uuid\Uuid;
@@ -12,6 +14,63 @@ class ServerController {
 
     public function __construct(\Slim\Container $container = null) {
         $this->container = $container;
+    }
+
+    /**
+     * @api {get} /servers/ Get
+     * @apiGroup Servers
+     *
+     * @apiDescription Gets all the Servers the token Owner is a Member of.
+     *
+     * @apiHeader {String} Authorization The User's token.
+     *
+     * @apiHeaderExample {json} Bearer Token:
+     *     {
+     *       "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJhcGlfcGxheWVyIiwic3ViIjoiZ2FtZSIsImF1ZCI6InBsYXllciIsImlhdCI6MTU4NDc0NTQ0NywiZXhwIjoxNTg0NzU2MjQ3fQ.vkaSPuOdb95IHWRFda9RGszEflYh8CGxhaKVHS3vredJSl2WyqqNTg_VUbfkx60A3cdClmcBqmyQdJnV3-l1xA"
+     *     }
+     *
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *       "type": "resources",
+     *       "servers": [
+     *         {
+     *           "id": "db0916fa-934b-4981-9980-d53bed190db3",
+     *           "name": "My Super Cool Server",
+     *           "image_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d",
+     *           "owner_id": "db0916fa-934b-4981-9980-d53bed190db3"
+     *         },
+     *         {
+     *           "id": "db0916fa-934b-4981-9980-d53bed190db3",
+     *           "name": "My Other Super Cool Server",
+     *           "image_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d",
+     *           "owner_id": "db0916fa-934b-4981-9980-d53bed190db3"
+     *         }
+     *       ]
+     *     }
+     *
+     * @apiError InvalidToken The token is not valid.
+     *
+     * @apiErrorExample InvalidToken-Response:
+     *     HTTP/1.1 401 UNAUTHORIZED
+     *     {
+     *       "type": "error",
+     *       "error": 401,
+     *       "message": "Token expired."
+     *     }
+     */
+    public function get(Request $request, Response $response, $args) {
+        $token_owner_id = $request->getAttribute('token_owner_id');
+
+        $servers = User::query()
+            ->where('id', '=', $token_owner_id)
+            ->first()
+            ->servers;
+
+        return JSON::successResponse($response, 200, [
+            "type" => "resources",
+            "servers" => $servers
+        ]);
     }
 
     /**
@@ -43,7 +102,7 @@ class ServerController {
      *       "server": {
      *         "id": "db0916fa-934b-4981-9980-d53bed190db3",
      *         "name": "My Super Cool Server",
-     *         "avatar_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d",
+     *         "image_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d",
      *         "owner_id": "db0916fa-934b-4981-9980-d53bed190db3"
      *       }
      *     }
@@ -109,7 +168,7 @@ class ServerController {
      *       "server": {
      *         "id": "db0916fa-934b-4981-9980-d53bed190db3",
      *         "name": "My Super Cool Server Updated",
-     *         "avatar_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d",
+     *         "image_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d",
      *         "owner_id": "db0916fa-934b-4981-9980-d53bed190db3"
      *       }
      *     }
@@ -185,7 +244,7 @@ class ServerController {
      *       "server": {
      *         "id": "db0916fa-934b-4981-9980-d53bed190db3",
      *         "name": "My Super Cool Server",
-     *         "avatar_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d",
+     *         "image_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d",
      *         "owner_id": "db0916fa-934b-4981-9980-d53bed190db3"
      *       }
      *     }
@@ -260,7 +319,7 @@ class ServerController {
      *       "server": {
      *         "id": "db0916fa-934b-4981-9980-d53bed190db3",
      *         "name": "My Super Cool Server",
-     *         "avatar_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d",
+     *         "image_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d",
      *         "owner_id": "db0916fa-934b-4981-9980-d53bed190db3"
      *       },
      *       "user": {
@@ -329,6 +388,7 @@ class ServerController {
 
             unset($user->password);
             unset($user->token);
+            unset($server->textChannels);
 
             return JSON::successResponse($response, 201, [
                 "type" => "resource",
@@ -362,7 +422,7 @@ class ServerController {
      *       "server": {
      *         "id": "db0916fa-934b-4981-9980-d53bed190db3",
      *         "name": "My Super Cool Server",
-     *         "avatar_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d",
+     *         "image_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d",
      *         "owner_id": "db0916fa-934b-4981-9980-d53bed190db3"
      *       },
      *       "user": {
@@ -454,7 +514,10 @@ class ServerController {
         if (($user->id === $token_owner_id && $server->owner_id !== $token_owner_id) || ($user->id !== $token_owner_id && $server->owner_id === $token_owner_id)) {
             // When a Member wants to leave the server OR when the Server's Owner wants to kick a Member from the Server
             $server->members()->detach($user->id);
-            echo $token_owner_id." tried to kick ".$user->username." from ".$server->name;
+
+            unset($user->password);
+            unset($user->token);
+            unset($server->textChannels);
 
             return JSON::successResponse($response, 200, [
                 "type" => "resource",

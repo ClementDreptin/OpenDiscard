@@ -40,6 +40,10 @@ $app->patch('/users/{id}[/]', UserController::class.':update')
     ->add(CORS::class.':addCORSHeaders');
 
 // Servers Routes
+$app->get('/servers[/]', ServerController::class.':get')
+    ->add(JWT::class.':checkJWT')
+    ->add(CORS::class.':addCORSHeaders');
+
 $app->post('/servers[/]', ServerController::class.':create')
     ->add(JWT::class.':checkJWT')
     ->add(Validator::class.':dataFormatErrorHandler')
