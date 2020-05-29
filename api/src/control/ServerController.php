@@ -215,6 +215,8 @@ class ServerController {
             $server->image_url = isset($body['image_url']) ? $body['image_url'] : $server->image_url;
             $server->saveOrFail();
 
+            unset($server->textChannels);
+
             return JSON::successResponse($response, 200, [
                 "type" => "resource",
                 "user" => $server
