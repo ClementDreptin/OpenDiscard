@@ -105,6 +105,11 @@ $app->delete('/channels/{id}[/]', TextChannelController::class.':delete')
     ->add(CORS::class.':addCORSHeaders');
 
 // Messages Routes
+$app->get('/channels/{id}/messages[/]', MessageController::class.':get')
+    ->add(JWT::class.':checkJWT')
+    ->add(Checker::class.':textChannelExists')
+    ->add(CORS::class.':addCORSHeaders');
+
 $app->post('/channels/{id}/messages[/]', MessageController::class.':create')
     ->add(JWT::class.':checkJWT')
     ->add(Checker::class.':textChannelExists')

@@ -15,6 +15,128 @@ class MessageController {
     }
 
     /**
+     * @api {get} /channels/:id/messages?page=:page&size=:size&order=:order Get
+     * @apiGroup Messages
+     *
+     * @apiDescription Gets Messages from a Text Channel.
+     *
+     * @apiParam {Number} page The page.
+     * @apiParam {Number} size The amount of Messages per page.
+     * @apiParam {Number} size The amount of Messages per page.
+     * @apiParam {String=asc,desc} order The order.
+     *
+     * @apiHeader {String} Authorization The User's token.
+     *
+     * @apiHeaderExample {json} Bearer Token:
+     *     {
+     *       "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJhcGlfcGxheWVyIiwic3ViIjoiZ2FtZSIsImF1ZCI6InBsYXllciIsImlhdCI6MTU4NDc0NTQ0NywiZXhwIjoxNTg0NzU2MjQ3fQ.vkaSPuOdb95IHWRFda9RGszEflYh8CGxhaKVHS3vredJSl2WyqqNTg_VUbfkx60A3cdClmcBqmyQdJnV3-l1xA"
+     *     }
+     *
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *       "type": "resources",
+     *       "links": {
+     *         "next": {
+     *           "href": "/channels/db0916fa-934b-4981-9980-d53bed190db3/messages?page=2&size=2&order=desc"
+     *         },
+     *         "prev": {
+     *           "href": "/channels/db0916fa-934b-4981-9980-d53bed190db3/messages?page=1&size=2&order=desc"
+     *         },
+     *         "last": {
+     *           "href": "/channels/db0916fa-934b-4981-9980-d53bed190db3/messages?page=5&size=2&order=desc"
+     *         },
+     *         "first": {
+     *           "href": "/channels/db0916fa-934b-4981-9980-d53bed190db3/messages?page=1&size=2&order=desc"
+     *         }
+     *       },
+     *       "messages": [
+     *         {
+     *           "id": "db0916fa-934b-4981-9980-d53bed190db3",
+     *           "content": "My Other Super Cool Message",
+     *           "created_at": "2020-05-28 17:07:30",
+     *           "updated_at": "2020-05-28 17:07:30",
+     *           "user_id": "db0916fa-934b-4981-9980-d53bed190db3",
+     *           "channel_id": "db0916fa-934b-4981-9980-d53bed190db3"
+     *         },
+     *         {
+     *           "id": "db0916fa-934b-4981-9980-d53bed190db3",
+     *           "content": "My Super Cool Message",
+     *           "created_at": "2020-05-28 17:05:47",
+     *           "updated_at": "2020-05-28 17:05:47",
+     *           "user_id": "db0916fa-934b-4981-9980-d53bed190db3",
+     *           "channel_id": "db0916fa-934b-4981-9980-d53bed190db3"
+     *         }
+     *       ]
+     *     }
+     *
+     * @apiError TextChannelNotFound The UUID of the Text Channel was not found.
+     * @apiError NotServerMember A Non-Member tries to create a Message.
+     * @apiError InvalidToken The token is not valid.
+     *
+     * @apiErrorExample TextChannelNotFound-Response:
+     *     HTTP/1.1 404 NOT FOUND
+     *     {
+     *       "type": "error",
+     *       "error": 404,
+     *       "message": "Text Channel with ID db0916fa-934b-4981-9980-d53bed190db3 doesn't exist."
+     *     }
+     *
+     * @apiErrorExample NotServerMember-Response:
+     *     HTTP/1.1 401 UNAUTHORIZED
+     *     {
+     *       "type": "error",
+     *       "error": 401,
+     *       "message": "Only Members can get Messages."
+     *     }
+     *
+     * @apiErrorExample InvalidToken-Response:
+     *     HTTP/1.1 401 UNAUTHORIZED
+     *     {
+     *       "type": "error",
+     *       "error": 401,
+     *       "message": "Token expired."
+     *     }
+     */
+    public function get(Request $request, Response $response, $args) {
+        $textChannel = $request->getAttribute('text_channel');
+        $token_owner_id = $request->getAttribute('token_owner_id');
+
+        if (!$textChannel->server->members()->where('user_id', '=', $token_owner_id)->exists()) {
+            return JSON::errorResponse($response, 401, "Only Members can get Messages.");
+        }
+
+        $page = $request->getQueryParam('page', 1);
+        $size = $request->getQueryParam('size', 10);
+        $order = $request->getQueryParam('order', 'desc');
+
+        $messages = $textChannel->messages();
+        $total = $messages->count();
+
+        if ($size > $total) {
+            $page = 1;
+        } else if (($page * $size) > $total) {
+            $page = intdiv($total, $size) + 1;
+        }
+
+        $messages = $messages->offset(($page-1)*$size)
+            ->limit($size)
+            ->orderBy('created_at', $order)
+            ->get();
+
+        return JSON::successResponse($response, 200, [
+            "type" => "resources",
+            "links" => [
+                "next" => ["href" => "/channels/".$textChannel->id."/messages?page=".(ceil($total / $size) > $page ? $page + 1 : ceil($total / $size))."&size=$size"],
+                "prev" => ["href" => "/channels/".$textChannel->id."/messages?page=".($page > 1 ? $page-1 : $page)."&size=$size"],
+                "last" => ["href" => "/channels/".$textChannel->id."/messages?page=".(ceil($total / $size))."&size=$size"],
+                "first" => ["href" => "/channels/".$textChannel->id."/messages?page=1&size=$size"]
+            ],
+            "messages" => $messages
+        ]);
+    }
+
+    /**
      * @api {post} /channels/:id/messages/ Create
      * @apiGroup Messages
      *
@@ -52,7 +174,7 @@ class MessageController {
      * @apiError NotServerMember A Non-Member tries to create a Message.
      * @apiError InvalidToken The token is not valid.
      *
-     * @apiErrorExample ServerNotFound-Response:
+     * @apiErrorExample TextChannelNotFound-Response:
      *     HTTP/1.1 404 NOT FOUND
      *     {
      *       "type": "error",
