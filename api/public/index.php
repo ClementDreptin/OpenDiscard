@@ -23,6 +23,11 @@ $app = new \Slim\App($container);
 DatabaseConnection::startEloquent(($app->getContainer())->settings['dbconf']);
 
 // Users Routes
+$app->get('/servers/{id}/users[/]', UserController::class.':get')
+    ->add(JWT::class.':checkJWT')
+    ->add(Checker::class.':serverExists')
+    ->add(CORS::class.':addCORSHeaders');
+
 $app->post('/users/signup[/]', UserController::class.':signUp')
     ->add(Validator::class.':dataFormatErrorHandler')
     ->add(Validator::createUserValidator())

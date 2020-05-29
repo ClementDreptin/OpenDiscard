@@ -17,6 +17,93 @@ class UserController {
     }
 
     /**
+     * @api {get} /servers/:id/users/ Get
+     * @apiGroup Users
+     *
+     * @apiDescription Gets all the Users from a Server.
+     *
+     * @apiHeader {String} Authorization The User's token.
+     *
+     * @apiHeaderExample {json} Bearer Token:
+     *     {
+     *       "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJhcGlfcGxheWVyIiwic3ViIjoiZ2FtZSIsImF1ZCI6InBsYXllciIsImlhdCI6MTU4NDc0NTQ0NywiZXhwIjoxNTg0NzU2MjQ3fQ.vkaSPuOdb95IHWRFda9RGszEflYh8CGxhaKVHS3vredJSl2WyqqNTg_VUbfkx60A3cdClmcBqmyQdJnV3-l1xA"
+     *     }
+     *
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *       "type": "resources",
+     *       "members": [
+     *         {
+     *           "id": "db0916fa-934b-4981-9980-d53bed190db3",
+     *           "username": "AlbertEinstein",
+     *           "email": "albert.einstein@physics.com",
+     *           "avatar_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d"
+     *         },
+     *         {
+     *           "id": "db0916fa-934b-4981-9980-d53bed190db3",
+     *           "username": "IsaacNewton",
+     *           "email": "isaac.newton@physics.com",
+     *           "avatar_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d"
+     *         }
+     *       ]
+     *     }
+     *
+     * @apiError ServerNotFound The UUID of the Server was not found.
+     * @apiError NotServerMember A Non-Member tries to get the Server's Members.
+     * @apiError InvalidToken The token is not valid.
+     *
+     * @apiErrorExample ServerNotFound-Response:
+     *     HTTP/1.1 404 NOT FOUND
+     *     {
+     *       "type": "error",
+     *       "error": 404,
+     *       "message": "Server with ID db0916fa-934b-4981-9980-d53bed190db3 doesn't exist."
+     *     }
+     *
+     * @apiErrorExample NotServerMember-Response:
+     *     HTTP/1.1 401 UNAUTHORIZED
+     *     {
+     *       "type": "error",
+     *       "error": 401,
+     *       "message": "Only Members can get Members from this Server."
+     *     }
+     *
+     * @apiErrorExample InvalidToken-Response:
+     *     HTTP/1.1 401 UNAUTHORIZED
+     *     {
+     *       "type": "error",
+     *       "error": 401,
+     *       "message": "Token expired."
+     *     }
+     */
+    public function get(Request $request, Response $response, $args) {
+        $server = $request->getAttribute('server');
+        $token_owner_id = $request->getAttribute('token_owner_id');
+        $members = $server->members;
+        $tokenOwnerInServer = false;
+
+        // I didn't do $server->members()->where('user_id', '=', $token_owner_id)->exists()
+        // this time not to make another request to the database.
+        foreach ($members as $member) {
+            unset($member->token);
+            unset($member->password);
+            if ($member->id === $token_owner_id) {
+                $tokenOwnerInServer = true;
+            }
+        }
+
+        if (!$tokenOwnerInServer) {
+            return JSON::errorResponse($response, 401, "Only Members can get Members from this Server.");
+        } else {
+            return JSON::successResponse($response, 200, [
+                "type" => "resources",
+                "members" => $members
+            ]);
+        }
+    }
+
+    /**
      * @api {post} /users/signup/ Create
      * @apiGroup Users
      *
