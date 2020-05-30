@@ -1,7 +1,6 @@
 <?php
 namespace OpenDiscard\api\control;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use OpenDiscard\api\common\writer\JSON;
 use OpenDiscard\api\model\Server;
 use OpenDiscard\api\model\User;
