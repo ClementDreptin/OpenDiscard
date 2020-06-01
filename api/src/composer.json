@@ -5,7 +5,8 @@
     "ramsey/uuid": "^3.7",
     "firebase/php-jwt": "^5.0.0",
     "illuminate/database": "^6.0",
-    "davidepastore/slim-validation": "^0.5.1"
+    "davidepastore/slim-validation": "^0.5.1",
+    "cboden/ratchet": "^0.4.2"
   },
   "autoload": {
     "psr-4": {
