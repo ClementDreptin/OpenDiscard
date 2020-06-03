@@ -8,6 +8,7 @@ use OpenDiscard\api\common\middleware\CORS;
 use OpenDiscard\api\common\middleware\JWT;
 use OpenDiscard\api\common\middleware\Validator;
 use OpenDiscard\api\control\DocsController;
+use OpenDiscard\api\control\ImageController;
 use OpenDiscard\api\control\MessageController;
 use OpenDiscard\api\control\ServerController;
 use OpenDiscard\api\control\TextChannelController;
@@ -127,6 +128,10 @@ $app->patch('/messages/{id}[/]', MessageController::class.':update')
 $app->delete('/messages/{id}[/]', MessageController::class.':delete')
     ->add(JWT::class.':checkJWT')
     ->add(Checker::class.':messageExists')
+    ->add(CORS::class.':addCORSHeaders');
+
+// Images Routes
+$app->post('/images[/]', ImageController::class.':upload')
     ->add(CORS::class.':addCORSHeaders');
 
 // Other Routes
