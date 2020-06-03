@@ -17,7 +17,7 @@ return [
     },
     'phpErrorHandler' => function ($container) {
         return function (Request $request, Response $response, \Error $exception) use ($container){
-            return JSON::errorResponse($response, 500, "Internal Server Error. Error : ".$exception->getMessage()." in the file: ".$exception->getFile()." at line: ".$exception->getLine());
+            return JSON::errorResponse($response, 500, "Internal Server Error."/* Error : ".$exception->getMessage()." in the file: ".$exception->getFile()." at line: ".$exception->getLine()*/);
         };
     }
 ];
