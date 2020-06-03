@@ -1,5 +1,48 @@
 define({ "api": [
   {
+    "type": "get",
+    "url": "/images/:id",
+    "title": "Get",
+    "group": "Images",
+    "description": "<p>Gets an Image.</p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Image",
+            "optional": false,
+            "field": "image",
+            "description": "<p>The Image.</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "ImageNotFound",
+            "description": "<p>The UUID of the Image was not found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "ImageNotFound-Response:",
+          "content": "HTTP/1.1 404 NOT FOUND\n{\n  \"type\": \"error\",\n  \"error\": 404,\n  \"message\": \"Image with ID db0916fa-934b-4981-9980-d53bed190db3 doesn't exist.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/control/ImageController.php",
+    "groupTitle": "Images",
+    "name": "GetImagesId"
+  },
+  {
     "type": "post",
     "url": "/images/",
     "title": "Upload",
