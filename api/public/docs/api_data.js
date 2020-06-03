@@ -1,5 +1,68 @@
 define({ "api": [
   {
+    "type": "post",
+    "url": "/images/",
+    "title": "Upload",
+    "group": "Images",
+    "description": "<p>Uploads an Image.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "File",
+            "optional": false,
+            "field": "image",
+            "description": "<p>The Image file.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 201 CREATED\n{\n  \"type\": \"resource\",\n  \"url\": \"/images/db0916fa-934b-4981-9980-d53bed190db3.png\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "WrongMIMEType",
+            "description": "<p>The MIME type of the file doesn't correspond to an Image.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "ImageTooLarge",
+            "description": "<p>The Image is larger than 8MB.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "WrongMIMEType-Response:",
+          "content": "HTTP/1.1 415 UNSUPPORTED MEDIA TYPE\n{\n  \"type\": \"error\",\n  \"error\": 415,\n  \"message\": \"You must upload an image.\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "ImageTooLarge-Response:",
+          "content": "HTTP/1.1 413 PAYLOAD TOO LARGE\n{\n  \"type\": \"error\",\n  \"error\": 413,\n  \"message\": \"Image is too large, you can upload Images up to 8MB.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/control/ImageController.php",
+    "groupTitle": "Images",
+    "name": "PostImages"
+  },
+  {
     "type": "delete",
     "url": "/messages/:id/",
     "title": "Delete",
