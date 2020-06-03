@@ -11,6 +11,12 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class Checker {
+    protected $container;
+
+    public function __construct(\Slim\Container $container = null) {
+        $this->container = $container;
+    }
+
     public function userExists(Request $request, Response $response, callable $next) {
         $user_id = isset($request->getAttribute('routeInfo')[2]['id']) ? $request->getAttribute('routeInfo')[2]['id'] : $request->getAttribute('routeInfo')[2]['user_id'];
 
@@ -67,5 +73,22 @@ class Checker {
         } catch (ModelNotFoundException $exception) {
             return JSON::errorResponse($response, 404, "Text Channel with ID ".$text_channel_id." doesn't exist.");
         }
+    }
+
+    public function imageExists(Request $request, Response $response, callable $next) {
+        $image_id = isset($request->getAttribute('routeInfo')[2]['id']) ? $request->getAttribute('routeInfo')[2]['id'] : $request->getAttribute('routeInfo')[2]['image_id'];
+
+        $match = glob($this->container->settings['upload_dir'].'/'.$image_id.'.*');
+        if (empty($match)) {
+            return JSON::errorResponse($response, 404, "Image with ID ".$image_id." doesn't exist.");
+        }
+
+        $image = file_get_contents($match[0]);
+        $type = mime_content_type($match[0]);
+
+        $request = $request->withAttribute('image', $image);
+        $request = $request->withAttribute('type', $type);
+
+        return $next($request, $response);
     }
 }

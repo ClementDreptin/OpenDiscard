@@ -70,4 +70,34 @@ class ImageController {
             "url" => "/images/$filename"
         ]);
     }
+
+    /**
+     * @api {get} /images/:id Get
+     * @apiGroup Images
+     *
+     * @apiDescription Gets an Image.
+     *
+     * @apiSuccess {Image} image The Image.
+     *
+     * @apiError ImageNotFound The UUID of the Image was not found.
+     *
+     * @apiErrorExample ImageNotFound-Response:
+     *     HTTP/1.1 404 NOT FOUND
+     *     {
+     *       "type": "error",
+     *       "error": 404,
+     *       "message": "Image with ID db0916fa-934b-4981-9980-d53bed190db3 doesn't exist."
+     *     }
+     */
+    public function get(Request $request, Response $response, $args) {
+        $image = $request->getAttribute('image');
+        $type = $request->getAttribute('type');
+
+        $response = $response->withStatus(200)
+            ->withHeader("Content-Type", $type);
+
+        $response->getBody()->write($image);
+
+        return $response;
+    }
 }

@@ -134,6 +134,10 @@ $app->delete('/messages/{id}[/]', MessageController::class.':delete')
 $app->post('/images[/]', ImageController::class.':upload')
     ->add(CORS::class.':addCORSHeaders');
 
+$app->get('/images/{id}[/]', ImageController::class.':get')
+    ->add(Checker::class.':imageExists')
+    ->add(CORS::class.':addCORSHeaders');
+
 // Other Routes
 $app->options('/{routes:.+}', function ($request, $response, $args) { return $response; })
     ->add(CORS::class.':addCORSHeaders');
