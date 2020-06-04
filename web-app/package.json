@@ -6,6 +6,7 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "bulma": "^0.8.2",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
