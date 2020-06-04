@@ -1,16 +1,16 @@
 <template>
     <div>
-        <Chat/>
+        <SignUp/>
     </div>
 </template>
 
 <script>
-    import Chat from "../components/Chat";
+    import SignUp from "../views/SignUp";
 
     export default {
         name: 'Home',
         components: {
-            Chat
+            SignUp
         }
     }
 </script>
