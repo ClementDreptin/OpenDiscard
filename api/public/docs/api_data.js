@@ -4,19 +4,15 @@ define({ "api": [
     "url": "/images/:id",
     "title": "Get",
     "group": "Images",
-    "description": "<p>Gets an Image.</p>",
+    "description": "<p>Gets an Image encoded in Base64.</p>",
     "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "Image",
-            "optional": false,
-            "field": "image",
-            "description": "<p>The Image.</p>"
-          }
-        ]
-      }
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"type\": \"resource\",\n  \"image\": \"iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAYAAACA\",\n  \"mimetype\": \"image/png\"\n}",
+          "type": "json"
+        }
+      ]
     },
     "error": {
       "fields": {
