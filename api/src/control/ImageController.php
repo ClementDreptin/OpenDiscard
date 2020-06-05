@@ -75,9 +75,15 @@ class ImageController {
      * @api {get} /images/:id Get
      * @apiGroup Images
      *
-     * @apiDescription Gets an Image.
+     * @apiDescription Gets an Image encoded in Base64.
      *
-     * @apiSuccess {Image} image The Image.
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *       "type": "resource",
+     *       "image": "iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAYAAACA",
+     *       "mimetype": "image/png"
+     *     }
      *
      * @apiError ImageNotFound The UUID of the Image was not found.
      *
@@ -93,11 +99,10 @@ class ImageController {
         $image = $request->getAttribute('image');
         $type = $request->getAttribute('type');
 
-        $response = $response->withStatus(200)
-            ->withHeader("Content-Type", $type);
-
-        $response->getBody()->write($image);
-
-        return $response;
+        return JSON::successResponse($response, 200, [
+            "type" => "resource",
+            "image" => base64_encode($image),
+            "mimetype" => $type
+        ]);
     }
 }

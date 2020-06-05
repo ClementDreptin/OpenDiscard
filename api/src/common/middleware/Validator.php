@@ -17,7 +17,7 @@ class Validator {
             'username' => RespectValidator::alnum(),
             'email' => RespectValidator::email(),
             'password' => RespectValidator::notOptional(),
-            'avatar_url' => RespectValidator::optional(RespectValidator::url())
+            'avatar_url' => RespectValidator::optional(RespectValidator::startsWith('/images/'))
         ];
 
         return new Validation($validator);
@@ -26,7 +26,7 @@ class Validator {
     public static function updateUserValidator() {
         $validator = [
             'username' => RespectValidator::optional(RespectValidator::alnum()),
-            'avatar_url' => RespectValidator::optional(RespectValidator::url())
+            'avatar_url' => RespectValidator::optional(RespectValidator::startsWith('/images/'))
         ];
 
         return new Validation($validator);
@@ -36,7 +36,7 @@ class Validator {
     public static function createServerValidator() {
         $validator = [
             'name' => RespectValidator::alnum(self::ACCENTS." ".self::PUNCTUATION),
-            'image_url' => RespectValidator::optional(RespectValidator::url())
+            'image_url' => RespectValidator::optional(RespectValidator::startsWith('/images/'))
         ];
 
         return new Validation($validator);
@@ -45,7 +45,7 @@ class Validator {
     public static function updateServerValidator() {
         $validator = [
             'name' => RespectValidator::optional(RespectValidator::alnum(self::ACCENTS." ".self::PUNCTUATION)),
-            'avatar_url' => RespectValidator::optional(RespectValidator::url())
+            'avatar_url' => RespectValidator::optional(RespectValidator::startsWith('/images/'))
         ];
 
         return new Validation($validator);
