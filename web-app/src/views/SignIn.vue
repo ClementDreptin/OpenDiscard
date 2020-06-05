@@ -40,11 +40,16 @@
 </template>
 
 <script>
+    import Home from "./Home";
+
     export default {
         name: "SignIn",
+        components: {
+            Home
+        },
         data() {
             return {
-                email: "",
+                email: "isaac.newton@physics.com",
                 password: "",
                 fail: false
             }
@@ -56,23 +61,52 @@
                         username: this.email,
                         password: this.password
                     }
-                }).then(response => {
-                        this.fail = false;
-                        let user = response.data.user;
-                        this.$store.state.user = user;
+                }).then(async response => {
+                    this.fail = false;
+                    let user = response.data.user;
+                    this.$store.state.user = user;
 
-                        if (user.avatar_url) {
-                            axios.get(user.avatar_url)
-                                .then(response => {
-                                    this.$store.state.user.avatar = response.data;
-                                    this.$router.push('/');
-                                })
-                                .catch(err => console.log(err.response.data.message));
-                        } else {
-                            this.$router.push('/');
-                        }
-                    }).catch(exception => {
-                        this.fail = exception.response.data.message;
+                    if (user.avatar_url) this.getUserAvatar();
+                    this.getServers();
+                }).catch(err => {
+                    this.fail = err.response.data.message;
+                });
+            },
+
+            test() {
+                console.log('0')
+                setTimeout(() => console.log('1'), 3000);
+            },
+
+            getUserAvatar() {
+                axios.get(this.$store.state.user.avatar_url)
+                    .then(response => {
+                        this.$store.state.user.avatar = response.data;
+                    }).catch(err => console.log(err.response.data.message));
+            },
+
+            getServers() {
+                axios.get('/servers/')
+                    .then(response => {
+                        this.$store.state.servers = response.data.servers;
+                        this.getServersImages();
+                    })
+                    .catch(err => console.log(err.response.data.message));
+            },
+
+            getServersImages() {
+                let imagesToGet = 0;
+                let imagesGot = 0;
+                this.$store.state.servers.forEach(server => {
+                    if (server.image_url) {
+                        imagesToGet++;
+                        axios.get(server.image_url)
+                            .then(response => {
+                                server.image = response.data;
+                                imagesGot++;
+                                if (imagesToGet === imagesGot) this.$router.push('/');
+                            }).catch(err => console.log(err.response.data.message));
+                    }
                 });
             }
         }
