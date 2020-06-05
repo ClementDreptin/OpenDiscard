@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="control">
-                    <span><router-link class="button is-info is-light is-rounded" to="login">Already have an account? Sign In!</router-link></span>
+                    <span><router-link class="button is-info is-light is-rounded" to="signIn">Already have an account? Sign In!</router-link></span>
                 </div>
             </div>
         </div>
@@ -77,7 +77,8 @@
                     axios.post('/users/signup/', params)
                         .then(response => {
                             this.fail = false;
-                            console.log(response.data);
+                            this.$store.commit('signIn', response.data.user);
+                            this.$router.push('/');
                         }).catch(err => {
                             this.fail = err.response.data.message
                     })
