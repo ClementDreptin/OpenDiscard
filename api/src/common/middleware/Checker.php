@@ -110,4 +110,23 @@ class Checker {
 
         return $next($request, $response);
     }
+
+    public function withAuthors(Request $request, Response $response, callable $next) {
+        if (!isset($request->getQueryParams()['authors'])) {
+            $request = $request->withAttribute('with_authors', false);
+            return $next($request, $response);
+        }
+
+        $with_image = $request->getQueryParams()['authors'];
+        $true_options = [true, 'true', 'on', 'yes', 1];
+        $false_options = [false, 'false', 'off', 'no', 0];
+
+        if (in_array($with_image, $true_options, true)) {
+            $request = $request->withAttribute('with_authors', true);
+        } else if (in_array($with_image, $false_options, true)) {
+            $request = $request->withAttribute('with_authors', false);
+        }
+
+        return $next($request, $response);
+    }
 }

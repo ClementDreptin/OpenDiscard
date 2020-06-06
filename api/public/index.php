@@ -112,9 +112,14 @@ $app->delete('/channels/{id}[/]', TextChannelController::class.':delete')
     ->add(CORS::class.':addCORSHeaders');
 
 // Messages Routes
+//$app->get('/channels/{id}/messages[/]', MessageController::class.':test');
+
 $app->get('/channels/{id}/messages[/]', MessageController::class.':get')
     ->add(JWT::class.':checkJWT')
+    ->add(Checker::class.':withAuthors')
     ->add(Checker::class.':textChannelExists')
+    ->add(Validator::class.':dataFormatErrorHandler')
+    ->add(Validator::getMessagesValidator())
     ->add(CORS::class.':addCORSHeaders');
 
 $app->post('/channels/{id}/messages[/]', MessageController::class.':create')

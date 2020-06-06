@@ -15,7 +15,7 @@ class MessageController {
     }
 
     /**
-     * @api {get} /channels/:id/messages?page=:page&size=:size&order=:order Get
+     * @api {get} /channels/:id/messages?page=:page&size=:size&order=:order?authors=:authors Get
      * @apiGroup Messages
      *
      * @apiDescription Gets Messages from a Text Channel.
@@ -23,6 +23,7 @@ class MessageController {
      * @apiParam {Number} [page] The page number.
      * @apiParam {Number} [size] The amount of Messages per page.
      * @apiParam {String=asc,desc} [order] The order.
+     * @apiParam {Bool=true,false} [authors] Whether to get the Messages' Authors or not.
      *
      * @apiHeader {String} Authorization The User's token.
      *
@@ -57,6 +58,16 @@ class MessageController {
      *           "updated_at": "2020-05-28 17:07:30",
      *           "user_id": "db0916fa-934b-4981-9980-d53bed190db3",
      *           "channel_id": "db0916fa-934b-4981-9980-d53bed190db3"
+     *           "author": {
+     *             "id": "db0916fa-934b-4981-9980-d53bed190db3",
+     *             "username": "AlbertEinstein",
+     *             "email": "albert.einstein@physics.com",
+     *             "avatar_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d",
+     *             "avatar": {
+     *               "image": "iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCA...",
+     *               "mimetype": "image/png"
+     *             }
+     *           }
      *         },
      *         {
      *           "id": "db0916fa-934b-4981-9980-d53bed190db3",
@@ -64,7 +75,17 @@ class MessageController {
      *           "created_at": "2020-05-28 17:05:47",
      *           "updated_at": "2020-05-28 17:05:47",
      *           "user_id": "db0916fa-934b-4981-9980-d53bed190db3",
-     *           "channel_id": "db0916fa-934b-4981-9980-d53bed190db3"
+     *           "channel_id": "db0916fa-934b-4981-9980-d53bed190db3",
+     *           "author": {
+     *             "id": "db0916fa-934b-4981-9980-d53bed190db3",
+     *             "username": "AlbertEinstein",
+     *             "email": "albert.einstein@physics.com",
+     *             "avatar_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d",
+     *             "avatar": {
+     *               "image": "iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCA...",
+     *               "mimetype": "image/png"
+     *             }
+     *           }
      *         }
      *       ]
      *     }
@@ -100,6 +121,7 @@ class MessageController {
     public function get(Request $request, Response $response, $args) {
         $textChannel = $request->getAttribute('text_channel');
         $token_owner_id = $request->getAttribute('token_owner_id');
+        $with_authors = $request->getAttribute('with_authors');
 
         if (!$textChannel->server->members()->where('user_id', '=', $token_owner_id)->exists()) {
             return JSON::errorResponse($response, 401, "Only Members can get Messages.");
@@ -111,7 +133,14 @@ class MessageController {
 
         $order = $order !== 'asc' || $order !== 'desc' ? 'desc' : $order;
 
-        $messages = $textChannel->messages();
+        $messages = Message::query()
+            ->where('channel_id', '=', $textChannel->id)
+            ->with([
+                'author' => function ($query) {
+                    $query->select('id', 'username', 'email', 'avatar_url');
+                }
+            ]);
+
         $total = $messages->count();
 
         if ($size > $total) {
@@ -124,6 +153,22 @@ class MessageController {
             ->limit($size)
             ->orderBy('created_at', $order)
             ->get();
+
+        if ($with_authors) {
+            foreach ($messages as $message) {
+                if (isset($message->author->avatar_url)) {
+                    $url_array = explode('/', $message->author->avatar_url);
+                    $image_id = end($url_array);
+                    $match = glob($this->container->settings['upload_dir'].'/'.$image_id.'.*');
+                    $image = file_get_contents($match[0]);
+                    $type = mime_content_type($match[0]);
+                    $message->author->avatar = [
+                        'image' => base64_encode($image),
+                        'mimetype' => $type
+                    ];
+                }
+            }
+        }
 
         return JSON::successResponse($response, 200, [
             "type" => "resources",

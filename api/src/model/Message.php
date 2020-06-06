@@ -8,4 +8,8 @@ class Message extends Model {
     protected $primaryKey = 'id';
     public $timestamps = true;
     public $incrementing = false;
+
+    public function author() {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

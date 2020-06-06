@@ -101,6 +101,15 @@ class Validator {
         return new Validation($validator);
     }
 
+    public static function getMessagesValidator() {
+        $validator = [
+            'authors' => RespectValidator::boolVal()
+        ];
+
+        return new Validation($validator);
+    }
+
+
     public static function dataFormatErrorHandler(Request $request, Response $response, callable $next) {
         if ($request->getAttribute('has_errors')) {
             $errors = $request->getAttribute('errors');
