@@ -704,10 +704,27 @@ define({ "api": [
   },
   {
     "type": "get",
-    "url": "/servers/",
+    "url": "/servers/?image=:image",
     "title": "Get",
     "group": "Servers",
     "description": "<p>Gets all the Servers the token Owner is a Member of.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Bool",
+            "allowedValues": [
+              "false",
+              "true"
+            ],
+            "optional": true,
+            "field": "image",
+            "description": "<p>Whether to get the Servers' Image or not.</p>"
+          }
+        ]
+      }
+    },
     "header": {
       "fields": {
         "Header": [
@@ -732,7 +749,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"type\": \"resources\",\n  \"servers\": [\n    {\n      \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"name\": \"My Super Cool Server\",\n      \"image_url\": \"/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d\",\n      \"owner_id\": \"db0916fa-934b-4981-9980-d53bed190db3\"\n    },\n    {\n      \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"name\": \"My Other Super Cool Server\",\n      \"image_url\": \"/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d\",\n      \"owner_id\": \"db0916fa-934b-4981-9980-d53bed190db3\"\n    }\n  ]\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"type\": \"resources\",\n  \"servers\": [\n    {\n      \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"name\": \"My Super Cool Server\",\n      \"image_url\": \"/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d\",\n      \"owner_id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"image\": {\n        \"image\": \"iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCA...\",\n        \"mimetype\": \"image/png\"\n      }\n    },\n    {\n      \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"name\": \"My Other Super Cool Server\",\n      \"image_url\": \"/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d\",\n      \"owner_id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"image\": {\n        \"image\": \"iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCA...\",\n        \"mimetype\": \"image/png\"\n      }\n    }\n  ]\n}",
           "type": "json"
         }
       ]
@@ -759,7 +776,7 @@ define({ "api": [
     "version": "0.0.0",
     "filename": "src/control/ServerController.php",
     "groupTitle": "Servers",
-    "name": "GetServers"
+    "name": "GetServersImageImage"
   },
   {
     "type": "patch",
