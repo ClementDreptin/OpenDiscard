@@ -48,6 +48,9 @@ $app->patch('/users/{id}[/]', UserController::class.':update')
 // Servers Routes
 $app->get('/servers[/]', ServerController::class.':get')
     ->add(JWT::class.':checkJWT')
+    ->add(Checker::class.':withImage')
+    ->add(Validator::class.':dataFormatErrorHandler')
+    ->add(Validator::getServersValidator())
     ->add(CORS::class.':addCORSHeaders');
 
 $app->post('/servers[/]', ServerController::class.':create')

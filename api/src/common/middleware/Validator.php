@@ -51,6 +51,14 @@ class Validator {
         return new Validation($validator);
     }
 
+    public static function getServersValidator() {
+        $validator = [
+            'image' => RespectValidator::boolVal()
+        ];
+
+        return new Validation($validator);
+    }
+
     // TextChannels validators
     public static function createTextChannelValidator() {
         $validator = [
