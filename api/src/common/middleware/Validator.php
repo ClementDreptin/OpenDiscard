@@ -32,6 +32,14 @@ class Validator {
         return new Validation($validator);
     }
 
+    public static function getUsersValidator() {
+        $validator = [
+            'image' => RespectValidator::boolVal()
+        ];
+
+        return new Validation($validator);
+    }
+
     // Servers validators
     public static function createServerValidator() {
         $validator = [

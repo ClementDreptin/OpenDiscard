@@ -26,7 +26,10 @@ DatabaseConnection::startEloquent(($app->getContainer())->settings['dbconf']);
 // Users Routes
 $app->get('/servers/{id}/users[/]', UserController::class.':get')
     ->add(JWT::class.':checkJWT')
+    ->add(Checker::class.':withImage')
     ->add(Checker::class.':serverExists')
+    ->add(Validator::class.':dataFormatErrorHandler')
+    ->add(Validator::getUsersValidator())
     ->add(CORS::class.':addCORSHeaders');
 
 $app->post('/users/signup[/]', UserController::class.':signUp')

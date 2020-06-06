@@ -102,9 +102,9 @@ class Checker {
         $true_options = [true, 'true', 'on', 'yes', 1];
         $false_options = [false, 'false', 'off', 'no', 0];
 
-        if (in_array($with_image, $true_options)) {
+        if (in_array($with_image, $true_options, true)) {
             $request = $request->withAttribute('with_image', true);
-        } else if (in_array($with_image, $false_options)) {
+        } else if (in_array($with_image, $false_options, true)) {
             $request = $request->withAttribute('with_image', false);
         }
 
