@@ -1434,6 +1434,23 @@
     "title": "Get",
     "group": "Users",
     "description": "<p>Gets all the Users from a Server.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Bool",
+            "allowedValues": [
+              "false",
+              "true"
+            ],
+            "optional": true,
+            "field": "image",
+            "description": "<p>Whether to get the Users' Avatar or not.</p>"
+          }
+        ]
+      }
+    },
     "header": {
       "fields": {
         "Header": [
@@ -1458,7 +1475,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"type\": \"resources\",\n  \"members\": [\n    {\n      \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"username\": \"AlbertEinstein\",\n      \"email\": \"albert.einstein@physics.com\",\n      \"avatar_url\": \"/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d\"\n    },\n    {\n      \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"username\": \"IsaacNewton\",\n      \"email\": \"isaac.newton@physics.com\",\n      \"avatar_url\": \"/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d\"\n    }\n  ]\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"type\": \"resources\",\n  \"members\": [\n    {\n      \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"username\": \"AlbertEinstein\",\n      \"email\": \"albert.einstein@physics.com\",\n      \"avatar_url\": \"/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d\",\n      \"avatar\": {\n        \"image\": \"iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCA...\",\n        \"mimetype\": \"image/png\"\n      }\n    },\n    {\n      \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"username\": \"IsaacNewton\",\n      \"email\": \"isaac.newton@physics.com\",\n      \"avatar_url\": \"/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d\",\n      \"avatar\": {\n        \"image\": \"iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCA...\",\n        \"mimetype\": \"image/png\"\n      }\n    }\n  ]\n}",
           "type": "json"
         }
       ]
