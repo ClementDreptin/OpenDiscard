@@ -14,7 +14,7 @@
             <span v-else>No profile picture</span>
         </div>
         <div v-show="$store.state.currentServer" class="column is-one-fifth">
-            people in the server
+            <Members/>
         </div>
     </div>
 </template>
@@ -22,12 +22,14 @@
 <script>
     import ServersBar from "../components/Server/ServersBar";
     import TextChannels from "../components/TextChannel/TextChannels";
+    import Members from "../components/Member/Members";
 
     export default {
         name: 'Home',
         components: {
             TextChannels,
-            ServersBar
+            ServersBar,
+            Members
         },
         data() {
             return {
