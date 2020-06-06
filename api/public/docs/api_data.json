@@ -184,7 +184,7 @@
   },
   {
     "type": "get",
-    "url": "/channels/:id/messages?page=:page&size=:size&order=:order",
+    "url": "/channels/:id/messages?page=:page&size=:size&order=:order?authors=:authors",
     "title": "Get",
     "group": "Messages",
     "description": "<p>Gets Messages from a Text Channel.</p>",
@@ -215,6 +215,17 @@
             "optional": true,
             "field": "order",
             "description": "<p>The order.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Bool",
+            "allowedValues": [
+              "true",
+              "false"
+            ],
+            "optional": true,
+            "field": "authors",
+            "description": "<p>Whether to get the Messages' Authors or not.</p>"
           }
         ]
       }
@@ -243,7 +254,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"type\": \"resources\",\n  \"links\": {\n    \"next\": {\n      \"href\": \"/channels/db0916fa-934b-4981-9980-d53bed190db3/messages?page=2&size=2&order=desc\"\n    },\n    \"prev\": {\n      \"href\": \"/channels/db0916fa-934b-4981-9980-d53bed190db3/messages?page=1&size=2&order=desc\"\n    },\n    \"last\": {\n      \"href\": \"/channels/db0916fa-934b-4981-9980-d53bed190db3/messages?page=5&size=2&order=desc\"\n    },\n    \"first\": {\n      \"href\": \"/channels/db0916fa-934b-4981-9980-d53bed190db3/messages?page=1&size=2&order=desc\"\n    }\n  },\n  \"messages\": [\n    {\n      \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"content\": \"My Other Super Cool Message\",\n      \"created_at\": \"2020-05-28 17:07:30\",\n      \"updated_at\": \"2020-05-28 17:07:30\",\n      \"user_id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"channel_id\": \"db0916fa-934b-4981-9980-d53bed190db3\"\n    },\n    {\n      \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"content\": \"My Super Cool Message\",\n      \"created_at\": \"2020-05-28 17:05:47\",\n      \"updated_at\": \"2020-05-28 17:05:47\",\n      \"user_id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"channel_id\": \"db0916fa-934b-4981-9980-d53bed190db3\"\n    }\n  ]\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"type\": \"resources\",\n  \"links\": {\n    \"next\": {\n      \"href\": \"/channels/db0916fa-934b-4981-9980-d53bed190db3/messages?page=2&size=2&order=desc\"\n    },\n    \"prev\": {\n      \"href\": \"/channels/db0916fa-934b-4981-9980-d53bed190db3/messages?page=1&size=2&order=desc\"\n    },\n    \"last\": {\n      \"href\": \"/channels/db0916fa-934b-4981-9980-d53bed190db3/messages?page=5&size=2&order=desc\"\n    },\n    \"first\": {\n      \"href\": \"/channels/db0916fa-934b-4981-9980-d53bed190db3/messages?page=1&size=2&order=desc\"\n    }\n  },\n  \"messages\": [\n    {\n      \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"content\": \"My Other Super Cool Message\",\n      \"created_at\": \"2020-05-28 17:07:30\",\n      \"updated_at\": \"2020-05-28 17:07:30\",\n      \"user_id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"channel_id\": \"db0916fa-934b-4981-9980-d53bed190db3\"\n      \"author\": {\n        \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n        \"username\": \"AlbertEinstein\",\n        \"email\": \"albert.einstein@physics.com\",\n        \"avatar_url\": \"/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d\",\n        \"avatar\": {\n          \"image\": \"iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCA...\",\n          \"mimetype\": \"image/png\"\n        }\n      }\n    },\n    {\n      \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"content\": \"My Super Cool Message\",\n      \"created_at\": \"2020-05-28 17:05:47\",\n      \"updated_at\": \"2020-05-28 17:05:47\",\n      \"user_id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"channel_id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"author\": {\n        \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n        \"username\": \"AlbertEinstein\",\n        \"email\": \"albert.einstein@physics.com\",\n        \"avatar_url\": \"/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d\",\n        \"avatar\": {\n          \"image\": \"iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCA...\",\n          \"mimetype\": \"image/png\"\n        }\n      }\n    }\n  ]\n}",
           "type": "json"
         }
       ]
@@ -292,7 +303,7 @@
     "version": "0.0.0",
     "filename": "src/control/MessageController.php",
     "groupTitle": "Messages",
-    "name": "GetChannelsIdMessagesPagePageSizeSizeOrderOrder"
+    "name": "GetChannelsIdMessagesPagePageSizeSizeOrderOrderAuthorsAuthors"
   },
   {
     "type": "patch",
