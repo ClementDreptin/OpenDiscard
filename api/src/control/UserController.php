@@ -17,7 +17,7 @@ class UserController {
     }
 
     /**
-     * @api {get} /servers/:id/users/ Get
+     * @api {get} /servers/:id/users/?image=:image Get
      * @apiGroup Users
      *
      * @apiDescription Gets all the Users from a Server.
@@ -126,7 +126,7 @@ class UserController {
     }
 
     /**
-     * @api {post} /users/signup/ Create
+     * @api {post} /users/signup/ Sign up
      * @apiGroup Users
      *
      * @apiDescription Creates a User.

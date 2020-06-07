@@ -1441,7 +1441,7 @@ define({ "api": [
   },
   {
     "type": "get",
-    "url": "/servers/:id/users/",
+    "url": "/servers/:id/users/?image=:image",
     "title": "Get",
     "group": "Users",
     "description": "<p>Gets all the Users from a Server.</p>",
@@ -1535,7 +1535,7 @@ define({ "api": [
     "version": "0.0.0",
     "filename": "src/control/UserController.php",
     "groupTitle": "Users",
-    "name": "GetServersIdUsers"
+    "name": "GetServersIdUsersImageImage"
   },
   {
     "type": "patch",
@@ -1696,7 +1696,7 @@ define({ "api": [
   {
     "type": "post",
     "url": "/users/signup/",
-    "title": "Create",
+    "title": "Sign up",
     "group": "Users",
     "description": "<p>Creates a User.</p>",
     "parameter": {
