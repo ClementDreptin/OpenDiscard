@@ -28,6 +28,8 @@
                         .then(response => {
                             this.$store.state.currentServer.textChannels = response.data.text_channels;
                             this.textChannels = this.$store.state.currentServer.textChannels;
+                            this.$store.state.currentTextChannel = this.textChannels[0];
+                            this.$bus.$emit('currentTextChannelChanged');
                         }).catch(err => console.log(err.response.data.message));
                 } else {
                     this.textChannels = this.$store.state.currentServer.textChannels;

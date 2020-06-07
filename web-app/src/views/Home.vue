@@ -6,12 +6,8 @@
         <div v-show="$store.state.currentServer" class="column is-one-fifth">
             <TextChannels/>
         </div>
-        <div v-show="$store.state.currentServer" class="column is-half">
-            <div>Username: {{user.username}}</div>
-            <div>E-mail address: {{user.email}}</div>
-            <span>Profile picture: </span>
-            <span v-if="user.avatar"><img :src="`data:${user.avatar.mimetype};base64,${user.avatar.image}`"></span>
-            <span v-else>No profile picture</span>
+        <div v-show="$store.state.currentTextChannel" class="column is-half">
+            <Messages/>
         </div>
         <div v-show="$store.state.currentServer" class="column is-one-fifth">
             <Members/>
@@ -23,26 +19,20 @@
     import ServersBar from "../components/Server/ServersBar";
     import TextChannels from "../components/TextChannel/TextChannels";
     import Members from "../components/Member/Members";
+    import Messages from "../components/Message/Messages";
 
     export default {
         name: 'Home',
         components: {
             TextChannels,
             ServersBar,
-            Members
-        },
-        data() {
-            return {
-
-            }
+            Members,
+            Messages
         },
         computed: {
             user() {
                 return this.$store.state.user;
             }
-        },
-        methods: {
-
         },
         mounted() {
             if (!this.$store.state.user) {

@@ -7,7 +7,8 @@ export default new Vuex.Store({
     state: {
         user: null,
         servers: [],
-        currentServer: null
+        currentServer: null,
+        currentTextChannel: null
     },
     mutations: {
     },
