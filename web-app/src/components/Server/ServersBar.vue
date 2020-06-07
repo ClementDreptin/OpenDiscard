@@ -16,10 +16,23 @@
         components: {
             Server
         },
-        computed: {
-            servers() {
-                return this.$store.state.servers;
+        data() {
+            return {
+                servers: []
             }
+        },
+        methods: {
+            getServers() {
+                axios.get('/servers/?image=true')
+                    .then(response => {
+                        this.$store.state.servers = response.data.servers;
+                        this.servers = this.$store.state.servers;
+                    })
+                    .catch(err => console.log(err.response.data.message));
+            },
+        },
+        mounted() {
+            this.getServers();
         }
     }
 </script>

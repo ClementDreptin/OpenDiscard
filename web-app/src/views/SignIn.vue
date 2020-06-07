@@ -61,53 +61,20 @@
                         username: this.email,
                         password: this.password
                     }
-                }).then(async response => {
+                }).then(response => {
                     this.fail = false;
                     let user = response.data.user;
                     this.$store.state.user = user;
 
                     if (user.avatar_url) this.getUserAvatar();
-                    this.getServers();
-                }).catch(err => {
-                    this.fail = err.response.data.message;
-                });
-            },
-
-            test() {
-                console.log('0')
-                setTimeout(() => console.log('1'), 3000);
+                    this.$router.push('/');
+                }).catch(err => this.fail = err.response.data.message);
             },
 
             getUserAvatar() {
                 axios.get(this.$store.state.user.avatar_url)
-                    .then(response => {
-                        this.$store.state.user.avatar = response.data;
-                    }).catch(err => console.log(err.response.data.message));
-            },
-
-            getServers() {
-                axios.get('/servers/')
-                    .then(response => {
-                        this.$store.state.servers = response.data.servers;
-                        this.getServersImages();
-                    })
+                    .then(response => this.$store.state.user.avatar = response.data)
                     .catch(err => console.log(err.response.data.message));
-            },
-
-            getServersImages() {
-                let imagesToGet = 0;
-                let imagesGot = 0;
-                this.$store.state.servers.forEach(server => {
-                    if (server.image_url) {
-                        imagesToGet++;
-                        axios.get(server.image_url)
-                            .then(response => {
-                                server.image = response.data;
-                                imagesGot++;
-                                if (imagesToGet === imagesGot) this.$router.push('/');
-                            }).catch(err => console.log(err.response.data.message));
-                    }
-                });
             }
         }
     }
