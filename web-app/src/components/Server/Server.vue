@@ -22,5 +22,11 @@
 </script>
 
 <style scoped>
+    a {
+        padding: 0;
+    }
 
+    figure {
+        display: inline-block;
+    }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <aside id="server-bar" class="menu">
+    <aside class="menu">
         <ul class="menu-list">
             <li v-for="server in servers">
                 <Server :server="server"/>
@@ -38,5 +38,11 @@
 </script>
 
 <style scoped>
+    li {
+        text-align: center;
+    }
 
+    aside {
+        padding: 0.75em;
+    }
 </style>

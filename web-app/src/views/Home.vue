@@ -1,16 +1,18 @@
 <template>
-    <div id="home" class="columns" v-if="user">
-        <div class="column">
+    <div id="home" v-if="user">
+        <div id="server-bar">
             <ServersBar/>
         </div>
-        <div v-show="$store.state.currentServer" class="column is-one-fifth">
-            <TextChannels/>
-        </div>
-        <div v-show="$store.state.currentTextChannel" class="column is-half">
-            <Messages/>
-        </div>
-        <div v-show="$store.state.currentServer" class="column is-one-fifth">
-            <Members/>
+        <div class="columns">
+            <div class="column is-one-fifth">
+                <TextChannels/>
+            </div>
+            <div class="column is-three-fifths">
+                <Messages/>
+            </div>
+            <div class="column is-one-fifth">
+                <Members/>
+            </div>
         </div>
     </div>
 </template>
@@ -43,5 +45,18 @@
 </script>
 
 <style scoped>
+    #home {
+        height: 100%;
+        display: flex;
+    }
 
+    #server-bar {
+        background-color: #393939;
+        flex: 1;
+    }
+
+    .columns {
+        margin-top: 0;
+        flex: 20;
+    }
 </style>
