@@ -184,7 +184,7 @@
   },
   {
     "type": "get",
-    "url": "/channels/:id/messages?page=:page&size=:size&order=:order?authors=:authors",
+    "url": "/channels/:id/messages?page=:page&size=:size&order=:order&authors=:authors",
     "title": "Get",
     "group": "Messages",
     "description": "<p>Gets Messages from a Text Channel.</p>",

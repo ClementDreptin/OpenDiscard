@@ -15,7 +15,7 @@ class MessageController {
     }
 
     /**
-     * @api {get} /channels/:id/messages?page=:page&size=:size&order=:order?authors=:authors Get
+     * @api {get} /channels/:id/messages?page=:page&size=:size&order=:order&authors=:authors Get
      * @apiGroup Messages
      *
      * @apiDescription Gets Messages from a Text Channel.
