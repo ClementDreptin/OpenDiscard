@@ -1,21 +1,18 @@
 <template>
-    <div class="card">
-        <div class="card-content">
-            <div class="media">
-                <div class="media-left" v-if="message.author.avatar">
-                    <figure class="image is-48x48">
-                        <img class="is-rounded" :src="`data:${message.author.avatar.mimetype};base64,${message.author.avatar.image}`">
-                    </figure>
-                </div>
-                <div class="media-content">
-                    <p class="title is-4">{{ message.author.username }}</p>
-                </div>
-            </div>
-
-            <div class="content">
+    <div class="message">
+        <figure class="image is-48x48">
+            <img class="is-rounded"
+                 :src="`data:${message.author.avatar.mimetype};base64,${message.author.avatar.image}`"
+                 :alt="`${message.author.username}'s profile picture`">
+        </figure>
+        <div class="message-content">
+            <a class="author-name">
+                <div>{{ message.author.username }}</div>
+            </a>
+            <div>
                 {{ message.content }}
                 <br>
-                <time datetime="2016-1-1">{{ message.updated_at }}</time>
+                <time>{{ message.updated_at }}</time>
             </div>
         </div>
     </div>
@@ -31,5 +28,35 @@
 </script>
 
 <style scoped>
+    .message {
+        display: flex;
+    }
 
+    figure {
+        margin: 0.5em;
+    }
+
+    .author-name {
+        color: #ffffff;
+        font-weight: bold;
+        text-decoration: none !important;
+    }
+
+    .author-name:hover {
+        text-decoration: underline !important;
+    }
+
+    .message-content {
+        color: #dcddde;
+        margin-left: 0.5em;
+        margin-top: 0.5em;
+    }
+
+    .message-content > div {
+        font-size: 1rem;
+    }
+
+    time {
+        color: #72767d;
+    }
 </style>

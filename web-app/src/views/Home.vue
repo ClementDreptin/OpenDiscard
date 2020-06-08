@@ -4,13 +4,13 @@
             <ServersBar/>
         </div>
         <div class="columns">
-            <div class="column is-one-fifth">
+            <div id="text-channels" class="column is-one-fifth">
                 <TextChannels/>
             </div>
-            <div class="column is-three-fifths">
+            <div id="messages" class="column is-three-fifths">
                 <Messages/>
             </div>
-            <div class="column is-one-fifth">
+            <div id="members" class="column is-one-fifth">
                 <Members/>
             </div>
         </div>
@@ -52,11 +52,43 @@
 
     #server-bar {
         background-color: #393939;
-        flex: 1;
+    }
+
+    #text-channels {
+        background-color: #2F3136;
+    }
+
+    #messages {
+        background-color: #36393F;
+    }
+
+    #members {
+        background-color: #2F3136;
     }
 
     .columns {
         margin-top: 0;
+        margin-left: 0;
+        margin-right: 0;
         flex: 20;
+    }
+
+    .columns > div, #server-bar {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        scrollbar-color: rgba(32,34,37,.6) transparent;
+        scrollbar-width: thin;
+    }
+
+    ::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: rgba(32,34,37,.6);
     }
 </style>

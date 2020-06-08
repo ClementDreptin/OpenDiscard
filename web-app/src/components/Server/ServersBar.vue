@@ -40,9 +40,11 @@
 <style scoped>
     li {
         text-align: center;
+        margin-bottom: 0.4em;
     }
 
     aside {
         padding: 0.75em;
+        margin-bottom: 2em;
     }
 </style>

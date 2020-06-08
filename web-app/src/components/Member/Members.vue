@@ -1,5 +1,5 @@
 <template>
-    <aside id="text-channels" class="menu">
+    <aside class="menu">
         <ul class="menu-list">
             <li v-for="member in members">
                 <Member :member="member"/>
@@ -24,7 +24,7 @@
         methods: {
             getMembers() {
                 if (!this.$store.state.currentServer.members) {
-                    axios.get(`/servers/${this.$store.state.currentServer.id}/users/`)
+                    axios.get(`/servers/${this.$store.state.currentServer.id}/users/?image=true`)
                         .then(response => {
                             this.$store.state.currentServer.members = response.data.members;
                             this.members = this.$store.state.currentServer.members;
@@ -43,5 +43,7 @@
 </script>
 
 <style scoped>
-
+    aside {
+        margin-bottom: 2em;
+    }
 </style>

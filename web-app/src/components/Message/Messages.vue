@@ -1,5 +1,5 @@
 <template>
-    <div id="messages">
+    <div>
         <Message v-for="message in messages" :message="message"/>
     </div>
 </template>
@@ -35,5 +35,8 @@
 </script>
 
 <style scoped>
-
+    div {
+        background-color: #36393F;
+        margin-bottom: 2em;
+    }
 </style>

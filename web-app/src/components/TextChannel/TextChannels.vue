@@ -1,5 +1,5 @@
 <template>
-    <aside id="text-channels" class="menu">
+    <aside class="menu">
         <ul class="menu-list">
             <li v-for="textChannel in textChannels">
                 <TextChannel :textChannel="textChannel"/>
@@ -45,5 +45,7 @@
 </script>
 
 <style scoped>
-
+    aside {
+        margin-bottom: 2em;
+    }
 </style>
