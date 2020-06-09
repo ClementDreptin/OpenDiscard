@@ -2,7 +2,6 @@
     <figure class="image is-48x48">
         <a @click="serverClick">
             <img v-if="server.image"
-                 class="is-rounded"
                  :src="`data:${server.image.mimetype};base64,${server.image.image}`"
                  :alt="`Image of the server ${server.name}`">
         </a>
@@ -27,11 +26,24 @@
 <style scoped>
     a {
         padding: 0;
+    }
+
+    img:hover {
         border-radius: 10px;
     }
 
-    a:hover {
-        background-color: #c2c2c2;
+    .menu-list a:hover {
+        background-color: transparent;
+        color: transparent;
+    }
+
+    img {
+        border-radius: 100%;
+        background-color: #36393F;
+        -moz-transition: all .3s;
+        -o-transition: all .3s;
+        -webkit-transition: all .3s;
+        transition: all .3s;
     }
 
     figure {

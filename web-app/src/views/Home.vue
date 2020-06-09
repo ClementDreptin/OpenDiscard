@@ -51,7 +51,7 @@
     }
 
     #server-bar {
-        background-color: #393939;
+        background-color: #272727;
     }
 
     #text-channels {

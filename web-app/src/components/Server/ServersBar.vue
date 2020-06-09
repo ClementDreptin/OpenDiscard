@@ -4,17 +4,22 @@
             <li v-for="server in servers">
                 <Server :server="server"/>
             </li>
+            <li>
+                <AddServerButton/>
+            </li>
         </ul>
     </aside>
 </template>
 
 <script>
     import Server from "./Server";
+    import AddServerButton from "./AddServerButton";
 
     export default {
         name: "ServersBar",
         components: {
-            Server
+            Server,
+            AddServerButton
         },
         data() {
             return {
