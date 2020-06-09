@@ -4,12 +4,12 @@ define({ "api": [
     "url": "/images/:id",
     "title": "Get",
     "group": "Images",
-    "description": "<p>Gets an Image encoded in Base64.</p>",
+    "description": "<p>Gets a base64 encoded Image.</p>",
     "success": {
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"type\": \"resource\",\n  \"image\": \"iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAYAAACA\",\n  \"mimetype\": \"image/png\"\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"type\": \"resource\",\n  \"image\": \"iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAYAAACA...\",\n  \"mimetype\": \"image/png\"\n}",
           "type": "json"
         }
       ]
@@ -49,13 +49,20 @@ define({ "api": [
         "Parameter": [
           {
             "group": "Parameter",
-            "type": "File",
+            "type": "String",
             "optional": false,
             "field": "image",
-            "description": "<p>The Image file.</p>"
+            "description": "<p>The base64 encoded Image.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n  \"image\": \"iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAYAAACA...\"\n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [
