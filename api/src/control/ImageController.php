@@ -4,7 +4,6 @@ namespace OpenDiscard\api\control;
 use OpenDiscard\api\common\writer\JSON;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Ramsey\Uuid\Uuid;
 
 class ImageController {
     protected $container;
@@ -19,7 +18,12 @@ class ImageController {
      *
      * @apiDescription Uploads an Image.
      *
-     * @apiParam {File} image The Image file.
+     * @apiParam {String} image The base64 encoded Image.
+     *
+     * @apiParamExample {json} Request-Example:
+     *     {
+     *       "image": "iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAYAAACA..."
+     *     }
      *
      * @apiSuccessExample Success-Response:
      *     HTTP/1.1 201 CREATED
@@ -48,26 +52,11 @@ class ImageController {
      *     }
      */
     public function upload(Request $request, Response $response, $args) {
-        if (!isset($request->getUploadedFiles()['image'])) {
-            return JSON::errorResponse($response, 400, "Incorrect format in parameters. Details: You must provide an image parameter.");
-        }
-
-        $file = $request->getUploadedFiles()['image'];
-
-        if ($file->getError() !== UPLOAD_ERR_OK) return JSON::errorResponse($response, 500, "An error occurred.");
-
-        if (substr(mime_content_type($file->file), 0, 5) !== 'image') return JSON::errorResponse($response, 415, "You must upload an image.");
-
-        if ($file->getSize() > 8 * 1024 * 1024) return JSON::errorResponse($response, 413, "Image is too large, you can upload Images up to 8MB.");
-
-        $upload_dir = $this->container->settings['upload_dir'];
-        $filename = Uuid::uuid4()->__toString();
-        $extension = pathinfo($file->getClientFilename(), PATHINFO_EXTENSION);
-        $file->moveTo("$upload_dir/$filename.$extension");
+        $image_name = $request->getAttribute('image_name');
 
         return JSON::successResponse($response, 201, [
             "type" => "resource",
-            "url" => "/images/$filename"
+            "url" => "/images/$image_name"
         ]);
     }
 
@@ -75,13 +64,13 @@ class ImageController {
      * @api {get} /images/:id Get
      * @apiGroup Images
      *
-     * @apiDescription Gets an Image encoded in Base64.
+     * @apiDescription Gets a base64 encoded Image.
      *
      * @apiSuccessExample Success-Response:
      *     HTTP/1.1 200 OK
      *     {
      *       "type": "resource",
-     *       "image": "iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAYAAACA",
+     *       "image": "iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAYAAACA...",
      *       "mimetype": "image/png"
      *     }
      *

@@ -143,6 +143,7 @@ $app->delete('/messages/{id}[/]', MessageController::class.':delete')
 
 // Images Routes
 $app->post('/images[/]', ImageController::class.':upload')
+    ->add(Checker::class.':isBase64Image')
     ->add(CORS::class.':addCORSHeaders');
 
 $app->get('/images/{id}[/]', ImageController::class.':get')

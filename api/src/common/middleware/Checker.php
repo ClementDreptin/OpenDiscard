@@ -9,6 +9,7 @@ use OpenDiscard\api\model\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Ramsey\Uuid\Uuid;
 
 class Checker {
     protected $container;
@@ -78,7 +79,7 @@ class Checker {
     public function imageExists(Request $request, Response $response, callable $next) {
         $image_id = isset($request->getAttribute('routeInfo')[2]['id']) ? $request->getAttribute('routeInfo')[2]['id'] : $request->getAttribute('routeInfo')[2]['image_id'];
 
-        $match = glob($this->container->settings['upload_dir'].'/'.$image_id.'.*');
+        $match = glob($this->container->settings['upload_dir'].'/'.$image_id);
         if (empty($match)) {
             return JSON::errorResponse($response, 404, "Image with ID ".$image_id." doesn't exist.");
         }
@@ -88,6 +89,41 @@ class Checker {
 
         $request = $request->withAttribute('image', $image);
         $request = $request->withAttribute('type', $type);
+
+        return $next($request, $response);
+    }
+
+    public function isBase64Image(Request $request, Response $response, callable $next) {
+        $body = $request->getParsedBody();
+
+        if (!isset($body['image'])) {
+            return JSON::errorResponse($response, 400, "Incorrect format in parameters. Details: You must provide an image parameter.");
+        }
+
+        $decoded = base64_decode($body['image'], true);
+        $encoded = base64_encode($decoded);
+
+        if (!preg_match('/^[a-zA-Z0-9\/\r\n+]*={0,2}$/', $body['image']) || $decoded === false || $encoded !== $body['image']) {
+            return JSON::errorResponse($response, 400, "Incorrect format in parameters. Details: You must provide a base64 encoded image.");
+        }
+
+        $upload_dir = $this->container->settings['upload_dir'];
+        $filename = Uuid::uuid4();
+        $fullpath = "$upload_dir/$filename";
+
+        file_put_contents($fullpath, $decoded);
+
+        if (substr(mime_content_type($fullpath), 0, 5) !== 'image') {
+            unlink($fullpath);
+            return JSON::errorResponse($response, 415, "You must upload an image.");
+        }
+
+        if (filesize($fullpath) > 8 * 1024 * 1024) {
+            unlink($fullpath);
+            return JSON::errorResponse($response, 413, "Image is too large, you can upload Images up to 8MB.");
+        }
+
+        $request = $request->withAttribute('image_name', $filename);
 
         return $next($request, $response);
     }
