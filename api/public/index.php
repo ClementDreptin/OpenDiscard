@@ -112,8 +112,6 @@ $app->delete('/channels/{id}[/]', TextChannelController::class.':delete')
     ->add(CORS::class.':addCORSHeaders');
 
 // Messages Routes
-//$app->get('/channels/{id}/messages[/]', MessageController::class.':test');
-
 $app->get('/channels/{id}/messages[/]', MessageController::class.':get')
     ->add(JWT::class.':checkJWT')
     ->add(Checker::class.':withAuthors')

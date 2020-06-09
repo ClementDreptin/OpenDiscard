@@ -159,7 +159,7 @@ class MessageController {
                 if (isset($message->author->avatar_url)) {
                     $url_array = explode('/', $message->author->avatar_url);
                     $image_id = end($url_array);
-                    $match = glob($this->container->settings['upload_dir'].'/'.$image_id.'.*');
+                    $match = glob($this->container->settings['upload_dir'].'/'.$image_id);
                     $image = file_get_contents($match[0]);
                     $type = mime_content_type($match[0]);
                     $message->author->avatar = [
