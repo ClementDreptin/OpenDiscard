@@ -3,7 +3,7 @@
         <div v-show="showModal" class="modal is-active">
             <div class="modal-background"></div>
             <div class="modal-card">
-                <form @submit.prevent="showModal = false">
+                <form @submit.prevent="">
                     <header class="modal-card-head">
                         <p class="modal-card-title">Create your Server</p>
                         <button @click="showModal = false" class="delete"></button>
@@ -11,7 +11,7 @@
                     <section class="modal-card-body">
                         <div class="field">
                             <p class="control">
-                                <input class="input" type="text" name="server-name" placeholder="Name">
+                                <input class="input" type="text" v-model="serverName" placeholder="Name">
                             </p>
                         </div>
                         <div class="field">
@@ -30,9 +30,19 @@
                                 </label>
                             </div>
                         </div>
+                        <div class="container" id="signin-message">
+                            <article class="message is-danger" v-show="fail">
+                                <div class="message-header">
+                                    <p>Error</p>
+                                </div>
+                                <div class="message-body">
+                                    {{ fail }}
+                                </div>
+                            </article>
+                        </div>
                     </section>
                     <footer class="modal-card-foot">
-                        <button @click="createServer();showModal = false" class="button is-success">Create</button>
+                        <button @click="createServer" class="button is-success">Create</button>
                         <button @click="showModal = false" class="button">Cancel</button>
                     </footer>
                 </form>
@@ -56,8 +66,10 @@
         data() {
             return {
                 showModal: false,
+                serverName: "",
                 fileName: "",
-                fileData: null
+                fileData: null,
+                fail: null
             }
         },
         methods: {
@@ -66,25 +78,35 @@
             },
 
             createServer() {
-                axios.post('/images/', {
-                    image: this.fileData
-                }).then(response => {
-                    console.log(response.data);
-                })
+                if (this.serverName === "") return this.fail = "You must give your server a name!";
+
+                if (this.fileData) {
+                    axios.post('/images/', {image: this.fileData})
+                        .then(response => this.createServerApi(response.data.url))
+                        .catch(err => console.log(err.response.data.message))
+                } else {
+                    this.createServerApi();
+                }
+            },
+
+            createServerApi(imageUrl) {
+                let params = { name: this.serverName };
+                if (imageUrl) params.image_url = imageUrl;
+                axios.post('/servers/', params)
+                    .then(response => {})
+                    .catch(err => console.log(err.response.data.message))
             },
 
             showMyImage() {
+                this.fail = null;
                 let file = this.$refs.file.files[0];
-                if (!file.type.match(/image.*/)) return;
+                if (!file.type.match(/image.*/)) return this.fail = "You must select an image.";
                 this.fileName = file.name;
                 let reader = new FileReader();
 
                 reader.readAsDataURL(file);
 
-                reader.onload = () => {
-                    this.fileData = reader.result.replace(/^data:image\/.*;base64,/, "");
-                    console.log(this.fileData);
-                };
+                reader.onload = () => this.fileData = reader.result.replace(/^data:image\/.*;base64,/, "");
             }
         }
     }
