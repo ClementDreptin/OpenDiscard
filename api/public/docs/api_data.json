@@ -68,7 +68,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 201 CREATED\n{\n  \"type\": \"resource\",\n  \"url\": \"/images/db0916fa-934b-4981-9980-d53bed190db3.png\"\n}",
+          "content": "HTTP/1.1 201 CREATED\n{\n  \"type\": \"resource\",\n  \"url\": \"/images/db0916fa-934b-4981-9980-d53bed190db3\"\n}",
           "type": "json"
         }
       ]

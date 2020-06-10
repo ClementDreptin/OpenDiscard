@@ -29,7 +29,7 @@ class ImageController {
      *     HTTP/1.1 201 CREATED
      *     {
      *       "type": "resource",
-     *       "url": "/images/db0916fa-934b-4981-9980-d53bed190db3.png"
+     *       "url": "/images/db0916fa-934b-4981-9980-d53bed190db3"
      *     }
      *
      * @apiError WrongMIMEType The MIME type of the file doesn't correspond to an Image.
