@@ -1,5 +1,5 @@
 <template>
-    <figure class="image is-48x48">
+    <figure class="image">
         <a @click="serverClick">
             <img v-if="server.image_url"
                  :src="`${axios.defaults.baseURL}${server.image_url}`"
@@ -43,6 +43,8 @@
     }
 
     img {
+        width: 48px;
+        height: 48px;
         border-radius: 100%;
         background-color: #36393F;
         -moz-transition: all .3s;

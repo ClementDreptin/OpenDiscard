@@ -38,6 +38,10 @@
         },
         mounted() {
             this.getServers();
+
+            this.$bus.$on('serverAdded', () => {
+                this.servers = this.$store.state.servers;
+            });
         }
     }
 </script>

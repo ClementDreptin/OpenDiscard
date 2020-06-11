@@ -17,7 +17,7 @@
                         <div class="field">
                             <div class="file">
                                 <label class="file-label">
-                                    <input class="file-input" ref="file" @change="showMyImage()" type="file" name="resume">
+                                    <input class="file-input" ref="file" @change="encodeImage" type="file" name="resume">
                                     <span class="file-cta">
                                         <span class="file-icon">
                                             <i class="fas fa-upload"></i>
@@ -93,11 +93,15 @@
                 let params = { name: this.serverName };
                 if (imageUrl) params.image_url = imageUrl;
                 axios.post('/servers/', params)
-                    .then(response => {})
-                    .catch(err => console.log(err.response.data.message))
+                    .then(response => {
+                        this.$store.state.servers.push(response.data.server);
+                        this.$bus.$emit('serverAdded');
+                        this.showModal = false;
+                    })
+                    .catch(err => console.log(err.response.data.message));
             },
 
-            showMyImage() {
+            encodeImage() {
                 this.fail = null;
                 let file = this.$refs.file.files[0];
                 if (!file.type.match(/image.*/)) return this.fail = "You must select an image.";
