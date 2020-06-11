@@ -30,6 +30,10 @@
             this.$bus.$on('currentTextChannelChanged', () => {
                 this.getMessages();
             });
+
+            this.$bus.$on('currentServerChanged', () => {
+                this.messages = [];
+            });
         }
     }
 </script>
