@@ -62,11 +62,7 @@ class MessageController {
      *             "id": "db0916fa-934b-4981-9980-d53bed190db3",
      *             "username": "AlbertEinstein",
      *             "email": "albert.einstein@physics.com",
-     *             "avatar_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d",
-     *             "avatar": {
-     *               "image": "iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCA...",
-     *               "mimetype": "image/png"
-     *             }
+     *             "avatar_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d"
      *           }
      *         },
      *         {
@@ -80,11 +76,7 @@ class MessageController {
      *             "id": "db0916fa-934b-4981-9980-d53bed190db3",
      *             "username": "AlbertEinstein",
      *             "email": "albert.einstein@physics.com",
-     *             "avatar_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d",
-     *             "avatar": {
-     *               "image": "iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCA...",
-     *               "mimetype": "image/png"
-     *             }
+     *             "avatar_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d"
      *           }
      *         }
      *       ]
@@ -133,13 +125,15 @@ class MessageController {
 
         $order = $order !== 'asc' || $order !== 'desc' ? 'desc' : $order;
 
-        $messages = Message::query()
-            ->where('channel_id', '=', $textChannel->id)
-            ->with([
+        $messages = Message::query()->where('channel_id', '=', $textChannel->id);
+
+        if ($with_authors) {
+            $messages->with([
                 'author' => function ($query) {
                     $query->select('id', 'username', 'email', 'avatar_url');
                 }
             ]);
+        }
 
         $total = $messages->count();
 
@@ -153,22 +147,6 @@ class MessageController {
             ->limit($size)
             ->orderBy('created_at', $order)
             ->get();
-
-        if ($with_authors) {
-            foreach ($messages as $message) {
-                if (isset($message->author->avatar_url)) {
-                    $url_array = explode('/', $message->author->avatar_url);
-                    $image_id = end($url_array);
-                    $match = glob($this->container->settings['upload_dir'].'/'.$image_id);
-                    $image = file_get_contents($match[0]);
-                    $type = mime_content_type($match[0]);
-                    $message->author->avatar = [
-                        'image' => base64_encode($image),
-                        'mimetype' => $type
-                    ];
-                }
-            }
-        }
 
         return JSON::successResponse($response, 200, [
             "type" => "resources",

@@ -17,12 +17,10 @@ class UserController {
     }
 
     /**
-     * @api {get} /servers/:id/users/?image=:image Get
+     * @api {get} /servers/:id/users/ Get
      * @apiGroup Users
      *
      * @apiDescription Gets all the Users from a Server.
-     *
-     * @apiParam {Bool=false,true} [image] Whether to get the Users' Avatar or not.
      *
      * @apiHeader {String} Authorization The User's token.
      *
@@ -40,21 +38,13 @@ class UserController {
      *           "id": "db0916fa-934b-4981-9980-d53bed190db3",
      *           "username": "AlbertEinstein",
      *           "email": "albert.einstein@physics.com",
-     *           "avatar_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d",
-     *           "avatar": {
-     *             "image": "iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCA...",
-     *             "mimetype": "image/png"
-     *           }
+     *           "avatar_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d"
      *         },
      *         {
      *           "id": "db0916fa-934b-4981-9980-d53bed190db3",
      *           "username": "IsaacNewton",
      *           "email": "isaac.newton@physics.com",
-     *           "avatar_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d",
-     *           "avatar": {
-     *             "image": "iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCA...",
-     *             "mimetype": "image/png"
-     *           }
+     *           "avatar_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d"
      *         }
      *       ]
      *     }
@@ -90,7 +80,6 @@ class UserController {
     public function get(Request $request, Response $response, $args) {
         $server = $request->getAttribute('server');
         $token_owner_id = $request->getAttribute('token_owner_id');
-        $with_image = $request->getAttribute('with_image');
         $members = $server->members;
         $tokenOwnerInServer = false;
 
@@ -101,17 +90,6 @@ class UserController {
             unset($member->password);
             if ($member->id === $token_owner_id) {
                 $tokenOwnerInServer = true;
-            }
-            if (isset($member->avatar_url) && $with_image) {
-                $url_array = explode('/', $member->avatar_url);
-                $image_id = end($url_array);
-                $match = glob($this->container->settings['upload_dir'].'/'.$image_id);
-                $image = file_get_contents($match[0]);
-                $type = mime_content_type($match[0]);
-                $member->avatar = [
-                    'image' => base64_encode($image),
-                    'mimetype' => $type
-                ];
             }
         }
 

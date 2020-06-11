@@ -128,25 +128,6 @@ class Checker {
         return $next($request, $response);
     }
 
-    public function withImage(Request $request, Response $response, callable $next) {
-        if (!isset($request->getQueryParams()['image'])) {
-            $request = $request->withAttribute('with_image', false);
-            return $next($request, $response);
-        }
-
-        $with_image = $request->getQueryParams()['image'];
-        $true_options = [true, 'true', 'on', 'yes', 1];
-        $false_options = [false, 'false', 'off', 'no', 0];
-
-        if (in_array($with_image, $true_options, true)) {
-            $request = $request->withAttribute('with_image', true);
-        } else if (in_array($with_image, $false_options, true)) {
-            $request = $request->withAttribute('with_image', false);
-        }
-
-        return $next($request, $response);
-    }
-
     public function withAuthors(Request $request, Response $response, callable $next) {
         if (!isset($request->getQueryParams()['authors'])) {
             $request = $request->withAttribute('with_authors', false);
@@ -154,8 +135,8 @@ class Checker {
         }
 
         $with_image = $request->getQueryParams()['authors'];
-        $true_options = [true, 'true', 'on', 'yes', 1];
-        $false_options = [false, 'false', 'off', 'no', 0];
+        $true_options = [true, 'true', 'on', 'yes', "1", 1];
+        $false_options = [false, 'false', 'off', 'no', "0", 0];
 
         if (in_array($with_image, $true_options, true)) {
             $request = $request->withAttribute('with_authors', true);

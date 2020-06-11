@@ -16,12 +16,10 @@ class ServerController {
     }
 
     /**
-     * @api {get} /servers/?image=:image Get
+     * @api {get} /servers/ Get
      * @apiGroup Servers
      *
      * @apiDescription Gets all the Servers the token Owner is a Member of.
-     *
-     * @apiParam {Bool=false,true} [image] Whether to get the Servers' Image or not.
      *
      * @apiHeader {String} Authorization The User's token.
      *
@@ -39,21 +37,13 @@ class ServerController {
      *           "id": "db0916fa-934b-4981-9980-d53bed190db3",
      *           "name": "My Super Cool Server",
      *           "image_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d",
-     *           "owner_id": "db0916fa-934b-4981-9980-d53bed190db3",
-     *           "image": {
-     *             "image": "iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCA...",
-     *             "mimetype": "image/png"
-     *           }
+     *           "owner_id": "db0916fa-934b-4981-9980-d53bed190db3"
      *         },
      *         {
      *           "id": "db0916fa-934b-4981-9980-d53bed190db3",
      *           "name": "My Other Super Cool Server",
      *           "image_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d",
-     *           "owner_id": "db0916fa-934b-4981-9980-d53bed190db3",
-     *           "image": {
-     *             "image": "iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCA...",
-     *             "mimetype": "image/png"
-     *           }
+     *           "owner_id": "db0916fa-934b-4981-9980-d53bed190db3"
      *         }
      *       ]
      *     }
@@ -70,28 +60,11 @@ class ServerController {
      */
     public function get(Request $request, Response $response, $args) {
         $token_owner_id = $request->getAttribute('token_owner_id');
-        $with_image = $request->getAttribute('with_image');
 
         $servers = User::query()
             ->where('id', '=', $token_owner_id)
             ->first()
             ->servers;
-
-        if ($with_image) {
-            foreach ($servers as $server) {
-                if (isset($server->image_url)) {
-                    $url_array = explode('/', $server->image_url);
-                    $image_id = end($url_array);
-                    $match = glob($this->container->settings['upload_dir'].'/'.$image_id);
-                    $image = file_get_contents($match[0]);
-                    $type = mime_content_type($match[0]);
-                    $server->image = [
-                        'image' => base64_encode($image),
-                        'mimetype' => $type
-                    ];
-                }
-            }
-        }
 
         return JSON::successResponse($response, 200, [
             "type" => "resources",

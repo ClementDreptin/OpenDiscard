@@ -32,14 +32,6 @@ class Validator {
         return new Validation($validator);
     }
 
-    public static function getUsersValidator() {
-        $validator = [
-            'image' => RespectValidator::boolVal()
-        ];
-
-        return new Validation($validator);
-    }
-
     // Servers validators
     public static function createServerValidator() {
         $validator = [
@@ -54,14 +46,6 @@ class Validator {
         $validator = [
             'name' => RespectValidator::optional(RespectValidator::alnum(self::ACCENTS." ".self::PUNCTUATION)),
             'avatar_url' => RespectValidator::optional(RespectValidator::startsWith('/images/'))
-        ];
-
-        return new Validation($validator);
-    }
-
-    public static function getServersValidator() {
-        $validator = [
-            'image' => RespectValidator::boolVal()
         ];
 
         return new Validation($validator);

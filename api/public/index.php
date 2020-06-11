@@ -26,10 +26,7 @@ DatabaseConnection::startEloquent(($app->getContainer())->settings['dbconf']);
 // Users Routes
 $app->get('/servers/{id}/users[/]', UserController::class.':get')
     ->add(JWT::class.':checkJWT')
-    ->add(Checker::class.':withImage')
     ->add(Checker::class.':serverExists')
-    ->add(Validator::class.':dataFormatErrorHandler')
-    ->add(Validator::getUsersValidator())
     ->add(CORS::class.':addCORSHeaders');
 
 $app->post('/users/signup[/]', UserController::class.':signUp')
@@ -51,9 +48,6 @@ $app->patch('/users/{id}[/]', UserController::class.':update')
 // Servers Routes
 $app->get('/servers[/]', ServerController::class.':get')
     ->add(JWT::class.':checkJWT')
-    ->add(Checker::class.':withImage')
-    ->add(Validator::class.':dataFormatErrorHandler')
-    ->add(Validator::getServersValidator())
     ->add(CORS::class.':addCORSHeaders');
 
 $app->post('/servers[/]', ServerController::class.':create')
