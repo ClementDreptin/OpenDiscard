@@ -28,7 +28,7 @@
         },
         methods: {
             getServers() {
-                axios.get('/servers/?image=true')
+                axios.get('/servers/')
                     .then(response => {
                         this.$store.state.servers = response.data.servers;
                         this.servers = this.$store.state.servers;

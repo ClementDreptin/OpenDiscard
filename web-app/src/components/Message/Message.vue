@@ -2,7 +2,7 @@
     <div class="message">
         <figure class="image is-48x48">
             <img class="is-rounded"
-                 :src="`data:${message.author.avatar.mimetype};base64,${message.author.avatar.image}`"
+                 :src="`${axios.defaults.baseURL}${message.author.avatar_url}`"
                  :alt="`${message.author.username}'s profile picture`">
         </figure>
         <div class="message-content">
@@ -21,6 +21,11 @@
 <script>
     export default {
         name: "Message",
+        data() {
+            return {
+                axios: axios
+            }
+        },
         props: [
             'message'
         ]

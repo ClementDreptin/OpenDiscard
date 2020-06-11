@@ -1,8 +1,8 @@
 <template>
     <figure class="image is-48x48">
         <a @click="serverClick">
-            <img v-if="server.image"
-                 :src="`data:${server.image.mimetype};base64,${server.image.image}`"
+            <img v-if="server.image_url"
+                 :src="`${axios.defaults.baseURL}${server.image_url}`"
                  :alt="`Image of the server ${server.name}`">
         </a>
     </figure>
@@ -14,6 +14,11 @@
         props: [
             'server'
         ],
+        data() {
+            return {
+                axios: axios
+            }
+        },
         methods: {
             serverClick() {
                 this.$store.state.currentServer = this.server;

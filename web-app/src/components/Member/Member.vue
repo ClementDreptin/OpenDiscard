@@ -1,9 +1,9 @@
 <template>
     <a>
-        <span v-if="member.avatar">
+        <span v-if="member.avatar_url">
             <figure class="image is-32x32">
                 <img class="is-rounded"
-                     :src="`data:${member.avatar.mimetype};base64,${member.avatar.image}`"
+                     :src="`${axios.defaults.baseURL}${member.avatar_url}`"
                      :alt="`${member.username}'s profile picture`">
             </figure>
         </span>
@@ -14,6 +14,11 @@
 <script>
     export default {
         name: "Member",
+        data() {
+            return {
+                axios: axios
+            }
+        },
         props: [
             'member'
         ]
