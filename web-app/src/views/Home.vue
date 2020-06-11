@@ -44,7 +44,7 @@
     }
 </script>
 
-<style scoped>
+<style>
     #home {
         height: 100%;
         display: flex;
@@ -90,5 +90,64 @@
 
     ::-webkit-scrollbar-thumb {
         background: rgba(32,34,37,.6);
+    }
+
+    .modal-card {
+        max-width: 80%;
+    }
+
+    .modal-card-head, .modal-card-foot {
+        border: none;
+        background-color: #2F3136;
+    }
+
+    .modal-card-body {
+        color: #dcddde;
+        background-color: #36393F;
+    }
+
+    .modal-card-title {
+        color: #dcddde;
+    }
+
+    .input {
+        background-color: #2F3136;
+        color: #dcddde;
+    }
+
+    .button {
+        background-color: transparent;
+        border: solid #dcddde 1px;
+        color: #dcddde;
+    }
+
+    .button:hover {
+        background-color: rgba(0, 0, 0, 0.3);
+        border: solid white 1px;
+        color: white;
+    }
+
+    .button.is-success {
+        background-color: transparent;
+        border: solid #3ec46d 1px;
+        color: #3ec46d;
+    }
+
+    .button.is-success:hover {
+        background-color: rgba(0, 0, 0, 0.3);
+        border: solid #52ea8c 1px;
+        color: #52ea8c;
+    }
+
+    .button.is-danger {
+        background-color: transparent;
+        border: solid #f03a5f 1px;
+        color: #f03a5f;
+    }
+
+    .button.is-danger:hover {
+        background-color: rgba(0, 0, 0, 0.3);
+        border: solid #ff5877 1px;
+        color: #ff5877;
     }
 </style>
