@@ -26,8 +26,8 @@
                                             Choose an image...
                                         </span>
                                     </span>
-                                    <span class="file-name">{{ fileName }}</span>
                                 </label>
+                                <span class="file-name">{{ fileName }}</span>
                             </div>
                         </div>
                         <div class="container">
