@@ -32,11 +32,11 @@
                 </form>
             </div>
         </div>
-        <span>
-            <a @click="showModal = true" class="add-text-channel-button">
+        <div class="add-text-channel-button">
+            <a @click="showModal = true">
                 <span>+</span>
             </a>
-        </span>
+        </div>
     </div>
 </template>
 
@@ -74,13 +74,17 @@
     }
 
     .add-text-channel-button {
+        text-align: right;
+    }
+
+    .add-text-channel-button > a {
+        display: inline;
         color: #a5a5a5;
         font-size: 1.3rem;
-        text-align: right;
         padding: 0;
     }
 
-    .add-text-channel-button > span:hover {
+    .add-text-channel-button > a:hover {
         color: white;
     }
 </style>
