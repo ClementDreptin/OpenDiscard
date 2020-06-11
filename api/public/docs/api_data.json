@@ -4,15 +4,19 @@
     "url": "/images/:id",
     "title": "Get",
     "group": "Images",
-    "description": "<p>Gets a base64 encoded Image.</p>",
+    "description": "<p>Gets an Image.</p>",
     "success": {
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"type\": \"resource\",\n  \"image\": \"iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAYAAACA...\",\n  \"mimetype\": \"image/png\"\n}",
-          "type": "json"
-        }
-      ]
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Image",
+            "optional": false,
+            "field": "image",
+            "description": "<p>The Image.</p>"
+          }
+        ]
+      }
     },
     "error": {
       "fields": {
@@ -261,7 +265,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"type\": \"resources\",\n  \"links\": {\n    \"next\": {\n      \"href\": \"/channels/db0916fa-934b-4981-9980-d53bed190db3/messages?page=2&size=2&order=desc\"\n    },\n    \"prev\": {\n      \"href\": \"/channels/db0916fa-934b-4981-9980-d53bed190db3/messages?page=1&size=2&order=desc\"\n    },\n    \"last\": {\n      \"href\": \"/channels/db0916fa-934b-4981-9980-d53bed190db3/messages?page=5&size=2&order=desc\"\n    },\n    \"first\": {\n      \"href\": \"/channels/db0916fa-934b-4981-9980-d53bed190db3/messages?page=1&size=2&order=desc\"\n    }\n  },\n  \"messages\": [\n    {\n      \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"content\": \"My Other Super Cool Message\",\n      \"created_at\": \"2020-05-28 17:07:30\",\n      \"updated_at\": \"2020-05-28 17:07:30\",\n      \"user_id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"channel_id\": \"db0916fa-934b-4981-9980-d53bed190db3\"\n      \"author\": {\n        \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n        \"username\": \"AlbertEinstein\",\n        \"email\": \"albert.einstein@physics.com\",\n        \"avatar_url\": \"/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d\",\n        \"avatar\": {\n          \"image\": \"iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCA...\",\n          \"mimetype\": \"image/png\"\n        }\n      }\n    },\n    {\n      \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"content\": \"My Super Cool Message\",\n      \"created_at\": \"2020-05-28 17:05:47\",\n      \"updated_at\": \"2020-05-28 17:05:47\",\n      \"user_id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"channel_id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"author\": {\n        \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n        \"username\": \"AlbertEinstein\",\n        \"email\": \"albert.einstein@physics.com\",\n        \"avatar_url\": \"/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d\",\n        \"avatar\": {\n          \"image\": \"iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCA...\",\n          \"mimetype\": \"image/png\"\n        }\n      }\n    }\n  ]\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"type\": \"resources\",\n  \"links\": {\n    \"next\": {\n      \"href\": \"/channels/db0916fa-934b-4981-9980-d53bed190db3/messages?page=2&size=2&order=desc\"\n    },\n    \"prev\": {\n      \"href\": \"/channels/db0916fa-934b-4981-9980-d53bed190db3/messages?page=1&size=2&order=desc\"\n    },\n    \"last\": {\n      \"href\": \"/channels/db0916fa-934b-4981-9980-d53bed190db3/messages?page=5&size=2&order=desc\"\n    },\n    \"first\": {\n      \"href\": \"/channels/db0916fa-934b-4981-9980-d53bed190db3/messages?page=1&size=2&order=desc\"\n    }\n  },\n  \"messages\": [\n    {\n      \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"content\": \"My Other Super Cool Message\",\n      \"created_at\": \"2020-05-28 17:07:30\",\n      \"updated_at\": \"2020-05-28 17:07:30\",\n      \"user_id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"channel_id\": \"db0916fa-934b-4981-9980-d53bed190db3\"\n      \"author\": {\n        \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n        \"username\": \"AlbertEinstein\",\n        \"email\": \"albert.einstein@physics.com\",\n        \"avatar_url\": \"/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d\"\n      }\n    },\n    {\n      \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"content\": \"My Super Cool Message\",\n      \"created_at\": \"2020-05-28 17:05:47\",\n      \"updated_at\": \"2020-05-28 17:05:47\",\n      \"user_id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"channel_id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"author\": {\n        \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n        \"username\": \"AlbertEinstein\",\n        \"email\": \"albert.einstein@physics.com\",\n        \"avatar_url\": \"/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d\"\n      }\n    }\n  ]\n}",
           "type": "json"
         }
       ]
@@ -722,27 +726,10 @@
   },
   {
     "type": "get",
-    "url": "/servers/?image=:image",
+    "url": "/servers/",
     "title": "Get",
     "group": "Servers",
     "description": "<p>Gets all the Servers the token Owner is a Member of.</p>",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "Bool",
-            "allowedValues": [
-              "false",
-              "true"
-            ],
-            "optional": true,
-            "field": "image",
-            "description": "<p>Whether to get the Servers' Image or not.</p>"
-          }
-        ]
-      }
-    },
     "header": {
       "fields": {
         "Header": [
@@ -767,7 +754,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"type\": \"resources\",\n  \"servers\": [\n    {\n      \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"name\": \"My Super Cool Server\",\n      \"image_url\": \"/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d\",\n      \"owner_id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"image\": {\n        \"image\": \"iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCA...\",\n        \"mimetype\": \"image/png\"\n      }\n    },\n    {\n      \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"name\": \"My Other Super Cool Server\",\n      \"image_url\": \"/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d\",\n      \"owner_id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"image\": {\n        \"image\": \"iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCA...\",\n        \"mimetype\": \"image/png\"\n      }\n    }\n  ]\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"type\": \"resources\",\n  \"servers\": [\n    {\n      \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"name\": \"My Super Cool Server\",\n      \"image_url\": \"/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d\",\n      \"owner_id\": \"db0916fa-934b-4981-9980-d53bed190db3\"\n    },\n    {\n      \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"name\": \"My Other Super Cool Server\",\n      \"image_url\": \"/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d\",\n      \"owner_id\": \"db0916fa-934b-4981-9980-d53bed190db3\"\n    }\n  ]\n}",
           "type": "json"
         }
       ]
@@ -794,7 +781,7 @@
     "version": "0.0.0",
     "filename": "src/control/ServerController.php",
     "groupTitle": "Servers",
-    "name": "GetServersImageImage"
+    "name": "GetServers"
   },
   {
     "type": "patch",
@@ -1448,27 +1435,10 @@
   },
   {
     "type": "get",
-    "url": "/servers/:id/users/?image=:image",
+    "url": "/servers/:id/users/",
     "title": "Get",
     "group": "Users",
     "description": "<p>Gets all the Users from a Server.</p>",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "Bool",
-            "allowedValues": [
-              "false",
-              "true"
-            ],
-            "optional": true,
-            "field": "image",
-            "description": "<p>Whether to get the Users' Avatar or not.</p>"
-          }
-        ]
-      }
-    },
     "header": {
       "fields": {
         "Header": [
@@ -1493,7 +1463,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"type\": \"resources\",\n  \"members\": [\n    {\n      \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"username\": \"AlbertEinstein\",\n      \"email\": \"albert.einstein@physics.com\",\n      \"avatar_url\": \"/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d\",\n      \"avatar\": {\n        \"image\": \"iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCA...\",\n        \"mimetype\": \"image/png\"\n      }\n    },\n    {\n      \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"username\": \"IsaacNewton\",\n      \"email\": \"isaac.newton@physics.com\",\n      \"avatar_url\": \"/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d\",\n      \"avatar\": {\n        \"image\": \"iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCA...\",\n        \"mimetype\": \"image/png\"\n      }\n    }\n  ]\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"type\": \"resources\",\n  \"members\": [\n    {\n      \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"username\": \"AlbertEinstein\",\n      \"email\": \"albert.einstein@physics.com\",\n      \"avatar_url\": \"/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d\"\n    },\n    {\n      \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"username\": \"IsaacNewton\",\n      \"email\": \"isaac.newton@physics.com\",\n      \"avatar_url\": \"/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d\"\n    }\n  ]\n}",
           "type": "json"
         }
       ]
@@ -1542,7 +1512,7 @@
     "version": "0.0.0",
     "filename": "src/control/UserController.php",
     "groupTitle": "Users",
-    "name": "GetServersIdUsersImageImage"
+    "name": "GetServersIdUsers"
   },
   {
     "type": "patch",
