@@ -5,13 +5,13 @@
         <div class="container" id="signin-form">
             <div class="field">
                 <div class="control">
-                    <input class="input is-rounded" type="text" v-on:keyup.enter="signIn" v-model="email" placeholder="E-mail">
+                    <input class="input is-rounded" type="text" @keyup.enter="signIn" @keypress="fail = null" v-model="email" placeholder="E-mail">
                 </div>
             </div>
 
             <div class="field">
                 <div class="control">
-                    <input class="input is-rounded" type="password" v-on:keyup.enter="signIn" v-model="password" placeholder="Password">
+                    <input class="input is-rounded" type="password" @keyup.enter="signIn" @keypress="fail = null" v-model="password" placeholder="Password">
                 </div>
             </div>
 
