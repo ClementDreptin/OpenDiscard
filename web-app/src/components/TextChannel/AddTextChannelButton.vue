@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="add-text-channel-button">
-            <a @click="showModal = true">
+            <a @click="showModal = true;textChannelName = ''">
                 <span>+</span>
             </a>
         </div>
