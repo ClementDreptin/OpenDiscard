@@ -22,7 +22,23 @@
         name: "DeleteTextChannelModal",
         methods: {
             deleteTextChannel() {
-                console.log(this.$parent.showConfirmDeleteModal);
+                axios.delete(`/channels/${this.$parent.textChannelLocal.id}`)
+                    .then(response => {
+                        let textChannels = this.$store.state.currentServer.textChannels;
+                        let currentTextChannel = this.$store.state.currentTextChannel;
+                        let index = textChannels.findIndex(tc => tc.id === response.data.text_channel.id);
+
+                        textChannels.splice(index, 1);
+
+                        if (currentTextChannel.id === response.data.text_channel.id) {
+                            currentTextChannel = null;
+                            this.$bus.$emit('currentTextChannelWasDeleted');
+                        }
+
+                        this.$parent.showConfirmDeleteModal = false;
+                        this.$parent.showModal = false;
+                    })
+                    .catch(err => console.log(err.response.data.message));
             }
         }
     }
