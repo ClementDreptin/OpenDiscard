@@ -11,7 +11,7 @@
                     <section class="modal-card-body">
                         <div class="field">
                             <p class="control">
-                                <input @keypress="fail = null" class="input" type="text" v-model="newTextChannelName" placeholder="Name">
+                                <input @keypress="fail = null" class="input" type="text" v-model="textChannelLocal.name" placeholder="Name">
                             </p>
                         </div>
                         <button @click="showConfirmDeleteModal = true" class="button is-danger is-pulled-right">
@@ -55,15 +55,33 @@
         ],
         data() {
             return {
+                textChannelLocal: JSON.parse(JSON.stringify(this.textChannel)), // Deep clone of the prop
                 showModal: false,
                 showConfirmDeleteModal: false,
-                newTextChannelName: this.textChannel.name,
                 fail: null
             }
         },
         methods: {
             updateTextChannel() {
+                const params = {
+                    name: this.textChannelLocal.name
+                }
 
+                axios.patch(`/channels/${this.textChannelLocal.id}`, params)
+                    .then(response => {
+                        let textChannels = this.$store.state.currentServer.textChannels;
+                        let currentTextChannel = this.$store.state.currentTextChannel;
+                        let index = textChannels.findIndex(tc => tc.id === response.data.text_channel.id);
+
+                        textChannels[index].name = response.data.text_channel.name;
+
+                        if (currentTextChannel.id === response.data.text_channel.id) {
+                            currentTextChannel.name = response.data.text_channel.name;
+                        }
+
+                        this.showModal = false;
+                    })
+                    .catch(err => console.log(err.response.data.message));
             }
         }
     }
