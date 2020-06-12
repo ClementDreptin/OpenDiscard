@@ -34,6 +34,10 @@
             this.$bus.$on('currentServerChanged', () => {
                 this.messages = [];
             });
+
+            this.$bus.$on('currentTextChannelWasDeleted', () => {
+                this.messages = [];
+            });
         }
     }
 </script>
