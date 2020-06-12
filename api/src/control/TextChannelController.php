@@ -313,7 +313,7 @@ class TextChannelController {
 
             return JSON::successResponse($response, 200, [
                 "type" => "resource",
-                "user" => $textChannel
+                "text_channel" => $textChannel
             ]);
         } catch (\Exception $exception) {
             return JSON::errorResponse($response, 500, "The Text Channel failed to delete.");
