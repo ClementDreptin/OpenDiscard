@@ -5,35 +5,35 @@
         <div class="container" id="signup-form">
             <div class="field">
                 <div class="control">
-                    <input class="input is-primary is-rounded" type="text" v-model="username" placeholder="Username">
+                    <input class="input is-rounded" type="text" v-model="username" placeholder="Username">
                 </div>
             </div>
 
             <div class="field">
                 <div class="control">
-                    <input class="input is-primary is-rounded" type="text" v-model="email" placeholder="E-mail address">
+                    <input class="input is-rounded" type="text" v-model="email" placeholder="E-mail address">
                 </div>
             </div>
 
             <div class="field">
                 <div class="control">
-                    <input class="input is-primary is-rounded" type="password" v-model="password" placeholder="Password">
+                    <input class="input is-rounded" type="password" v-model="password" placeholder="Password">
                 </div>
             </div>
 
             <div class="field">
                 <div class="control">
-                    <input class="input is-primary is-rounded" type="password" v-model="passwordVerify" placeholder="Confirm password">
+                    <input class="input is-rounded" type="password" v-model="passwordVerify" placeholder="Confirm password">
                 </div>
             </div>
 
             <div class="field is-grouped">
                 <div class="control">
-                    <button class="button is-link is-rounded is-light" @click="signUp">Sign Up</button>
+                    <button class="button is-link is-rounded" @click="signUp">Sign Up</button>
                 </div>
 
                 <div class="control">
-                    <span><router-link class="button is-info is-light is-rounded" to="signIn">Already have an account? Sign In!</router-link></span>
+                    <span><router-link class="button is-link is-rounded" to="signIn">Already have an account? Sign In!</router-link></span>
                 </div>
             </div>
         </div>
@@ -91,9 +91,15 @@
 </script>
 
 <style scoped>
+    h1 {
+        color: #dcddde;
+    }
+
     #signup {
-        margin: auto;
-        width: 80%;
+        background-color: #272727;
+        padding-left: 10%;
+        padding-right: 10%;
+        height: 100vh;
     }
 
     #signup-form {
