@@ -1,7 +1,9 @@
 <template>
     <figure class="image">
+        <span v-show="isActive"></span>
         <a @click="serverClick">
             <img v-if="server.image_url"
+                 :class="{active: isActive}"
                  :src="`${axios.defaults.baseURL}${server.image_url}`"
                  :alt="`Image of the server ${server.name}`">
         </a>
@@ -16,12 +18,17 @@
         ],
         data() {
             return {
-                axios: axios
+                axios: axios,
+                isActive: false
             }
         },
         methods: {
             serverClick() {
                 this.$store.state.currentServer = this.server;
+                this.$parent.$children.forEach(child => {
+                    if (child.isActive === true) child.isActive = false;
+                });
+                this.isActive = !this.isActive;
                 this.$bus.$emit('currentServerChanged');
             }
         }
@@ -55,5 +62,20 @@
 
     figure {
         display: inline-block;
+    }
+
+    .active {
+        border-radius: 10px;
+    }
+
+    span {
+        position: absolute;
+        display: block;
+        width: 8px;
+        height: 40px;
+        border-radius: 0 4px 4px 0;
+        margin-left: -15px;
+        margin-top: 4px;
+        background-color: #dcddde;
     }
 </style>
