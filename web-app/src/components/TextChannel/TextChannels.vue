@@ -1,7 +1,10 @@
 <template>
-    <aside class="menu">
+    <aside class="menu" v-if="$store.state.currentServer">
+        <header>
+            <h6 class="title is-6">{{ $store.state.currentServer.name }}</h6>
+        </header>
         <ul class="menu-list">
-            <li v-if="$store.state.currentServer">
+            <li>
                 <AddTextChannelButton/>
             </li>
             <li v-for="textChannel in textChannels">
@@ -28,19 +31,15 @@
         },
         methods: {
             getTextChannels() {
-                if (!this.$store.state.currentServer.textChannels) {
-                    axios.get(`/servers/${this.$store.state.currentServer.id}/channels/`)
-                        .then(response => {
-                            this.$store.state.currentServer.textChannels = response.data.text_channels;
-                            this.textChannels = this.$store.state.currentServer.textChannels;
-                            if (this.textChannels.length !== 0) {
-                                this.$store.state.currentTextChannel = this.textChannels[0];
-                                this.$bus.$emit('currentTextChannelChanged');
-                            }
-                        }).catch(err => console.log(err.response.data.message));
-                } else {
-                    this.textChannels = this.$store.state.currentServer.textChannels;
-                }
+                axios.get(`/servers/${this.$store.state.currentServer.id}/channels/`)
+                    .then(response => {
+                        this.$store.state.currentServer.textChannels = response.data.text_channels;
+                        this.textChannels = this.$store.state.currentServer.textChannels;
+                        if (this.textChannels.length !== 0) {
+                            this.$store.state.currentTextChannel = this.textChannels[0];
+                            this.$bus.$emit('currentTextChannelChanged');
+                        }
+                    }).catch(err => console.log(err.response.data.message));
             }
         },
         mounted() {
@@ -58,5 +57,15 @@
 <style scoped>
     aside {
         margin-bottom: 2em;
+    }
+
+    h6 {
+        color: #dcddde;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        padding-bottom: 1.25rem;
+        padding-top: 0.5rem;
+        border-bottom: solid 2px #272727;
     }
 </style>
