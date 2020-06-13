@@ -9,6 +9,12 @@ window.axios = axios.create({
     baseURL: 'http://api.opendiscard.local:19180'
 });
 
+document.addEventListener('contextmenu', event => {
+    if (event.target.tagName.toLowerCase() !== "input") {
+        event.preventDefault();
+    }
+});
+
 Vue.config.productionTip = false;
 
 // Bus for global events
