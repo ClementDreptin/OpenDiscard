@@ -27,7 +27,7 @@
                                         </span>
                                     </span>
                                 </label>
-                                <span class="file-name">{{ fileName }}</span>
+                                <span v-show="fileName" class="file-name">{{ fileName }}</span>
                             </div>
                         </div>
                         <div class="container">
@@ -145,5 +145,10 @@
         -o-transition: all .3s;
         -webkit-transition: all .3s;
         transition: all .3s;
+    }
+
+    .file-name {
+        margin-left: 0.5em;
+        border-width: 1px;
     }
 </style>
