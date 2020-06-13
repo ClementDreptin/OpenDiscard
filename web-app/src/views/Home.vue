@@ -182,4 +182,16 @@
     .input:focus {
         border: solid #5090f8 1px;
     }
+
+    .file-label .file-cta {
+        background-color: transparent;
+        border: solid #3273dc 1px;
+        color: #3273dc;
+    }
+
+    .file-label:hover .file-cta {
+        background-color: rgba(0, 0, 0, 0.3);
+        border: solid #5090f8 1px;
+        color: #5090f8;
+    }
 </style>
