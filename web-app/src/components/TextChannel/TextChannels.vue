@@ -44,6 +44,10 @@
                 this.getTextChannels();
             });
 
+            this.$bus.$on('currentServerWasDeleted', () => {
+                this.textChannels = [];
+            });
+
             this.$bus.$on('textChannelAdded', () => {
                 this.getTextChannels();
             });
