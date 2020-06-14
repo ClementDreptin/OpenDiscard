@@ -15,9 +15,9 @@
                             </p>
                         </div>
                         <button @click="showConfirmDeleteModal = true" class="button is-danger is-pulled-right">
-                            Delete this text channel
+                            Delete this Text Channel
                         </button>
-                        <DeleteTextChannelModal/>
+                        <ConfirmDeleteModal element="Text Channel" :deleteFunction="deleteTextChannel"/>
                         <div class="container">
                             <article class="message is-danger" v-show="fail">
                                 <div class="message-header">
@@ -43,12 +43,12 @@
 </template>
 
 <script>
-    import DeleteTextChannelModal from "./DeleteTextChannelModal";
+    import ConfirmDeleteModal from "../General/ConfirmDeleteModal";
 
     export default {
         name: "TextChannelSettings",
         components: {
-            DeleteTextChannelModal
+            ConfirmDeleteModal
         },
         props: [
             'textChannel'
@@ -83,6 +83,26 @@
                             currentTextChannel.name = response.data.text_channel.name;
                         }
 
+                        this.showModal = false;
+                    })
+                    .catch(err => console.log(err.response.data.message));
+            },
+
+            deleteTextChannel() {
+                axios.delete(`/channels/${this.textChannelLocal.id}`)
+                    .then(response => {
+                        let textChannels = this.$store.state.currentServer.textChannels;
+                        let currentTextChannel = this.$store.state.currentTextChannel;
+                        let index = textChannels.findIndex(tc => tc.id === response.data.text_channel.id);
+
+                        textChannels.splice(index, 1);
+
+                        if (currentTextChannel.id === response.data.text_channel.id) {
+                            currentTextChannel = null;
+                            this.$bus.$emit('currentTextChannelWasDeleted');
+                        }
+
+                        this.showConfirmDeleteModal = false;
                         this.showModal = false;
                     })
                     .catch(err => console.log(err.response.data.message));
