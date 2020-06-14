@@ -293,7 +293,7 @@ class ServerController {
 
             return JSON::successResponse($response, 200, [
                 "type" => "resource",
-                "user" => $server
+                "server" => $server
             ]);
         } catch (\Exception $exception) {
             return JSON::errorResponse($response, 500, "The Server failed to delete.");
