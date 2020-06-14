@@ -49,7 +49,7 @@
             </div>
         </div>
         <figure class="image is-48x48">
-            <a @click="showModal = true">
+            <a @click="showModal = true;serverName = ''">
                 <div class="plus-sign">
                     <svg width="24" height="24" viewBox="0 0 24 24">
                         <path fill="currentColor" d="M21 11.001H13V3.00098H11V11.001H3V13.001H11V21.001H13V13.001H21V11.001Z"></path>

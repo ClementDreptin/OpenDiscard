@@ -36,7 +36,7 @@
                 </form>
             </div>
         </div>
-        <a @click="showModal = true">
+        <a @click="showModal = true;resetTextChannelName()">
             <i class="fa fa-cog"></i>
         </a>
     </div>
@@ -62,6 +62,10 @@
             }
         },
         methods: {
+            resetTextChannelName() {
+                this.textChannelLocal = JSON.parse(JSON.stringify(this.textChannel));
+            },
+
             updateTextChannel() {
                 const params = {
                     name: this.textChannelLocal.name
