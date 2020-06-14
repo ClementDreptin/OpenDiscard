@@ -5,6 +5,7 @@
         </div>
         <div class="columns column">
             <div id="text-channels" class="column is-2">
+                <ServerHeader v-if="$store.state.currentServer"/>
                 <TextChannels/>
             </div>
             <div id="messages" class="column is-8">
@@ -19,6 +20,7 @@
 
 <script>
     import ServersBar from "../components/Server/ServersBar";
+    import ServerHeader from "../components/Server/ServerHeader";
     import TextChannels from "../components/TextChannel/TextChannels";
     import Members from "../components/Member/Members";
     import Messages from "../components/Message/Messages";
@@ -26,8 +28,9 @@
     export default {
         name: 'Home',
         components: {
-            TextChannels,
             ServersBar,
+            ServerHeader,
+            TextChannels,
             Members,
             Messages
         },

@@ -1,8 +1,5 @@
 <template>
     <aside class="menu" v-if="$store.state.currentServer">
-        <header>
-            <h6 class="title is-6">{{ $store.state.currentServer.name }}</h6>
-        </header>
         <ul class="menu-list">
             <li>
                 <AddTextChannelButton/>
@@ -57,15 +54,5 @@
 <style scoped>
     aside {
         margin-bottom: 2em;
-    }
-
-    h6 {
-        color: #dcddde;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        padding-bottom: 1.25rem;
-        padding-top: 0.5rem;
-        border-bottom: solid 2px #272727;
     }
 </style>
