@@ -218,7 +218,7 @@ class ServerController {
 
             return JSON::successResponse($response, 200, [
                 "type" => "resource",
-                "user" => $server
+                "server" => $server
             ]);
         } catch (\Throwable $exception) {
             return JSON::errorResponse($response, 500, "The Server update failed.");
