@@ -30,6 +30,10 @@
                                 <span v-show="fileName" class="file-name">{{ fileName }}</span>
                             </div>
                         </div>
+                        <button @click="showConfirmDeleteModal = true" class="button is-danger is-pulled-right">
+                            Delete this Server
+                        </button>
+                        <ConfirmDeleteModal element="Server" :deleteFunction="deleteServer"/>
                         <div class="container">
                             <article class="message is-danger" v-show="fail">
                                 <div class="message-header">
@@ -58,11 +62,17 @@
 </template>
 
 <script>
+    import ConfirmDeleteModal from "../General/ConfirmDeleteModal";
+
     export default {
         name: "ServerHeader",
+        components: {
+            ConfirmDeleteModal
+        },
         data() {
             return  {
                 showModal: false,
+                showConfirmDeleteModal: false,
                 fail: null,
                 serverLocal: JSON.parse(JSON.stringify(this.$store.state.currentServer)), // Deep clone of the current server
                 fileName: "",
@@ -106,6 +116,33 @@
                     .then(response => {
                         this.$store.state.currentServer.name = response.data.server.name;
                         this.$store.state.currentServer.image_url = response.data.server.image_url;
+                        this.showModal = false;
+                    })
+                    .catch(err => console.log(err.response.data.message));
+            },
+
+            deleteServer() {
+                axios.delete(`/servers/${this.serverLocal.id}`)
+                    .then(response => {
+                        let servers = this.$store.state.servers;
+                        let currentServer = this.$store.state.currentServer;
+                        let currentTextChannel = this.$store.state.currentTextChannel;
+                        let index = servers.findIndex(tc => tc.id === response.data.server.id);
+
+                        servers.splice(index, 1);
+
+                        // TODO: Remove the headers
+
+                        if (currentServer.id === response.data.server.id) {
+                            currentServer = null;
+                            this.$bus.$emit('currentServerWasDeleted');
+                            if (currentTextChannel.server_id === response.data.server.id) {
+                                currentTextChannel = null;
+                                this.$bus.$emit('currentTextChannelWasDeleted');
+                            }
+                        }
+
+                        this.showConfirmDeleteModal = false;
                         this.showModal = false;
                     })
                     .catch(err => console.log(err.response.data.message));
