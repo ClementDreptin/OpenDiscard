@@ -3,7 +3,7 @@
         <div class="modal-background"></div>
         <div class="modal-card">
             <header class="modal-card-head">
-                <p class="modal-card-title">Delete Text Channel</p>
+                <p class="modal-card-title">Delete {{ element }}</p>
                 <button @click="$parent.showConfirmDeleteModal = false" class="delete"></button>
             </header>
             <section class="modal-card-body">
