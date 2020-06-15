@@ -35,6 +35,9 @@
                         if (this.textChannels.length !== 0) {
                             this.$store.state.currentTextChannel = this.textChannels[0];
                             this.$bus.$emit('currentTextChannelChanged');
+                        } else {
+                            this.$store.state.currentTextChannel = null;
+                            this.$bus.$emit('currentTextChannelWasDeleted');
                         }
                     }).catch(err => console.log(err.response.data.message));
             }

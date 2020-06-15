@@ -134,7 +134,7 @@
                         if (currentServer.id === response.data.server.id) {
                             this.$store.state.currentServer = null;
                             this.$bus.$emit('currentServerWasDeleted');
-                            if (currentTextChannel.server_id === response.data.server.id) {
+                            if (currentTextChannel && currentTextChannel.server_id === response.data.server.id) {
                                 this.$store.state.currentTextChannel = null;
                                 this.$bus.$emit('currentTextChannelWasDeleted');
                             }
@@ -143,7 +143,7 @@
                         this.showConfirmDeleteModal = false;
                         this.showModal = false;
                     })
-                    .catch(err => console.log(err.response.data.message));
+                    .catch(err => console.log(err));
             }
         }
     }
