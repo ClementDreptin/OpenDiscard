@@ -38,7 +38,7 @@ class JWT {
                 return JSON::errorResponse($response, 401, "Token expired.");
 
             } catch (SignatureInvalidException $e) {
-                return JSON::errorResponse($response, 401, "Invalid signature.");
+                return JSON::errorResponse($response, 401, "Invalid signature in the token.");
 
             } catch (BeforeValidException $e) {
                 return JSON::errorResponse($response, 401, "Token not valid yet.");
