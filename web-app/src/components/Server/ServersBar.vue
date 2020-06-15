@@ -14,6 +14,7 @@
 <script>
     import Server from "./Server";
     import AddServerButton from "./AddServerButton";
+    import errorHandler from "../../modules/Errors";
 
     export default {
         name: "ServersBar",
@@ -33,7 +34,7 @@
                         this.$store.state.servers = response.data.servers;
                         this.servers = this.$store.state.servers;
                     })
-                    .catch(err => console.log(err.response.data.message));
+                    .catch(err => errorHandler(err, this));
             },
         },
         mounted() {

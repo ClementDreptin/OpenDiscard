@@ -44,6 +44,7 @@
 
 <script>
     import ConfirmDeleteModal from "../General/ConfirmDeleteModal";
+    import errorHandler from "../../modules/Errors";
 
     export default {
         name: "TextChannelSettings",
@@ -85,7 +86,7 @@
 
                         this.showModal = false;
                     })
-                    .catch(err => console.log(err.response.data.message));
+                    .catch(err => errorHandler(err, this));
             },
 
             deleteTextChannel() {
@@ -105,7 +106,7 @@
                         this.showConfirmDeleteModal = false;
                         this.showModal = false;
                     })
-                    .catch(err => console.log(err.response.data.message));
+                    .catch(err => errorHandler(err, this));
             }
         }
     }

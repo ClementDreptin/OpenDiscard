@@ -53,6 +53,8 @@
 </template>
 
 <script>
+    import errorHandler from "../modules/Errors";
+
     export default {
         name: "SignUp",
         data() {
@@ -79,9 +81,7 @@
                             this.fail = false;
                             this.$store.commit('signIn', response.data.user);
                             this.$router.push('/');
-                        }).catch(err => {
-                            this.fail = err.response.data.message
-                    })
+                        }).catch(err => errorHandler(err, this));
                 } else {
                     this.fail = "Passwords are not identical.";
                 }

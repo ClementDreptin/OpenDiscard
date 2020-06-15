@@ -41,6 +41,7 @@
 
 <script>
     import Home from "./Home";
+    import errorHandler from "../modules/Errors";
 
     export default {
         name: "SignIn",
@@ -66,7 +67,7 @@
                     this.$store.state.user = response.data.user;
 
                     this.$router.push('/');
-                }).catch(err => this.fail = err.response.data.message);
+                }).catch(err => errorHandler(err, this));
             }
         }
     }

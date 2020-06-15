@@ -41,6 +41,8 @@
 </template>
 
 <script>
+    import errorHandler from "../../modules/Errors";
+
     export default {
         name: "AddTextChannelButton",
         data() {
@@ -61,7 +63,7 @@
                     this.$bus.$emit('textChannelAdded');
                     this.showModal = false;
                     this.textChannelName = "";
-                }).catch(err => console.log(err.response.data.message));
+                }).catch(err => errorHandler(err, this));
             }
         }
     }

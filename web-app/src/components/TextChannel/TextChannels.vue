@@ -14,6 +14,7 @@
 <script>
     import TextChannel from "./TextChannel";
     import AddTextChannelButton from "./AddTextChannelButton";
+    import errorHandler from "../../modules/Errors";
 
     export default {
         name: "TextChannels",
@@ -39,7 +40,7 @@
                             this.$store.state.currentTextChannel = null;
                             this.$bus.$emit('currentTextChannelWasDeleted');
                         }
-                    }).catch(err => console.log(err.response.data.message));
+                    }).catch(err => errorHandler(err, this));
             }
         },
         mounted() {

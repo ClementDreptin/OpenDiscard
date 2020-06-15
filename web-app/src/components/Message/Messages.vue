@@ -6,6 +6,7 @@
 
 <script>
     import Message from "./Message";
+    import errorHandler from "../../modules/Errors";
 
     export default {
         name: "Messages",
@@ -23,7 +24,7 @@
                     .then(response => {
                         this.$store.state.currentTextChannel.messages = response.data.messages;
                         this.messages = this.$store.state.currentTextChannel.messages;
-                    }).catch(err => console.log(err.response.data.message));
+                    }).catch(err => errorHandler(err, this));
             }
         },
         mounted() {

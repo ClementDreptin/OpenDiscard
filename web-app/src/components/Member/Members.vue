@@ -10,6 +10,7 @@
 
 <script>
     import Member from "./Member";
+    import errorHandler from "../../modules/Errors";
 
     export default {
         name: "Members",
@@ -28,7 +29,7 @@
                         .then(response => {
                             this.$store.state.currentServer.members = response.data.members;
                             this.members = this.$store.state.currentServer.members;
-                        }).catch(err => console.log(err.response.data.message));
+                        }).catch(err => errorHandler(err, this));
                 } else {
                     this.members = this.$store.state.currentServer.members;
                 }

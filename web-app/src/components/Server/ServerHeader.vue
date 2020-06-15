@@ -63,6 +63,7 @@
 
 <script>
     import ConfirmDeleteModal from "../General/ConfirmDeleteModal";
+    import errorHandler from "../../modules/Errors";
 
     export default {
         name: "ServerHeader",
@@ -102,7 +103,7 @@
                 if (this.fileData) {
                     axios.post('/images/', {image: this.fileData})
                         .then(response => this.updateServerApi(response.data.url))
-                        .catch(err => console.log(err.response.data.message))
+                        .catch(err => errorHandler(err, this))
                 } else {
                     this.updateServerApi();
                 }
@@ -118,7 +119,7 @@
                         this.$store.state.currentServer.image_url = response.data.server.image_url;
                         this.showModal = false;
                     })
-                    .catch(err => console.log(err.response.data.message));
+                    .catch(err => errorHandler(err, this));
             },
 
             deleteServer() {
@@ -143,7 +144,7 @@
                         this.showConfirmDeleteModal = false;
                         this.showModal = false;
                     })
-                    .catch(err => console.log(err));
+                    .catch(err => errorHandler(err, this));
             }
         }
     }

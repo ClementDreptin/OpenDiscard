@@ -61,6 +61,8 @@
 </template>
 
 <script>
+    import errorHandler from "../../modules/Errors";
+
     export default {
         name: "AddServerButton",
         data() {
@@ -79,7 +81,7 @@
                 if (this.fileData) {
                     axios.post('/images/', {image: this.fileData})
                         .then(response => this.createServerApi(response.data.url))
-                        .catch(err => console.log(err.response.data.message))
+                        .catch(err => errorHandler(err, this))
                 } else {
                     this.createServerApi();
                 }
@@ -94,7 +96,7 @@
                         this.$bus.$emit('serverAdded');
                         this.showModal = false;
                     })
-                    .catch(err => console.log(err.response.data.message));
+                    .catch(err => errorHandler(err, this));
             },
 
             encodeImage() {
