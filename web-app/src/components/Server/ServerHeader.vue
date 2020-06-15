@@ -131,13 +131,11 @@
 
                         servers.splice(index, 1);
 
-                        // TODO: Remove the headers
-
                         if (currentServer.id === response.data.server.id) {
-                            currentServer = null;
+                            this.$store.state.currentServer = null;
                             this.$bus.$emit('currentServerWasDeleted');
                             if (currentTextChannel.server_id === response.data.server.id) {
-                                currentTextChannel = null;
+                                this.$store.state.currentTextChannel = null;
                                 this.$bus.$emit('currentTextChannelWasDeleted');
                             }
                         }

@@ -98,7 +98,7 @@
                         textChannels.splice(index, 1);
 
                         if (currentTextChannel.id === response.data.text_channel.id) {
-                            currentTextChannel = null;
+                            this.$store.state.currentTextChannel = null;
                             this.$bus.$emit('currentTextChannelWasDeleted');
                         }
 
