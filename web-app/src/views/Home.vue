@@ -9,6 +9,7 @@
                 <TextChannels/>
             </div>
             <div id="messages" class="column is-8">
+                <TextChannelHeader v-if="$store.state.currentTextChannel"/>
                 <Messages/>
             </div>
             <div id="members" class="column is-2">
@@ -22,6 +23,7 @@
     import ServersBar from "../components/Server/ServersBar";
     import ServerHeader from "../components/Server/ServerHeader";
     import TextChannels from "../components/TextChannel/TextChannels";
+    import TextChannelHeader from "../components/TextChannel/TextChannelHeader";
     import Members from "../components/Member/Members";
     import Messages from "../components/Message/Messages";
 
@@ -31,6 +33,7 @@
             ServersBar,
             ServerHeader,
             TextChannels,
+            TextChannelHeader,
             Members,
             Messages
         },
