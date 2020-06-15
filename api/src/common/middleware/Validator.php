@@ -104,9 +104,11 @@ class Validator {
                 foreach ($field_errors as $field_error) {
                     $field_errors_string .= "$field_error, ";
                 }
-                $error_string .= "$field: $field_errors_string | ";
+                $field_errors_string = substr($field_errors_string, 0, -2);
+                $field_errors_string .= ". ";
+
+                $error_string .= "$field: $field_errors_string";
             }
-            $error_string = substr($error_string, 0, -3);
 
             return JSON::errorResponse($response, 400, "Incorrect format in parameters. Details: $error_string");
         } else {
