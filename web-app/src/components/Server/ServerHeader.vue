@@ -19,16 +19,7 @@
                             Delete this Server
                         </button>
                         <ConfirmDeleteModal element="Server" :deleteFunction="deleteServer"/>
-                        <div class="container">
-                            <article class="message is-danger" v-show="fail">
-                                <div class="message-header">
-                                    <p>Error</p>
-                                </div>
-                                <div class="message-body">
-                                    {{ fail }}
-                                </div>
-                            </article>
-                        </div>
+                        <ErrorBox/>
                     </section>
                     <footer class="modal-card-foot">
                         <button @click="updateServer" class="button is-success">Update</button>
@@ -49,13 +40,15 @@
 <script>
     import ConfirmDeleteModal from "../General/ConfirmDeleteModal";
     import InputFile from "../General/InputFile";
+    import ErrorBox from "../General/ErrorBox";
     import errorHandler from "../../modules/Errors";
 
     export default {
         name: "ServerHeader",
         components: {
             ConfirmDeleteModal,
-            InputFile
+            InputFile,
+            ErrorBox
         },
         data() {
             return  {

@@ -25,33 +25,25 @@
             </div>
         </div>
 
-        <!-- Error message that appears when the user provides an incorrect e-mail address or password -->
-        <div class="container" id="signin-message">
-            <article class="message is-danger" v-show="fail">
-                <div class="message-header">
-                    <p>Error</p>
-                </div>
-                <div class="message-body">
-                    {{ fail }}
-                </div>
-            </article>
-        </div>
+        <ErrorBox id="signin-message"/>
     </div>
 </template>
 
 <script>
     import Home from "./Home";
+    import ErrorBox from "../components/General/ErrorBox";
     import errorHandler from "../modules/Errors";
 
     export default {
         name: "SignIn",
         components: {
-            Home
+            Home,
+            ErrorBox
         },
         data() {
             return {
                 email: "isaac.newton@physics.com",
-                password: "",
+                password: "physics",
                 fail: false
             }
         },

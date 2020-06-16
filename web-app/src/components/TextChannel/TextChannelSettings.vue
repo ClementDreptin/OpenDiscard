@@ -18,16 +18,7 @@
                             Delete this Text Channel
                         </button>
                         <ConfirmDeleteModal element="Text Channel" :deleteFunction="deleteTextChannel"/>
-                        <div class="container">
-                            <article class="message is-danger" v-show="fail">
-                                <div class="message-header">
-                                    <p>Error</p>
-                                </div>
-                                <div class="message-body">
-                                    {{ fail }}
-                                </div>
-                            </article>
-                        </div>
+                        <ErrorBox/>
                     </section>
                     <footer class="modal-card-foot">
                         <button @click="updateTextChannel" class="button is-success">Update</button>
@@ -44,12 +35,14 @@
 
 <script>
     import ConfirmDeleteModal from "../General/ConfirmDeleteModal";
+    import ErrorBox from "../General/ErrorBox";
     import errorHandler from "../../modules/Errors";
 
     export default {
         name: "TextChannelSettings",
         components: {
-            ConfirmDeleteModal
+            ConfirmDeleteModal,
+            ErrorBox
         },
         props: [
             'textChannel'
@@ -68,6 +61,8 @@
             },
 
             updateTextChannel() {
+                if (this.textChannelLocal.name === "") return this.fail = "You must give the text channel a name!";
+
                 const params = {
                     name: this.textChannelLocal.name
                 }

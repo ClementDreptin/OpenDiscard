@@ -15,16 +15,7 @@
                             </p>
                         </div>
                         <InputFile/>
-                        <div class="container">
-                            <article class="message is-danger" v-show="fail">
-                                <div class="message-header">
-                                    <p>Error</p>
-                                </div>
-                                <div class="message-body">
-                                    {{ fail }}
-                                </div>
-                            </article>
-                        </div>
+                        <ErrorBox/>
                     </section>
                     <footer class="modal-card-foot">
                         <button @click="updateUser" class="button is-success">Update</button>
@@ -52,12 +43,14 @@
 
 <script>
     import InputFile from "../General/InputFile";
+    import ErrorBox from "../General/ErrorBox";
     import errorHandler from "../../modules/Errors";
 
     export default {
         name: "UserInfo",
         components: {
-            InputFile
+            InputFile,
+            ErrorBox
         },
         data() {
             return {

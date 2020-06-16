@@ -38,25 +38,19 @@
             </div>
         </div>
 
-        <!-- Error message if the user provides credentials that don't match with the API's requirements -->
-        <div class="container" id="signup-message">
-            <article class="message is-danger" v-show="fail">
-                <div class="message-header">
-                    <p>Error</p>
-                </div>
-                <div class="message-body">
-                    {{ fail }}
-                </div>
-            </article>
-        </div>
+        <ErrorBox id="signup-message"/>
     </div>
 </template>
 
 <script>
+    import ErrorBox from "../components/General/ErrorBox";
     import errorHandler from "../modules/Errors";
 
     export default {
         name: "SignUp",
+        components: {
+            ErrorBox
+        },
         data() {
             return {
                 username: "",

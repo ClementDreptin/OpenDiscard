@@ -15,16 +15,7 @@
                             </p>
                         </div>
                         <InputFile/>
-                        <div class="container">
-                            <article class="message is-danger" v-show="fail">
-                                <div class="message-header">
-                                    <p>Error</p>
-                                </div>
-                                <div class="message-body">
-                                    {{ fail }}
-                                </div>
-                            </article>
-                        </div>
+                        <ErrorBox/>
                     </section>
                     <footer class="modal-card-foot">
                         <button @click="createServer" class="button is-success">Create</button>
@@ -47,12 +38,14 @@
 
 <script>
     import InputFile from "../General/InputFile";
+    import ErrorBox from "../General/ErrorBox";
     import errorHandler from "../../modules/Errors";
 
     export default {
         name: "AddServerButton",
         components: {
-            InputFile
+            InputFile,
+            ErrorBox
         },
         data() {
             return {

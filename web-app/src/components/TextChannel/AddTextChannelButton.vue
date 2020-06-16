@@ -14,16 +14,7 @@
                                 <input @keypress="fail = null" class="input" type="text" v-model="textChannelName" placeholder="Name">
                             </p>
                         </div>
-                        <div class="container">
-                            <article class="message is-danger" v-show="fail">
-                                <div class="message-header">
-                                    <p>Error</p>
-                                </div>
-                                <div class="message-body">
-                                    {{ fail }}
-                                </div>
-                            </article>
-                        </div>
+                        <ErrorBox/>
                     </section>
                     <footer class="modal-card-foot">
                         <button @click="createTextChannel" class="button is-success">Create</button>
@@ -41,10 +32,14 @@
 </template>
 
 <script>
+    import ErrorBox from "../General/ErrorBox";
     import errorHandler from "../../modules/Errors";
 
     export default {
         name: "AddTextChannelButton",
+        components: {
+            ErrorBox
+        },
         data() {
             return {
                 showModal: false,
