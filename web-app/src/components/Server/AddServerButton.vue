@@ -115,6 +115,10 @@
 </script>
 
 <style scoped>
+    figure {
+        margin-left: 3px;
+    }
+
     a {
         padding: 0;
         border-radius: 10px;

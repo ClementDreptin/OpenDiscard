@@ -61,6 +61,14 @@
 
 <style scoped>
     aside {
-        margin-bottom: 2em;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        scrollbar-color: rgba(32,34,37,.6) transparent;
+        scrollbar-width: thin;
+        height: 100%;
+    }
+
+    ul {
+        padding-bottom: 0.5em;
     }
 </style>

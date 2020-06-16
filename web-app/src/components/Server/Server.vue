@@ -90,7 +90,7 @@
         width: 8px;
         height: 40px;
         border-radius: 0 4px 4px 0;
-        margin-left: -15px;
+        margin-left: -18px;
         margin-top: 4px;
         background-color: #dcddde;
     }

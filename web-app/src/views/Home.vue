@@ -63,18 +63,29 @@
         background-color: #272727;
         width: 78px;
         padding: 0;
+        scrollbar-width: none;
     }
 
     #text-channels {
         background-color: #2F3136;
+        //position: relative;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #text-channels > * {
+        padding: 0.75rem 0.75rem 0;
     }
 
     #messages {
         background-color: #36393F;
+        scrollbar-width: thin;
     }
 
     #members {
         background-color: #2F3136;
+        scrollbar-width: thin;
     }
 
     .columns {
@@ -93,13 +104,6 @@
         flex: none;
     }
 
-    .columns > div, #server-bar {
-        overflow-x: hidden;
-        overflow-y: scroll;
-        scrollbar-color: rgba(32,34,37,.6) transparent;
-        scrollbar-width: thin;
-    }
-
     ::-webkit-scrollbar {
         width: 5px;
     }
@@ -110,6 +114,12 @@
 
     ::-webkit-scrollbar-thumb {
         background: rgba(32,34,37,.6);
+    }
+
+    #server-bar, #messages, #members {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        scrollbar-color: rgba(32,34,37,.6) transparent;
     }
 
     .modal-card {
