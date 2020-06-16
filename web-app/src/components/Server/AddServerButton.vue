@@ -14,22 +14,7 @@
                                 <input class="input" type="text" v-model="serverName" placeholder="Name">
                             </p>
                         </div>
-                        <div class="field">
-                            <div class="file">
-                                <label class="file-label">
-                                    <input class="file-input" ref="file" @change="encodeImage" type="file" name="resume">
-                                    <span class="file-cta">
-                                        <span class="file-icon">
-                                            <i class="fas fa-upload"></i>
-                                        </span>
-                                        <span class="file-label">
-                                            Choose an image...
-                                        </span>
-                                    </span>
-                                </label>
-                                <span v-show="fileName" class="file-name">{{ fileName }}</span>
-                            </div>
-                        </div>
+                        <InputFile/>
                         <div class="container">
                             <article class="message is-danger" v-show="fail">
                                 <div class="message-header">
@@ -49,7 +34,7 @@
             </div>
         </div>
         <figure class="image is-48x48">
-            <a @click="showModal = true;serverName = ''">
+            <a @click="showModal = true;resetInputs()">
                 <div class="plus-sign">
                     <svg width="24" height="24" viewBox="0 0 24 24">
                         <path fill="currentColor" d="M21 11.001H13V3.00098H11V11.001H3V13.001H11V21.001H13V13.001H21V11.001Z"></path>
@@ -61,10 +46,14 @@
 </template>
 
 <script>
+    import InputFile from "../General/InputFile";
     import errorHandler from "../../modules/Errors";
 
     export default {
         name: "AddServerButton",
+        components: {
+            InputFile
+        },
         data() {
             return {
                 showModal: false,
@@ -99,16 +88,11 @@
                     .catch(err => errorHandler(err, this));
             },
 
-            encodeImage() {
+            resetInputs() {
+                this.serverName = "";
+                this.fileName = "";
+                this.fileData = null;
                 this.fail = null;
-                let file = this.$refs.file.files[0];
-                if (!file.type.match(/image.*/)) return this.fail = "You must select an image.";
-                this.fileName = file.name;
-                let reader = new FileReader();
-
-                reader.readAsDataURL(file);
-
-                reader.onload = () => this.fileData = reader.result.replace(/^data:image\/.*;base64,/, "");
             }
         }
     }

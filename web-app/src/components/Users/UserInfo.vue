@@ -14,22 +14,7 @@
                                 <input @keypress="fail = null" class="input" type="text" v-model="userLocal.username" placeholder="Username">
                             </p>
                         </div>
-                        <div class="field">
-                            <div class="file">
-                                <label class="file-label">
-                                    <input class="file-input" ref="file" @change="encodeImage" type="file" name="resume">
-                                    <span class="file-cta">
-                                        <span class="file-icon">
-                                            <i class="fas fa-upload"></i>
-                                        </span>
-                                        <span class="file-label">
-                                            Choose an image...
-                                        </span>
-                                    </span>
-                                </label>
-                                <span v-show="fileName" class="file-name">{{ fileName }}</span>
-                            </div>
-                        </div>
+                        <InputFile/>
                         <div class="container">
                             <article class="message is-danger" v-show="fail">
                                 <div class="message-header">
@@ -59,17 +44,21 @@
             <div v-else>{{ $store.state.user.username[0] }}</div>
         </div>
         <div class="user-name">{{ $store.state.user.username }}</div>
-        <a @click="showModal = true;resetUserName()" class="user-settings">
+        <a @click="showModal = true;resetInputs()" class="user-settings">
             <i class="fa fa-cog"></i>
         </a>
     </div>
 </template>
 
 <script>
+    import InputFile from "../General/InputFile";
     import errorHandler from "../../modules/Errors";
 
     export default {
         name: "UserInfo",
+        components: {
+            InputFile
+        },
         data() {
             return {
                 axios: axios,
@@ -81,23 +70,6 @@
             }
         },
         methods: {
-            encodeImage() {
-                this.fail = null;
-                let file = this.$refs.file.files[0];
-                if (!file.type.match(/image.*/)) return this.fail = "You must select an image.";
-                this.fileName = file.name;
-                let reader = new FileReader();
-
-                reader.readAsDataURL(file);
-
-                reader.onload = () => this.fileData = reader.result.replace(/^data:image\/.*;base64,/, "");
-            },
-
-            resetUserName() {
-                this.userLocal = JSON.parse(JSON.stringify(this.$store.state.user));
-                this.fail = null;
-            },
-
             updateUser() {
                 if (this.userLocal.username === "") return this.fail = "You must give yourself a username!";
 
@@ -122,6 +94,13 @@
                     })
                     .catch(err => errorHandler(err, this));
             },
+
+            resetInputs() {
+                this.userLocal = JSON.parse(JSON.stringify(this.$store.state.user));
+                this.fail = null;
+                this.fileName = "";
+                this.fileData = null;
+            }
         }
     }
 </script>

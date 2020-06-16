@@ -14,22 +14,7 @@
                                 <input @keypress="fail = null" class="input" type="text" v-model="serverLocal.name" placeholder="Name">
                             </p>
                         </div>
-                        <div class="field">
-                            <div class="file">
-                                <label class="file-label">
-                                    <input class="file-input" ref="file" @change="encodeImage" type="file" name="resume">
-                                    <span class="file-cta">
-                                        <span class="file-icon">
-                                            <i class="fas fa-upload"></i>
-                                        </span>
-                                        <span class="file-label">
-                                            Choose an image...
-                                        </span>
-                                    </span>
-                                </label>
-                                <span v-show="fileName" class="file-name">{{ fileName }}</span>
-                            </div>
-                        </div>
+                        <InputFile/>
                         <button @click="showConfirmDeleteModal = true" class="button is-danger is-pulled-right">
                             Delete this Server
                         </button>
@@ -54,7 +39,7 @@
         </div>
         <div class="server-header">
             <h6 class="title is-6">{{ $store.state.currentServer.name }}</h6>
-            <a @click="showModal = true;resetServerName()" class="is-pulled-right server-settings-button">
+            <a @click="showModal = true;resetInputs()" class="is-pulled-right server-settings-button">
                 <i class="fa fa-cog"></i>
             </a>
         </div>
@@ -63,12 +48,14 @@
 
 <script>
     import ConfirmDeleteModal from "../General/ConfirmDeleteModal";
+    import InputFile from "../General/InputFile";
     import errorHandler from "../../modules/Errors";
 
     export default {
         name: "ServerHeader",
         components: {
-            ConfirmDeleteModal
+            ConfirmDeleteModal,
+            InputFile
         },
         data() {
             return  {
@@ -81,22 +68,6 @@
             }
         },
         methods: {
-            encodeImage() {
-                this.fail = null;
-                let file = this.$refs.file.files[0];
-                if (!file.type.match(/image.*/)) return this.fail = "You must select an image.";
-                this.fileName = file.name;
-                let reader = new FileReader();
-
-                reader.readAsDataURL(file);
-
-                reader.onload = () => this.fileData = reader.result.replace(/^data:image\/.*;base64,/, "");
-            },
-
-            resetServerName() {
-                this.serverLocal = JSON.parse(JSON.stringify(this.$store.state.currentServer));
-            },
-
             updateServer() {
                 if (this.serverLocal.name === "") return this.fail = "You must give your server a name!";
 
@@ -145,6 +116,13 @@
                         this.showModal = false;
                     })
                     .catch(err => errorHandler(err, this));
+            },
+
+            resetInputs() {
+                this.serverLocal = JSON.parse(JSON.stringify(this.$store.state.currentServer));
+                this.fileName = "";
+                this.fileData = null;
+                this.fail = null;
             }
         }
     }
