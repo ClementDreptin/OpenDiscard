@@ -130,8 +130,9 @@
     #user-info {
         color: white;
         display: flex;
-        //background-color: #292b2f;
-        background-color: blue;
+        background-color: #292b2f;
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
     }
 
     .user-icon, .user-name, .user-settings {
@@ -159,5 +160,6 @@
         flex: 1;
         text-align: right;
         color: white;
+        margin-right: 0;
     }
 </style>
