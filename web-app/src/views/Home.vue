@@ -68,7 +68,6 @@
 
     #text-channels {
         background-color: #2F3136;
-        //position: relative;
         padding: 0;
         display: flex;
         flex-direction: column;
@@ -212,5 +211,9 @@
         background-color: rgba(0, 0, 0, 0.3);
         border: solid #5090f8 1px;
         color: #5090f8;
+    }
+
+    .image.is-32x32 img, .image.is-48x48 img {
+        height: 100%;
     }
 </style>
