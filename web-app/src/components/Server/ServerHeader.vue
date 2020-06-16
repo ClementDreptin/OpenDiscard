@@ -12,9 +12,7 @@
                             </p>
                         </div>
                         <InputFile/>
-                        <button @click="showConfirmDeleteModal = true" class="button is-danger is-pulled-right">
-                            Delete this Server
-                        </button>
+                        <ModalDeleteButton element="Server"/>
                         <ConfirmDeleteModal element="Server" :deleteFunction="deleteServer"/>
                         <ErrorBox/>
                     </section>
@@ -37,6 +35,7 @@
     import ErrorBox from "../General/ErrorBox";
     import ModalHeader from "../General/ModalHeader";
     import ModalFooter from "../General/ModalFooter";
+    import ModalDeleteButton from "../General/ModalDeleteButton";
     import errorHandler from "../../modules/Errors";
 
     export default {
@@ -46,7 +45,8 @@
             InputFile,
             ErrorBox,
             ModalHeader,
-            ModalFooter
+            ModalFooter,
+            ModalDeleteButton
         },
         data() {
             return  {

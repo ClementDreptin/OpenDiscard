@@ -11,9 +11,7 @@
                                 <input @keypress="fail = null" class="input" type="text" v-model="textChannelLocal.name" placeholder="Name">
                             </p>
                         </div>
-                        <button @click="showConfirmDeleteModal = true" class="button is-danger is-pulled-right">
-                            Delete this Text Channel
-                        </button>
+                        <ModalDeleteButton element="Text Channel"/>
                         <ConfirmDeleteModal element="Text Channel" :deleteFunction="deleteTextChannel"/>
                         <ErrorBox/>
                     </section>
@@ -32,6 +30,7 @@
     import ErrorBox from "../General/ErrorBox";
     import ModalHeader from "../General/ModalHeader";
     import ModalFooter from "../General/ModalFooter";
+    import ModalDeleteButton from "../General/ModalDeleteButton";
     import errorHandler from "../../modules/Errors";
 
     export default {
@@ -40,7 +39,8 @@
             ConfirmDeleteModal,
             ErrorBox,
             ModalHeader,
-            ModalFooter
+            ModalFooter,
+            ModalDeleteButton
         },
         props: [
             'textChannel'
