@@ -4,10 +4,7 @@
             <div class="modal-background"></div>
             <div class="modal-card">
                 <form @submit.prevent="">
-                    <header class="modal-card-head">
-                        <p class="modal-card-title">Create a Text Channel</p>
-                        <button @click="showModal = false" class="delete"></button>
-                    </header>
+                    <ModalHeader title="Create a Text Channel"/>
                     <section class="modal-card-body">
                         <div class="field">
                             <p class="control">
@@ -33,12 +30,14 @@
 
 <script>
     import ErrorBox from "../General/ErrorBox";
+    import ModalHeader from "../General/ModalHeader";
     import errorHandler from "../../modules/Errors";
 
     export default {
         name: "AddTextChannelButton",
         components: {
-            ErrorBox
+            ErrorBox,
+            ModalHeader
         },
         data() {
             return {

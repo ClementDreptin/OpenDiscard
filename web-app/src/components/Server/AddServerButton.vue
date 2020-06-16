@@ -4,10 +4,7 @@
             <div class="modal-background"></div>
             <div class="modal-card">
                 <form @submit.prevent="">
-                    <header class="modal-card-head">
-                        <p class="modal-card-title">Create your Server</p>
-                        <button @click="showModal = false" class="delete"></button>
-                    </header>
+                    <ModalHeader title="Create your Server"/>
                     <section class="modal-card-body">
                         <div class="field">
                             <p class="control">
@@ -39,13 +36,15 @@
 <script>
     import InputFile from "../General/InputFile";
     import ErrorBox from "../General/ErrorBox";
+    import ModalHeader from "../General/ModalHeader";
     import errorHandler from "../../modules/Errors";
 
     export default {
         name: "AddServerButton",
         components: {
             InputFile,
-            ErrorBox
+            ErrorBox,
+            ModalHeader
         },
         data() {
             return {

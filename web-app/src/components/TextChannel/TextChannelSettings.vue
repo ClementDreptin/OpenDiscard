@@ -4,10 +4,7 @@
             <div class="modal-background"></div>
             <div class="modal-card">
                 <form @submit.prevent="">
-                    <header class="modal-card-head">
-                        <p class="modal-card-title">Text Channel Options</p>
-                        <button @click="showModal = false" class="delete"></button>
-                    </header>
+                    <ModalHeader title="Text Channel Options"/>
                     <section class="modal-card-body">
                         <div class="field">
                             <p class="control">
@@ -36,13 +33,15 @@
 <script>
     import ConfirmDeleteModal from "../General/ConfirmDeleteModal";
     import ErrorBox from "../General/ErrorBox";
+    import ModalHeader from "../General/ModalHeader";
     import errorHandler from "../../modules/Errors";
 
     export default {
         name: "TextChannelSettings",
         components: {
             ConfirmDeleteModal,
-            ErrorBox
+            ErrorBox,
+            ModalHeader
         },
         props: [
             'textChannel'
