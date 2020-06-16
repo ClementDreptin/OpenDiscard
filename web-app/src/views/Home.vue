@@ -7,6 +7,7 @@
             <div id="text-channels" class="column is-2">
                 <ServerHeader v-if="$store.state.currentServer"/>
                 <TextChannels/>
+                <UserInfo/>
             </div>
             <div id="messages" class="column is-8">
                 <TextChannelHeader v-if="$store.state.currentTextChannel"/>
@@ -24,7 +25,8 @@
     import ServerHeader from "../components/Server/ServerHeader";
     import TextChannels from "../components/TextChannel/TextChannels";
     import TextChannelHeader from "../components/TextChannel/TextChannelHeader";
-    import Members from "../components/Member/Members";
+    import Members from "../components/Users/Members";
+    import UserInfo from "../components/Users/UserInfo";
     import Messages from "../components/Message/Messages";
 
     export default {
@@ -35,6 +37,7 @@
             TextChannels,
             TextChannelHeader,
             Members,
+            UserInfo,
             Messages
         },
         computed: {
