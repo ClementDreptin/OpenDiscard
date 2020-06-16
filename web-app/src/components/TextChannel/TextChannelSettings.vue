@@ -17,10 +17,7 @@
                         <ConfirmDeleteModal element="Text Channel" :deleteFunction="deleteTextChannel"/>
                         <ErrorBox/>
                     </section>
-                    <footer class="modal-card-foot">
-                        <button @click="updateTextChannel" class="button is-success">Update</button>
-                        <button @click="showModal = false" class="button">Cancel</button>
-                    </footer>
+                    <ModalFooter :actionFunction="updateTextChannel" actionTitle="Update"/>
                 </form>
             </div>
         </div>
@@ -34,6 +31,7 @@
     import ConfirmDeleteModal from "../General/ConfirmDeleteModal";
     import ErrorBox from "../General/ErrorBox";
     import ModalHeader from "../General/ModalHeader";
+    import ModalFooter from "../General/ModalFooter";
     import errorHandler from "../../modules/Errors";
 
     export default {
@@ -41,7 +39,8 @@
         components: {
             ConfirmDeleteModal,
             ErrorBox,
-            ModalHeader
+            ModalHeader,
+            ModalFooter
         },
         props: [
             'textChannel'

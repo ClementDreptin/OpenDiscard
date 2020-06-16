@@ -14,10 +14,7 @@
                         <InputFile/>
                         <ErrorBox/>
                     </section>
-                    <footer class="modal-card-foot">
-                        <button @click="createServer" class="button is-success">Create</button>
-                        <button @click="showModal = false" class="button">Cancel</button>
-                    </footer>
+                    <ModalFooter :actionFunction="createServer" actionTitle="Create"/>
                 </form>
             </div>
         </div>
@@ -37,6 +34,7 @@
     import InputFile from "../General/InputFile";
     import ErrorBox from "../General/ErrorBox";
     import ModalHeader from "../General/ModalHeader";
+    import ModalFooter from "../General/ModalFooter";
     import errorHandler from "../../modules/Errors";
 
     export default {
@@ -44,7 +42,8 @@
         components: {
             InputFile,
             ErrorBox,
-            ModalHeader
+            ModalHeader,
+            ModalFooter
         },
         data() {
             return {

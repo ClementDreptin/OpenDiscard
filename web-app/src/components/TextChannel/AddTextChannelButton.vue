@@ -13,10 +13,7 @@
                         </div>
                         <ErrorBox/>
                     </section>
-                    <footer class="modal-card-foot">
-                        <button @click="createTextChannel" class="button is-success">Create</button>
-                        <button @click="showModal = false" class="button">Cancel</button>
-                    </footer>
+                    <ModalFooter :actionFunction="createTextChannel" actionTitle="Create"/>
                 </form>
             </div>
         </div>
@@ -31,13 +28,15 @@
 <script>
     import ErrorBox from "../General/ErrorBox";
     import ModalHeader from "../General/ModalHeader";
+    import ModalFooter from "../General/ModalFooter";
     import errorHandler from "../../modules/Errors";
 
     export default {
         name: "AddTextChannelButton",
         components: {
             ErrorBox,
-            ModalHeader
+            ModalHeader,
+            ModalFooter
         },
         data() {
             return {
