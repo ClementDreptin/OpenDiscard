@@ -1436,7 +1436,7 @@ define({ "api": [
   {
     "type": "get",
     "url": "/servers/:id/users/",
-    "title": "Get",
+    "title": "Get Members",
     "group": "Users",
     "description": "<p>Gets all the Users from a Server.</p>",
     "header": {
@@ -1513,6 +1513,89 @@ define({ "api": [
     "filename": "src/control/UserController.php",
     "groupTitle": "Users",
     "name": "GetServersIdUsers"
+  },
+  {
+    "type": "get",
+    "url": "/users?elem=:elem",
+    "title": "Get",
+    "group": "Users",
+    "description": "<p>Gets Users with a username that starts with <code>elem</code>.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "elem",
+            "description": "<p>The string to search for.</p>"
+          }
+        ]
+      }
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>The User's token.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Bearer Token:",
+          "content": "{\n  \"Authorization\": \"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJhcGlfcGxheWVyIiwic3ViIjoiZ2FtZSIsImF1ZCI6InBsYXllciIsImlhdCI6MTU4NDc0NTQ0NywiZXhwIjoxNTg0NzU2MjQ3fQ.vkaSPuOdb95IHWRFda9RGszEflYh8CGxhaKVHS3vredJSl2WyqqNTg_VUbfkx60A3cdClmcBqmyQdJnV3-l1xA\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"type\": \"resources\",\n  \"users\": [\n    {\n      \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"username\": \"AlbertEinstein\",\n      \"email\": \"albert.einstein@physics.com\",\n      \"avatar_url\": \"/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d\"\n    },\n    {\n      \"id\": \"db0916fa-934b-4981-9980-d53bed190db3\",\n      \"username\": \"AlbertEinsteinJR\",\n      \"email\": \"albert.einstein.jr@physics.com\",\n      \"avatar_url\": \"/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d\"\n    },\n  ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "InvalidElem",
+            "description": "<p>The elem parameter is empty or a string with only spaces.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "InvalidToken",
+            "description": "<p>The token is not valid.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "InvalidElem-Response:",
+          "content": "HTTP/1.1 400 BAD REQUEST\n{\n  \"type\": \"error\",\n  \"error\": 400,\n  \"message\": \"You need to provide a string to search for in the elem parameter.\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "InvalidToken-Response:",
+          "content": "HTTP/1.1 401 UNAUTHORIZED\n{\n  \"type\": \"error\",\n  \"error\": 401,\n  \"message\": \"Token expired.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/control/UserController.php",
+    "groupTitle": "Users",
+    "name": "GetUsersElemElem"
   },
   {
     "type": "patch",
