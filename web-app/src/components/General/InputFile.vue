@@ -12,6 +12,9 @@
             </label>
             <span v-show="$parent.fileName" class="file-name">{{ $parent.fileName }}</span>
         </div>
+        <div class="note">
+            <strong>Note:</strong> It is recommended to choose an image with an aspect ratio of 1 (width = height).
+        </div>
     </div>
 </template>
 
@@ -35,5 +38,14 @@
 </script>
 
 <style scoped>
+    .note {
+        margin-top: 0.5em;
+        color: #b5b5b5;
+        font-size: 0.85em;
+    }
 
+    .file-name {
+        margin-left: 0.5em;
+        border-width: 1px;
+    }
 </style>
