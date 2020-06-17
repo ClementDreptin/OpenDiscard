@@ -102,7 +102,6 @@
         display: flex;
         background-color: #292b2f;
         padding: 0.5rem;
-        margin-bottom: 0.5rem;
     }
 
     .user-icon, .user-name, .user-settings {
