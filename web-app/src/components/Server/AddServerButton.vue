@@ -127,9 +127,4 @@
         -webkit-transition: all .3s;
         transition: all .3s;
     }
-
-    .file-name {
-        margin-left: 0.5em;
-        border-width: 1px;
-    }
 </style>
