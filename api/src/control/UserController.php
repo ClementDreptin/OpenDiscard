@@ -80,8 +80,12 @@ class UserController {
     public function get(Request $request, Response $response, $args) {
         $server = $request->getAttribute('server');
         $token_owner_id = $request->getAttribute('token_owner_id');
-        $members = $server->members;
         $tokenOwnerInServer = false;
+
+        $members = $server
+            ->members()
+            ->orderBy('username', 'asc')
+            ->get();
 
         // I didn't do $server->members()->where('user_id', '=', $token_owner_id)->exists()
         // this time not to make another request to the database.

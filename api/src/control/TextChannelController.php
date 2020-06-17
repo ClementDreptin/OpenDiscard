@@ -73,9 +73,14 @@ class TextChannelController {
             return JSON::errorResponse($response, 401, "Only Members can get Text Channels from this Server.");
         }
 
+        $textChannels = $server
+            ->textChannels()
+            ->orderBy('name', 'asc')
+            ->get();
+
         return JSON::successResponse($response, 200, [
             "type" => "resources",
-            "text_channels" => $server->textChannels
+            "text_channels" => $textChannels
         ]);
     }
 

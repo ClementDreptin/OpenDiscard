@@ -64,7 +64,9 @@ class ServerController {
         $servers = User::query()
             ->where('id', '=', $token_owner_id)
             ->first()
-            ->servers;
+            ->servers()
+            ->orderBy('name', 'asc')
+            ->get();
 
         return JSON::successResponse($response, 200, [
             "type" => "resources",
