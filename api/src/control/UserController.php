@@ -17,7 +17,7 @@ class UserController {
     }
 
     /**
-     * @api {get} /servers/:id/users/ Get
+     * @api {get} /servers/:id/users/ Get Members
      * @apiGroup Users
      *
      * @apiDescription Gets all the Users from a Server.
@@ -105,6 +105,79 @@ class UserController {
                 "members" => $members
             ]);
         }
+    }
+
+    /**
+     * @api {get} /users?elem=:elem Get
+     * @apiGroup Users
+     *
+     * @apiDescription Gets Users with a username that starts with <code>elem</code>.
+     *
+     * @apiParam {String} elem The string to search for.
+     *
+     * @apiHeader {String} Authorization The User's token.
+     *
+     * @apiHeaderExample {json} Bearer Token:
+     *     {
+     *       "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJhcGlfcGxheWVyIiwic3ViIjoiZ2FtZSIsImF1ZCI6InBsYXllciIsImlhdCI6MTU4NDc0NTQ0NywiZXhwIjoxNTg0NzU2MjQ3fQ.vkaSPuOdb95IHWRFda9RGszEflYh8CGxhaKVHS3vredJSl2WyqqNTg_VUbfkx60A3cdClmcBqmyQdJnV3-l1xA"
+     *     }
+     *
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *       "type": "resources",
+     *       "users": [
+     *         {
+     *           "id": "db0916fa-934b-4981-9980-d53bed190db3",
+     *           "username": "AlbertEinstein",
+     *           "email": "albert.einstein@physics.com",
+     *           "avatar_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d"
+     *         },
+     *         {
+     *           "id": "db0916fa-934b-4981-9980-d53bed190db3",
+     *           "username": "AlbertEinsteinJR",
+     *           "email": "albert.einstein.jr@physics.com",
+     *           "avatar_url": "/images/c29eaa26-3fd1-4b66-aafe-60b571009d0d"
+     *         },
+     *       ]
+     *     }
+     *
+     * @apiError InvalidElem The elem parameter is empty or a string with only spaces.
+     * @apiError InvalidToken The token is not valid.
+     *
+     * @apiErrorExample InvalidElem-Response:
+     *     HTTP/1.1 400 BAD REQUEST
+     *     {
+     *       "type": "error",
+     *       "error": 400,
+     *       "message": "You need to provide a string to search for in the elem parameter."
+     *     }
+     *
+     * @apiErrorExample InvalidToken-Response:
+     *     HTTP/1.1 401 UNAUTHORIZED
+     *     {
+     *       "type": "error",
+     *       "error": 401,
+     *       "message": "Token expired."
+     *     }
+     */
+    public function search(Request $request, Response $response, $args) {
+        $elem_to_search = trim($request->getQueryParam('elem'));
+
+        if (!isset($elem_to_search) || $elem_to_search === '') {
+            return JSON::errorResponse($response, 400, "You need to provide a string to search for in the elem parameter.");
+        }
+
+        $users = User::query()
+            ->select('id', 'username', 'email', 'avatar_url')
+            ->where('username', 'like', "$elem_to_search%")
+            ->orderBy('username', 'asc')
+            ->get();
+
+        return JSON::successResponse($response, 200, [
+            "type" => "resources",
+            "users" => $users
+        ]);
     }
 
     /**

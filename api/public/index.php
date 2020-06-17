@@ -29,6 +29,10 @@ $app->get('/servers/{id}/users[/]', UserController::class.':get')
     ->add(Checker::class.':serverExists')
     ->add(CORS::class.':addCORSHeaders');
 
+$app->get('/users[/]', UserController::class.':search')
+    ->add(JWT::class.':checkJWT')
+    ->add(CORS::class.':addCORSHeaders');
+
 $app->post('/users/signup[/]', UserController::class.':signUp')
     ->add(Validator::class.':dataFormatErrorHandler')
     ->add(Validator::createUserValidator())
