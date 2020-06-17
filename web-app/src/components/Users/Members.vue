@@ -1,6 +1,9 @@
 <template>
     <aside class="menu">
         <ul class="menu-list">
+            <li v-if="$store.state.currentServer">
+                <AddMemberButton/>
+            </li>
             <li v-for="member in members">
                 <Member :member="member"/>
             </li>
@@ -10,12 +13,14 @@
 
 <script>
     import Member from "./Member";
+    import AddMemberButton from "./AddMemberButton";
     import errorHandler from "../../modules/Errors";
 
     export default {
         name: "Members",
         components: {
-            Member
+            Member,
+            AddMemberButton
         },
         data() {
             return {
