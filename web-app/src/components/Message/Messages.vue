@@ -1,6 +1,8 @@
 <template>
-    <div>
-        <Message v-for="message in messages" :message="message"/>
+    <div class="messages-container">
+        <div class="messages-custom">
+            <Message v-for="message in messages" :message="message"/>
+        </div>
     </div>
 </template>
 
@@ -44,8 +46,14 @@
 </script>
 
 <style scoped>
-    div {
-        background-color: #36393F;
-        margin-bottom: 2em;
+    .messages-container {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        scrollbar-color: rgba(32,34,37,.6) transparent;
+        scrollbar-width: thin;
+    }
+
+    .messages-custom {
+        padding-bottom: 1.5em;
     }
 </style>

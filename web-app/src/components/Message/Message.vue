@@ -35,6 +35,7 @@
 <style scoped>
     .message {
         display: flex;
+        background-color: #36393F;
     }
 
     figure {

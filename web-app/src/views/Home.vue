@@ -12,6 +12,7 @@
             <div id="messages" class="column is-8">
                 <TextChannelHeader v-if="$store.state.currentTextChannel"/>
                 <Messages/>
+                <MessageInput v-if="$store.state.currentTextChannel"/>
             </div>
             <div id="members" class="column is-2">
                 <Members/>
@@ -28,6 +29,7 @@
     import Members from "../components/Users/Members";
     import UserInfo from "../components/Users/UserInfo";
     import Messages from "../components/Message/Messages";
+    import MessageInput from "../components/Message/MessageInput";
 
     export default {
         name: 'Home',
@@ -38,7 +40,8 @@
             TextChannelHeader,
             Members,
             UserInfo,
-            Messages
+            Messages,
+            MessageInput
         },
         computed: {
             user() {
@@ -79,7 +82,13 @@
 
     #messages {
         background-color: #36393F;
-        scrollbar-width: thin;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #messages > * {
+        padding: 0.75rem 0.75rem 0;
     }
 
     #members {
@@ -103,6 +112,10 @@
         flex: none;
     }
 
+    .columns:last-child {
+        margin-bottom: 0;
+    }
+
     ::-webkit-scrollbar {
         width: 5px;
     }
@@ -115,7 +128,7 @@
         background: rgba(32,34,37,.6);
     }
 
-    #server-bar, #messages, #members {
+    #server-bar, #members {
         overflow-x: hidden;
         overflow-y: scroll;
         scrollbar-color: rgba(32,34,37,.6) transparent;
