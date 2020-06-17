@@ -44,6 +44,10 @@
         font-size: 0.85em;
     }
 
+    .note strong {
+        color: #b5b5b5;
+    }
+
     .file-name {
         margin-left: 0.5em;
         border-width: 1px;
