@@ -73,7 +73,7 @@
                     axios.post('/users/signup/', params)
                         .then(response => {
                             this.fail = false;
-                            this.$store.commit('signIn', response.data.user);
+                            this.$store.state.user = response.data.user;
                             this.$router.push('/');
                         }).catch(err => errorHandler(err, this));
                 } else {
