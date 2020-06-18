@@ -22,7 +22,9 @@
         </div>
         <div class="server-header">
             <h6 class="title is-6">{{ $store.state.currentServer.name }}</h6>
-            <a @click="showModal = true;resetInputs()" class="is-pulled-right server-settings-button">
+            <a v-if="$store.state.currentServer.owner_id === $store.state.user.id"
+               @click="showModal = true;resetInputs()"
+               class="is-pulled-right server-settings-button">
                 <i class="fa fa-cog"></i>
             </a>
         </div>

@@ -18,7 +18,8 @@
             </div>
         </div>
         <div class="add-text-channel-button">
-            <a @click="showModal = true;textChannelName = ''">
+            <a v-if="$store.state.currentServer.owner_id === $store.state.user.id"
+               @click="showModal = true;textChannelName = ''">
                 <span>+</span>
             </a>
         </div>
