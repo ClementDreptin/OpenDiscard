@@ -13,7 +13,7 @@
                         </div>
                         <InputFile/>
                         <ModalDeleteButton element="Server"/>
-                        <ConfirmDeleteModal element="Server" :deleteFunction="deleteServer"/>
+                        <ConfirmDeleteModal element="Server" actionTitle="Delete" :deleteFunction="deleteServer"/>
                         <ErrorBox/>
                     </section>
                     <ModalFooter :actionFunction="updateServer" actionTitle="Update"/>

@@ -12,7 +12,7 @@
                             </p>
                         </div>
                         <ModalDeleteButton element="Text Channel"/>
-                        <ConfirmDeleteModal element="Text Channel" :deleteFunction="deleteTextChannel"/>
+                        <ConfirmDeleteModal element="Text Channel" actionTitle="Delete" :deleteFunction="deleteTextChannel"/>
                         <ErrorBox/>
                     </section>
                     <ModalFooter :actionFunction="updateTextChannel" actionTitle="Update"/>
