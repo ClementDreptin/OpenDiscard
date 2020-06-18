@@ -114,7 +114,7 @@
         margin-right: 0;
         border-radius: 3px;
         border: solid #b5b5b5 1px;
-        height: 25rem;
+        height: 12rem;
         overflow-x: hidden;
         overflow-y: scroll;
         scrollbar-color: rgba(32,34,37,.6) transparent;

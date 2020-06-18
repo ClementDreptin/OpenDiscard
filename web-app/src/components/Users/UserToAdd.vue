@@ -1,5 +1,5 @@
 <template>
-    <div class="user-to-invite">
+    <div class="user-to-add">
         <figure class="image is-32x32">
             <img class="is-rounded"
                  :src="`${axios.defaults.baseURL}${user.avatar_url}`"
@@ -30,22 +30,21 @@
 </script>
 
 <style scoped>
-    .user-to-invite {
+    .user-to-add {
         display: flex;
-        padding: 0.5em;
+        padding: 0.25em;
     }
 
-    .user-to-invite figure {
-        flex: 1;
+    .user-to-add figure {
         margin-right: 1em;
     }
 
-    .user-to-invite div {
+    .user-to-add div {
         flex: 10;
         padding: 0.5em;
     }
 
-    .user-to-invite button {
+    .user-to-add button {
         flex: 2;
     }
 </style>
