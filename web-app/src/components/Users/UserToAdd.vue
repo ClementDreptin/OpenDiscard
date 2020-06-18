@@ -23,13 +23,21 @@
         },
         methods: {
             addUser() {
+                axios.put(`/servers/${this.$store.state.currentServer.id}/users/${this.user.id}`)
+                    .then(response => {
+                        this.$store.state.currentServer.members.push(response.data.user);
+                        this.disableButton();
+                    }).catch(err => this.$parent.fail = err.response.data.message);
+            },
 
+            disableButton() {
+                this.$refs.addButton.innerText = "Added";
+                this.$refs.addButton.disabled = true;
             }
         },
         mounted() {
             if (this.$store.state.currentServer.members.find(member => member.id === this.user.id)) {
-                this.$refs.addButton.innerText = "Added";
-                this.$refs.addButton.disabled = true;
+                this.disableButton();
             } else {
                 this.$refs.addButton.innerText = "Add";
             }
