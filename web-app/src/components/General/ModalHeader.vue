@@ -15,5 +15,9 @@
 </script>
 
 <style scoped>
-
+    @media screen and (max-width:430px) {
+        .modal-card-title{
+            font-size: 1em;
+        }
+    }
 </style>
