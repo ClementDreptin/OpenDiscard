@@ -6,7 +6,7 @@
                  :alt="`${user.username}'s profile picture`">
         </figure>
         <div>{{ user.username }}</div>
-        <button @click="addUser" class="button is-success">Add</button>
+        <button @click="addUser" ref="addButton" class="button is-success"></button>
     </div>
 </template>
 
@@ -24,6 +24,14 @@
         methods: {
             addUser() {
 
+            }
+        },
+        mounted() {
+            if (this.$store.state.currentServer.members.find(member => member.id === this.user.id)) {
+                this.$refs.addButton.innerText = "Added";
+                this.$refs.addButton.disabled = true;
+            } else {
+                this.$refs.addButton.innerText = "Add";
             }
         }
     }
@@ -46,5 +54,10 @@
 
     .user-to-add button {
         flex: 2;
+    }
+
+    .button.is-success:disabled {
+        background-color: transparent;
+        border-width: 1px;
     }
 </style>

@@ -13,7 +13,7 @@
                         </div>
                         <div class="field users-list">
                             <ul v-if="filteredUsers.length > 0">
-                                <li v-for="user in filteredUsers">
+                                <li v-for="user in filteredUsers" :key="user.id">
                                     <UserToAdd :user="user"/>
                                 </li>
                             </ul>
