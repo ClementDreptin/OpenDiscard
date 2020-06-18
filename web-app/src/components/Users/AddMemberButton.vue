@@ -24,7 +24,7 @@
                         <ErrorBox/>
                     </section>
                     <footer class="modal-card-foot">
-                        <button @click="$showModal = false" class="button is-success">Done</button>
+                        <button @click="showModal = false" class="button is-success">Done</button>
                     </footer>
                 </form>
             </div>
