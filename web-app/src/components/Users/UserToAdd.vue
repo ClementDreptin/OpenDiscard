@@ -1,8 +1,11 @@
 <template>
     <div class="user-to-add">
         <figure class="image is-32x32">
-            <img class="is-rounded"
+            <img v-if="user.avatar_url" class="is-rounded"
                  :src="`${axios.defaults.baseURL}${user.avatar_url}`"
+                 :alt="`${user.username}'s profile picture`">
+            <img v-else
+                 src="../../assets/default-profile-picture.svg"
                  :alt="`${user.username}'s profile picture`">
         </figure>
         <div>{{ user.username }}</div>

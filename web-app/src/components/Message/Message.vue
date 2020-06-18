@@ -1,8 +1,11 @@
 <template>
     <div class="message">
         <figure class="image is-48x48">
-            <img class="is-rounded"
+            <img v-if="message.author.avatar_url" class="is-rounded"
                  :src="`${axios.defaults.baseURL}${message.author.avatar_url}`"
+                 :alt="`${message.author.username}'s profile picture`">
+            <img v-else
+                 src="../../assets/default-profile-picture.svg"
                  :alt="`${message.author.username}'s profile picture`">
         </figure>
         <div class="message-content">

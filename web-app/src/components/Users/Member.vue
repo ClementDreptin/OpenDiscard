@@ -1,9 +1,12 @@
 <template>
     <a>
-        <span v-if="member.avatar_url">
+        <span>
             <figure class="image is-32x32">
-                <img class="is-rounded"
+                <img v-if="member.avatar_url" class="is-rounded"
                      :src="`${axios.defaults.baseURL}${member.avatar_url}`"
+                     :alt="`${member.username}'s profile picture`">
+                <img v-else
+                     src="../../assets/default-profile-picture.svg"
                      :alt="`${member.username}'s profile picture`">
             </figure>
         </span>

@@ -19,14 +19,16 @@
             </div>
         </div>
         <div class="user-icon">
-            <div v-if="$store.state.user.avatar_url">
+            <div>
                 <figure class="image is-32x32">
-                    <img class="is-rounded"
+                    <img v-if="$store.state.user.avatar_url" class="is-rounded"
                          :src="`${axios.defaults.baseURL}${$store.state.user.avatar_url}`"
+                         :alt="`${$store.state.user.username}'s profile picture`">
+                    <img v-else
+                         src="../../assets/default-profile-picture.svg"
                          :alt="`${$store.state.user.username}'s profile picture`">
                 </figure>
             </div>
-            <div v-else>{{ $store.state.user.username[0] }}</div>
         </div>
         <div class="user-name">{{ $store.state.user.username }}</div>
         <a @click="showModal = true;resetInputs()" class="user-settings">
