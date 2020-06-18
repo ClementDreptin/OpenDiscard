@@ -1,6 +1,6 @@
 <template>
     <div class="field">
-        <button @click="showConfirmDeleteModal = true" class="button is-danger">
+        <button @click="$parent.showConfirmDeleteModal = true" class="button is-danger">
             Delete this {{ element }}
         </button>
     </div>
