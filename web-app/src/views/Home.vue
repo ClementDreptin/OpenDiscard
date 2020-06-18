@@ -112,6 +112,10 @@
         flex: none;
     }
 
+    .columns > div, #server-bar {
+        overflow-x: hidden;
+    }
+
     .columns:last-child {
         margin-bottom: 0;
     }
