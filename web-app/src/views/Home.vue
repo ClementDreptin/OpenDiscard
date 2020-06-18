@@ -174,6 +174,11 @@
         color: white;
     }
 
+    .button:disabled {
+        background-color: transparent;
+        opacity: 0.35;
+    }
+
     .button.is-success {
         background-color: transparent;
         border: solid #3ec46d 1px;
@@ -184,6 +189,11 @@
         background-color: rgba(0, 0, 0, 0.3);
         border: solid #52ea8c 1px;
         color: #52ea8c;
+    }
+
+    .button.is-success:disabled {
+        border: solid #3ec46d 1px;
+        color: #3ec46d;
     }
 
     .button.is-danger {
@@ -198,6 +208,11 @@
         color: #ff5877;
     }
 
+    .button.is-danger:disabled {
+        border: solid #f03a5f 1px;
+        color: #f03a5f;
+    }
+
     .button.is-link {
         background-color: transparent;
         border: solid #3273dc 1px;
@@ -208,6 +223,11 @@
         background-color: rgba(0, 0, 0, 0.3);
         border: solid #5090f8 1px;
         color: #5090f8;
+    }
+
+    .button.is-link:disabled {
+        border: solid #3273dc 1px;
+        color: #3273dc;
     }
 
     .input:focus {
