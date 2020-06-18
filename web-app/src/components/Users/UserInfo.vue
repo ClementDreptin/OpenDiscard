@@ -1,6 +1,6 @@
 <template>
     <div id="user-info">
-        <div v-show="showModal" class="modal is-active">
+        <div v-if="showModal" class="modal is-active">
             <div class="modal-background"></div>
             <div class="modal-card">
                 <form @submit.prevent="">
