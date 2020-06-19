@@ -11,7 +11,7 @@
             </figure>
         </span>
         <span class="member-name">{{ member.username }}</span>
-        <a v-if="$store.state.currentServer.owner_id === $store.state.user.id"
+        <a v-if="$store.state.currentServer.owner_id === $store.state.user.id && $store.state.currentServer.owner_id !== member.id"
            class="kick-button"
            @click="showConfirmDeleteModal = true">
             <span>
@@ -24,6 +24,7 @@
 
 <script>
     import ConfirmDeleteModal from "../General/ConfirmDeleteModal";
+    import errorHandler from "../../modules/Errors";
 
     export default {
         name: "Member",
@@ -41,7 +42,15 @@
         },
         methods: {
             removeUser() {
-                
+                axios.delete(`/servers/${this.$store.state.currentServer.id}/users/${this.member.id}`)
+                    .then(response => {
+                        let members = this.$store.state.currentServer.members;
+                        let index = members.findIndex(member => member.id === response.data.user.id);
+
+                        members.splice(index, 1);
+
+                        this.showConfirmDeleteModal = false;
+                    }).catch(err => errorHandler(err, this));
             }
         }
     }
