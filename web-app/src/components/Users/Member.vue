@@ -11,7 +11,7 @@
             </figure>
         </span>
         <span class="member-name">{{ member.username }}</span>
-        <a v-if="$store.state.currentServer.owner_id === $store.state.user.id && $store.state.currentServer.owner_id !== member.id"
+        <a v-if="$store.state.currentServer && $store.state.currentServer.owner_id === $store.state.user.id && $store.state.currentServer.owner_id !== member.id"
            class="kick-button"
            @click="showConfirmDeleteModal = true">
             <span>
