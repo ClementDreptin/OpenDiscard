@@ -2,7 +2,7 @@
     <header class="server-header">
         <h6 class="title is-6">{{ $store.state.currentServer.name }}</h6>
         <ServerSettings v-if="$store.state.currentServer.owner_id === $store.state.user.id"
-                        class="is-pulled-right server-settings-button"/>
+                        class="server-settings-button"/>
     </header>
 </template>
 
@@ -20,7 +20,6 @@
 <style scoped>
     .server-header {
         display: flex;
-        padding-top: 0.5rem;
         border-bottom: solid 2px #272727;
     }
 
@@ -36,6 +35,7 @@
     h6 {
         flex: 7;
         color: #dcddde;
+        padding-top: 0.5em;
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
@@ -44,6 +44,7 @@
     .server-settings-button {
         flex: 1;
         color: transparent;
+        padding-top: 0.3em;
         padding-left: 0;
         padding-right: 0;
     }
