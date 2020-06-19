@@ -3,16 +3,19 @@
         <h6 class="title is-6">{{ $store.state.currentServer.name }}</h6>
         <ServerSettings v-if="$store.state.currentServer.owner_id === $store.state.user.id"
                         class="server-settings-button"/>
+        <LeaveServerButton v-else class="leave-server-button"/>
     </header>
 </template>
 
 <script>
     import ServerSettings from "./ServerSettings";
+    import LeaveServerButton from "./LeaveServerButton";
 
     export default {
         name: "ServerHeader",
         components: {
-            ServerSettings
+            ServerSettings,
+            LeaveServerButton
         }
     }
 </script>
@@ -23,13 +26,12 @@
         border-bottom: solid 2px #272727;
     }
 
-    .server-header > *:hover {
-        background-color: transparent;
-        color: #dcddde;
-    }
-
     h6:hover + .server-settings-button {
         color: #a5a5a5;
+    }
+
+    h6:hover + .leave-server-button {
+        color: rgba(201,33,66,0.4);
     }
 
     h6 {
@@ -41,7 +43,7 @@
         overflow: hidden;
     }
 
-    .server-settings-button {
+    .server-settings-button, .leave-server-button {
         flex: 1;
         color: transparent;
         padding-top: 0.3em;
