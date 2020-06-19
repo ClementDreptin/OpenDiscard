@@ -18,9 +18,10 @@
             </div>
         </div>
         <div class="add-text-channel-button">
+            <span class="menu-label">Text Channels</span>
             <a v-if="$store.state.currentServer.owner_id === $store.state.user.id"
                @click="showModal = true;textChannelName = ''">
-                <span>+</span>
+                <span class="plus-sign"><i class="fa fa-plus"></i></span>
             </a>
         </div>
     </div>
@@ -64,17 +65,27 @@
 </script>
 
 <style scoped>
+    .plus-sign {
+        font-size: 0.6em;
+    }
+
     .menu-list a:hover {
         background-color: transparent;
         color: #a5a5a5;
     }
 
     .add-text-channel-button {
-        text-align: right;
+        display: flex;
+    }
+
+    .add-text-channel-button > span {
+        flex: 5;
+        padding-top: 0.7em;
     }
 
     .add-text-channel-button > a {
-        display: inline;
+        text-align: right;
+        flex: 1;
         color: #a5a5a5;
         font-size: 1.3rem;
         padding: 0;

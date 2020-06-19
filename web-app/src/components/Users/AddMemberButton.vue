@@ -30,8 +30,9 @@
             </div>
         </div>
         <div class="add-member-button">
+            <span class="menu-label">Members</span>
             <a @click="showModal = true;username = ''">
-                <span>+</span>
+                <span class="plus-sign"><i class="fa fa-plus"></i></span>
             </a>
         </div>
     </div>
@@ -88,17 +89,27 @@
 </script>
 
 <style scoped>
+    .plus-sign {
+        font-size: 0.6em;
+    }
+
     .menu-list a:hover {
         background-color: transparent;
         color: #a5a5a5;
     }
 
     .add-member-button {
-        text-align: right;
+        display: flex;
+    }
+
+    .add-member-button > span {
+        flex: 5;
+        padding-top: 0.7em;
     }
 
     .add-member-button > a {
-        display: inline;
+        text-align: right;
+        flex: 1;
         color: #a5a5a5;
         font-size: 1.3rem;
         padding: 0;
