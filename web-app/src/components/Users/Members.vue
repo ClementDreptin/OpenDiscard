@@ -44,6 +44,10 @@
             this.$bus.$on('currentServerChanged', () => {
                 this.getMembers();
             });
+
+            this.$bus.$on('currentServerWasDeleted', () => {
+                this.members = [];
+            });
         }
     }
 </script>
