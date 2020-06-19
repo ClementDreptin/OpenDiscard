@@ -4,22 +4,30 @@ export default function errorHandler(err, context) {
             case 400:
             case 415:
             case 413:
-                context.fail = err.response.data.message;
+                displayErrorMessage(err, context);
                 break;
             case 401:
                 if (err.response.data.message.toLowerCase().includes('token')) {
                     context.$router.push('/signIn');
                 } else {
-                    context.fail = err.response.data.message;
+                    displayErrorMessage(err, context);
                 }
                 break;
             case 500:
-                context.fail = err.response.data.message + " Please try again later.";
+                displayErrorMessage(err, context);
                 break;
             default:
                 console.log(err.response.data.message);
         }
     } else {
         console.log(err);
+    }
+}
+
+function displayErrorMessage(err, context) {
+    if (context.fail !== undefined) {
+        context.fail = err.response.data.message;
+    } else {
+        alert(err.response.data.message);
     }
 }
