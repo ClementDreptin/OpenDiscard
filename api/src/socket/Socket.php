@@ -5,38 +5,39 @@ use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
 
 class Socket implements MessageComponentInterface {
-    protected $clients;
+    public $rooms = [];
 
-    public function __construct() {
-        $this->clients = new \SplObjectStorage;
-    }
+    public function onOpen(ConnectionInterface $conn) {}
 
-    public function onOpen(ConnectionInterface $conn) {
-        // Store the new connection to send messages to later
-        $this->clients->attach($conn);
+    public function onMessage(ConnectionInterface $client, $dataString) {
+        $data = json_decode($dataString);
+        if ($data === null || !isset($data->action) || !isset($data->roomId)) return;
+        if ($data->action === 'message' && !isset($data->message)) return;
+        $action = $data->action;
+        $roomId = $data->roomId;
 
-        echo "New connection! ({$conn->resourceId})\n";
-    }
+        if (!isset($this->rooms[$roomId])) $this->rooms[$roomId] = new Room();
 
-    public function onMessage(ConnectionInterface $sender, $msg) {
-        foreach ($this->clients as $receiver) {
-            if ($sender !== $receiver) {
-                // The sender is not the receiver, send to each client connected
-                $receiver->send($msg);
-            }
+        switch($action) {
+            case 'join':
+                $this->rooms[$roomId]->join($client);
+                break;
+            case 'leave':
+                $this->rooms[$roomId]->leave($client);
+                break;
+            case 'message':
+                $message = json_encode($data->message);
+                $this->rooms[$roomId]->broadcast($client, $message);
+                break;
+            default:
+                return;
         }
     }
 
-    public function onClose(ConnectionInterface $conn) {
-        // The connection is closed, remove it, as we can no longer send it messages
-        $this->clients->detach($conn);
-
-        echo "Connection {$conn->resourceId} has disconnected\n";
-    }
+    public function onClose(ConnectionInterface $conn) {}
 
     public function onError(ConnectionInterface $conn, \Exception $e) {
         echo "An error has occurred: {$e->getMessage()}\n";
-
         $conn->close();
     }
 }

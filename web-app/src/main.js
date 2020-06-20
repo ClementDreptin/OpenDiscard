@@ -20,6 +20,8 @@ Vue.config.productionTip = false;
 // Bus for global events
 Vue.prototype.$bus = new Vue();
 
+Vue.prototype.$socket = new WebSocket('ws://localhost:19300');
+
 new Vue({
     router,
     store,

@@ -20,7 +20,20 @@
         ],
         methods: {
             textChannelClick() {
+                if (this.$store.state.currentTextChannel) {
+                    this.$socket.send(JSON.stringify({
+                        action: 'leave',
+                        roomId: this.$store.state.currentTextChannel.id
+                    }));
+                }
+
                 this.$store.state.currentTextChannel = this.textChannel;
+
+                this.$socket.send(JSON.stringify({
+                    action: 'join',
+                    roomId: this.$store.state.currentTextChannel.id
+                }));
+
                 this.$bus.$emit('currentTextChannelChanged');
             }
         }

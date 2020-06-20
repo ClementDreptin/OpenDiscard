@@ -41,6 +41,10 @@
             this.$bus.$on('currentTextChannelWasDeleted', () => {
                 this.messages = [];
             });
+
+            this.$bus.$on('messageReceived', message => {
+                console.log('message received:', JSON.parse(message));
+            });
         }
     }
 </script>

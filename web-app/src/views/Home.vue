@@ -52,6 +52,10 @@
             if (!this.$store.state.user) {
                 this.$router.push('/signIn');
             }
+
+            this.$socket.onmessage = e => {
+                this.$bus.$emit('messageReceived', e.data);
+            };
         }
     }
 </script>
