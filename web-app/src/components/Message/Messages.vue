@@ -24,7 +24,7 @@
             getMessages(page = 1, size = 10, order = 'desc', authors = true) {
                 axios.get(`/channels/${this.$store.state.currentTextChannel.id}/messages?page=${page}&size=${size}&order=${order}&authors=${authors}`)
                     .then(response => {
-                        this.$store.state.currentTextChannel.messages = response.data.messages;
+                        this.$store.state.currentTextChannel.messages = response.data.messages.reverse();
                         this.messages = this.$store.state.currentTextChannel.messages;
                     }).catch(err => errorHandler(err, this));
             }
@@ -43,7 +43,7 @@
             });
 
             this.$bus.$on('messageReceived', message => {
-                console.log('message received:', JSON.parse(message));
+                this.messages.push(JSON.parse(message));
             });
         }
     }

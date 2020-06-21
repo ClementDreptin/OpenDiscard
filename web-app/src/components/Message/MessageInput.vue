@@ -3,6 +3,8 @@
 </template>
 
 <script>
+    import errorHandler from "../../modules/Errors";
+
     export default {
         name: "MessageInput",
         data() {
@@ -14,19 +16,34 @@
             sendMessage() {
                 if (this.messageContent === "") return;
 
-                this.$socket.send(JSON.stringify({
-                    action: 'message',
-                    message: {
-                        user: {
-                            id: this.$store.state.user.id,
-                            email: this.$store.state.user.email,
-                            avatar_url: this.$store.state.user.avatar_url,
-                            username: this.$store.state.user.username
-                        },
-                        content: this.messageContent
-                    },
-                    roomId: this.$store.state.currentTextChannel.id
-                }));
+                const params = { content: this.messageContent }
+
+                axios.post(`/channels/${this.$store.state.currentTextChannel.id}/messages/`, params)
+                    .then(response => {
+                        const message = response.data.message;
+                        const user = this.$store.state.user;
+
+                        this.$socket.send(JSON.stringify({
+                            action: 'message',
+                            message: {
+                                id: message.id,
+                                content: message.content,
+                                created_at: message.created_at,
+                                updated_at: message.updated_at,
+                                user_id: message.user_id,
+                                channel_id: message.channel_id,
+                                author: {
+                                    id: user.id,
+                                    username: user.username,
+                                    email: user.email,
+                                    avatar_url: user.avatar_url
+                                }
+                            },
+                            roomId: message.channel_id
+                        }));
+
+                        this.messageContent = "";
+                    }).catch(err => errorHandler(err, this));
             }
         }
     }
