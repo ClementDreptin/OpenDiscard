@@ -27,7 +27,7 @@ class Socket implements MessageComponentInterface {
                 break;
             case 'message':
                 $message = json_encode($data->message);
-                $this->rooms[$roomId]->broadcast($client, $message);
+                $this->rooms[$roomId]->broadcast($message);
                 break;
             default:
                 return;

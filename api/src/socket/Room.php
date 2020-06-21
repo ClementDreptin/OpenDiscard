@@ -22,11 +22,9 @@ class Room {
         }
     }
 
-    public function broadcast(ConnectionInterface $sender, $message) {
+    public function broadcast($message) {
         foreach ($this->clients as $receiver) {
-            if ($sender !== $receiver) {
-                $receiver->send($message);
-            }
+            $receiver->send($message);
         }
     }
 }
