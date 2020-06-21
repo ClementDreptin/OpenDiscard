@@ -94,4 +94,8 @@
     .add-text-channel-button > a:hover {
         color: white;
     }
+
+    .menu-label {
+        margin-bottom: 1em;
+    }
 </style>
