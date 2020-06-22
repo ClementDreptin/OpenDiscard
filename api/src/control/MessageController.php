@@ -140,7 +140,11 @@ class MessageController {
         if ($size > $total) {
             $page = 1;
         } else if (($page * $size) > $total) {
-            $page = intdiv($total, $size) + 1;
+            if ($total % $size !== 0) {
+                $page = intdiv($total, $size) + 1;
+            } else {
+                $page = intdiv($total, $size);
+            }
         }
 
         $messages = $messages->offset(($page-1)*$size)
