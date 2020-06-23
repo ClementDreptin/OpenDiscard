@@ -176,7 +176,7 @@
         color: #dcddde;
     }
 
-    .button:hover {
+    .button:hover, .button:focus {
         background-color: rgba(0, 0, 0, 0.3);
         border: solid white 1px;
         color: white;
@@ -187,13 +187,17 @@
         opacity: 0.35;
     }
 
+    .button:focus:not(:active) {
+        box-shadow: none;
+    }
+
     .button.is-success {
         background-color: transparent;
         border: solid #3ec46d 1px;
         color: #3ec46d;
     }
 
-    .button.is-success:hover {
+    .button.is-success:hover, .button.is-success:focus {
         background-color: rgba(0, 0, 0, 0.3);
         border: solid #52ea8c 1px;
         color: #52ea8c;
@@ -210,7 +214,7 @@
         color: #f03a5f;
     }
 
-    .button.is-danger:hover {
+    .button.is-danger:hover, .button.is-danger:focus {
         background-color: rgba(0, 0, 0, 0.3);
         border: solid #ff5877 1px;
         color: #ff5877;
@@ -227,7 +231,7 @@
         color: #3273dc;
     }
 
-    .button.is-link:hover {
+    .button.is-link:hover, .button.is-link:focus {
         background-color: rgba(0, 0, 0, 0.3);
         border: solid #5090f8 1px;
         color: #5090f8;
