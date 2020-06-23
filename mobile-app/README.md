@@ -1,4 +1,4 @@
-# OpenDiscard - mobile app
+# OpenDiscard - Mobile App
 OpenDiscard Mobile App is a mobile version of [OpenDiscard](https://github.com/ClementDreptin/OpenDiscard/) for Android and iOS.
 
 ### Technologies used
