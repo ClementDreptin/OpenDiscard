@@ -42,8 +42,8 @@
         },
         data() {
             return {
-                email: "isaac.newton@physics.com",
-                password: "physics",
+                email: "",
+                password: "",
                 fail: false
             }
         },
