@@ -8,4 +8,4 @@ OpenDiscard API is the API used by the [Web and Desktop app](https://github.com/
 - [docker](https://www.docker.com/)
 
 ### Documentation
-Documentation [here]().
+Documentation [here](http://51.68.213.80:19180/docs/).
