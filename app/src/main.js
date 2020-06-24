@@ -6,7 +6,7 @@ import axios from 'axios'
 import 'bulma/css/bulma.css'
 
 window.axios = axios.create({
-    baseURL: 'http://api.opendiscard.local:19180'
+    baseURL: 'http://51.68.213.80:19180'
 });
 
 document.addEventListener('contextmenu', event => {
@@ -20,7 +20,7 @@ Vue.config.productionTip = false;
 // Bus for global events
 Vue.prototype.$bus = new Vue();
 
-Vue.prototype.$socket = new WebSocket('ws://localhost:19300');
+Vue.prototype.$socket = new WebSocket('ws://51.68.213.80:19300');
 
 new Vue({
     router,
