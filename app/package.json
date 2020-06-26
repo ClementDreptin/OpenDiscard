@@ -1,15 +1,20 @@
 {
   "name": "open-discard",
+  "productName": "OpenDiscard",
+  "description": "OpenDiscard is a university project that aims to be a clone of Discord but open-source.",
   "version": "0.1.0",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "electron:build": "vue-cli-service electron:build",
     "electron:serve": "vue-cli-service electron:serve",
+    "electron:generate-icons": "electron-icon-builder --input=./public/icon.png --output=build --flatten",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps"
   },
   "main": "background.js",
+  "author": "Clément Dreptin <cdreptin@gmail.com>",
+  "homepage": "http://51.68.213.80",
   "dependencies": {
     "axios": "^0.19.2",
     "bulma": "^0.8.2",
@@ -24,6 +29,8 @@
     "@vue/cli-plugin-vuex": "~4.4.0",
     "@vue/cli-service": "~4.4.0",
     "electron": "^9.0.0",
+    "electron-icon-builder": "^1.0.2",
+    "electron-packager": "^14.2.1",
     "vue-cli-plugin-electron-builder": "~2.0.0-rc.2",
     "vue-template-compiler": "^2.6.11"
   }
