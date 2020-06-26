@@ -1,6 +1,78 @@
 define({ "api": [
   {
     "type": "get",
+    "url": "/download?platform=:platform&format=:format",
+    "title": "Get",
+    "group": "Download",
+    "description": "<p>Gets a File.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "allowedValues": [
+              "win",
+              "linux"
+            ],
+            "optional": false,
+            "field": "platform",
+            "description": "<p>The platform.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "allowedValues": [
+              "msi",
+              "deb",
+              "tar.gz"
+            ],
+            "optional": false,
+            "field": "format",
+            "description": "<p>The format.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "File",
+            "optional": false,
+            "field": "file",
+            "description": "<p>The File.</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "IncorrectValue",
+            "description": "<p>Incorrect value in the parameters.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "ImageNotFound-Response:",
+          "content": "HTTP/1.1 400 BAD REQQUEST\n{\n  \"type\": \"error\",\n  \"error\": 400,\n  \"message\": \"Incorrect value in at least one parameter. Please check the docs for the possible values.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/control/DownloadController.php",
+    "groupTitle": "Download",
+    "name": "GetDownloadPlatformPlatformFormatFormat"
+  },
+  {
+    "type": "get",
     "url": "/images/:id",
     "title": "Get",
     "group": "Images",
