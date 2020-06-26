@@ -1,5 +1,6 @@
 /src/vendor/
 /images/
+/download/
 composer.lock
 docker-compose.yml
 config.ini
