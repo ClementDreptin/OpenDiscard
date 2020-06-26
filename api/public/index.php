@@ -8,6 +8,7 @@ use OpenDiscard\api\common\middleware\CORS;
 use OpenDiscard\api\common\middleware\JWT;
 use OpenDiscard\api\common\middleware\Validator;
 use OpenDiscard\api\control\DocsController;
+use OpenDiscard\api\control\DownloadController;
 use OpenDiscard\api\control\ImageController;
 use OpenDiscard\api\control\MessageController;
 use OpenDiscard\api\control\ServerController;
@@ -154,6 +155,9 @@ $app->get('/docs[/]', DocsController::class.':renderDocsHtmlFile')
     ->add(CORS::class.':addCORSHeaders');
 
 $app->get('/', DocsController::class.':redirectTowardsDocs')
+    ->add(CORS::class.':addCORSHeaders');
+
+$app->get('/download[/]', DownloadController::class.':download')
     ->add(CORS::class.':addCORSHeaders');
 
 $app->run();
