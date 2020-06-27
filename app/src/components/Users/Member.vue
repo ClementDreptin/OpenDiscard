@@ -19,16 +19,19 @@
             </span>
         </a>
         <ConfirmDeleteModal element="User" actionTitle="Remove" :deleteFunction="removeUser"/>
+        <ErrorModal/>
     </div>
 </template>
 
 <script>
     import ConfirmDeleteModal from "../General/ConfirmDeleteModal";
+    import ErrorModal from "../General/ErrorModal";
     import errorHandler from "../../modules/Errors";
 
     export default {
         name: "Member",
         components: {
+            ErrorModal,
             ConfirmDeleteModal
         },
         props: [
@@ -37,7 +40,8 @@
         data() {
             return {
                 axios: axios,
-                showConfirmDeleteModal: false
+                showConfirmDeleteModal: false,
+                fail: null
             }
         },
         methods: {

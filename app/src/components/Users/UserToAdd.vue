@@ -10,18 +10,25 @@
         </figure>
         <div>{{ user.username }}</div>
         <button @click="addUser" ref="addButton" class="button is-success"></button>
+        <ErrorModal/>
     </div>
 </template>
 
 <script>
+    import ErrorModal from "../General/ErrorModal";
+
     export default {
         name: "UserToAdd",
+        components: {
+            ErrorModal
+        },
         props: [
             'user'
         ],
         data() {
             return {
-                axios: axios
+                axios: axios,
+                fail: null
             }
         },
         methods: {

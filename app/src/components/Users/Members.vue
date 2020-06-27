@@ -8,6 +8,7 @@
                 <Member :member="member"/>
             </li>
         </ul>
+        <ErrorModal/>
     </aside>
 </template>
 
@@ -15,16 +16,19 @@
     import Member from "./Member";
     import AddMemberButton from "./AddMemberButton";
     import errorHandler from "../../modules/Errors";
+    import ErrorModal from "../General/ErrorModal";
 
     export default {
         name: "Members",
         components: {
+            ErrorModal,
             Member,
             AddMemberButton
         },
         data() {
             return {
-                members: []
+                members: [],
+                fail: null
             }
         },
         methods: {

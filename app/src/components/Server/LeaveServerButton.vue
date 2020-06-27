@@ -6,21 +6,25 @@
             </span>
         </a>
         <ConfirmDeleteModal element="Server" actionTitle="Leave" :deleteFunction="leaveServer"/>
+        <ErrorModal/>
     </div>
 </template>
 
 <script>
     import ConfirmDeleteModal from "../General/ConfirmDeleteModal";
+    import ErrorModal from "../General/ErrorModal";
     import errorHandler from "../../modules/Errors";
 
     export default {
         name: "LeaveServerButton",
         components: {
-            ConfirmDeleteModal
+            ConfirmDeleteModal,
+            ErrorModal
         },
         data() {
             return {
-                showConfirmDeleteModal: false
+                showConfirmDeleteModal: false,
+                fail: null
             }
         },
         methods: {

@@ -8,23 +8,27 @@
                 <TextChannel :textChannel="textChannel"/>
             </li>
         </ul>
+        <ErrorModal/>
     </aside>
 </template>
 
 <script>
     import TextChannel from "./TextChannel";
     import AddTextChannelButton from "./AddTextChannelButton";
+    import ErrorModal from "../General/ErrorModal";
     import errorHandler from "../../modules/Errors";
 
     export default {
         name: "TextChannels",
         components: {
             TextChannel,
-            AddTextChannelButton
+            AddTextChannelButton,
+            ErrorModal
         },
         data() {
             return {
-                textChannels: []
+                textChannels: [],
+                fail: null
             }
         },
         methods: {

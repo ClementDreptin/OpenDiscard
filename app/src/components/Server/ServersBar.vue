@@ -8,23 +8,27 @@
                 <AddServerButton/>
             </li>
         </ul>
+        <ErrorModal/>
     </aside>
 </template>
 
 <script>
     import Server from "./Server";
     import AddServerButton from "./AddServerButton";
+    import ErrorModal from "../General/ErrorModal";
     import errorHandler from "../../modules/Errors";
 
     export default {
         name: "ServersBar",
         components: {
             Server,
-            AddServerButton
+            AddServerButton,
+            ErrorModal
         },
         data() {
             return {
-                servers: []
+                servers: [],
+                fail: null
             }
         },
         methods: {

@@ -1,15 +1,23 @@
 <template>
-    <input id="message-input" class="input" type="text" @keyup.enter="sendMessage()" v-model="messageContent" placeholder="Message">
+    <div>
+        <input id="message-input" class="input" type="text" @keyup.enter="sendMessage()" v-model="messageContent" placeholder="Message">
+        <ErrorModal/>
+    </div>
 </template>
 
 <script>
+    import ErrorModal from "../General/ErrorModal";
     import errorHandler from "../../modules/Errors";
 
     export default {
         name: "MessageInput",
+        components: {
+            ErrorModal
+        },
         data() {
             return {
-                messageContent: ""
+                messageContent: "",
+                fail: null
             }
         },
         methods: {

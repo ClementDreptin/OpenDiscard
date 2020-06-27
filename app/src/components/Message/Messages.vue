@@ -3,24 +3,28 @@
         <div class="messages-custom">
             <Message v-for="message in messages" :message="message"/>
         </div>
+        <ErrorModal/>
     </div>
 </template>
 
 <script>
     import Message from "./Message";
+    import ErrorModal from "../General/ErrorModal";
     import errorHandler from "../../modules/Errors";
 
     export default {
         name: "Messages",
         components: {
-            Message
+            Message,
+            ErrorModal
         },
         data() {
             return {
                 messages: [],
                 nbMessagesFetched: null,
                 currentPage: 1,
-                lastPage: null
+                lastPage: null,
+                fail: null
             }
         },
         methods: {
