@@ -87,6 +87,7 @@
 <style scoped>
     h1 {
         color: #dcddde;
+        padding-top: 0.7em;
     }
 
     #signup {
