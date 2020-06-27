@@ -157,7 +157,10 @@ $app->get('/docs[/]', DocsController::class.':renderDocsHtmlFile')
 $app->get('/', DocsController::class.':redirectTowardsDocs')
     ->add(CORS::class.':addCORSHeaders');
 
-$app->get('/download[/]', DownloadController::class.':download')
+$app->get('/download[/]', DownloadController::class.':redirect')
+    ->add(CORS::class.':addCORSHeaders');
+
+$app->get('/apps/{file}[/]', DownloadController::class.':download')
     ->add(CORS::class.':addCORSHeaders');
 
 $app->run();

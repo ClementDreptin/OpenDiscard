@@ -33,9 +33,13 @@ class DownloadController {
      *       "message": "Incorrect value in at least one parameter. Please check the docs for the possible values."
      *     }
      */
-    public function download(Request $request, Response $response, $args) {
+    public function redirect(Request $request, Response $response, $args) {
         $platform = $request->getQueryParam('platform');
         $format = $request->getQueryParam('format');
+
+        $scheme = $request->getUri()->getScheme();
+        $host = $request->getUri()->getHost();
+        $port = $request->getUri()->getPort();
 
         if (!isset($platform) || !isset($format)) {
             return JSON::errorResponse($response, 400, "You need to provide a platform and a format in the respective parameters.");
@@ -60,6 +64,19 @@ class DownloadController {
         } else {
             return JSON::errorResponse($response, 400, "Incorrect value in at least one parameter. Please check the docs for the possible values.");
         }
+
+        $fileURL = "$scheme://$host:$port/apps/OpenDiscard.$extension";
+
+        $response = $response->withHeader("Location", $fileURL);
+
+        return $response;
+    }
+
+    public function download(Request $request, Response $response, $args) {
+        $file_name = $args['file'];
+
+        $tmp_array = explode('.', $file_name);
+        $extension = end($tmp_array);
 
         $match = glob($this->container->settings['download_dir'].'/*.'.$extension);
         if (empty($match)) {
