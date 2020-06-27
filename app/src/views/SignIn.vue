@@ -20,7 +20,35 @@
                     <button class="button is-link is-rounded" @click="signIn">Sign In</button>
                 </div>
                 <div class="control">
-                    <span><router-link class="button is-link is-rounded" to="signUp">New to OpenDiscard? Create an account!</router-link></span>
+                    <span><router-link class="button is-link is-rounded" to="signUp">Create an account!</router-link></span>
+                </div>
+            </div>
+
+            <div v-if="!isElectron" class="download-section">
+                <div class="download-title">Download</div>
+                <div class="download-options field is-grouped">
+                    <div id="windows-button" class="control">
+                        <a download :href="`${axios.defaults.baseURL}/download?platform=win&format=msi`" class="icons">
+                            <i class="fab fa-windows"></i>
+                        </a>
+                    </div>
+                    <div class="dropdown is-active">
+                        <div class="dropdown-trigger">
+                            <a class="icons" @click="dropdownActive = !dropdownActive">
+                                <i class="fab fa-linux"></i>
+                            </a>
+                        </div>
+                        <div v-if="dropdownActive" class="dropdown-menu">
+                            <div class="dropdown-content">
+                                <a class="dropdown-item" :href="`${axios.defaults.baseURL}/download?platform=linux&format=deb`">
+                                    deb
+                                </a>
+                                <a class="dropdown-item" :href="`${axios.defaults.baseURL}/download?platform=linux&format=tar.gz`">
+                                    tar.gz
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -44,7 +72,10 @@
             return {
                 email: "",
                 password: "",
-                fail: false
+                fail: false,
+                axios: axios,
+                isElectron: process.env.IS_ELECTRON,
+                dropdownActive: false
             }
         },
         methods: {
@@ -68,6 +99,7 @@
 <style scoped>
     h1 {
         color: #dcddde;
+        padding-top: 0.7em;
     }
 
     #signin {
@@ -84,5 +116,28 @@
     #signin-message {
         width: 90%;
         margin-top: 1em;
+    }
+
+    .icons {
+        color: #dcddde;
+        font-size: 1.8em;
+    }
+
+    .download-section {
+        margin-top: 10%;
+    }
+
+    .download-options {
+        justify-content: center;
+    }
+
+    .download-title {
+        color: #dcddde;
+        text-align: center;
+        margin-bottom: 1em;
+    }
+
+    #windows-button {
+        margin-right: 1.5em;
     }
 </style>
