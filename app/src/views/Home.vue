@@ -261,4 +261,17 @@
     .image.is-32x32 img, .image.is-48x48 img {
         height: 100%;
     }
+
+    .dropdown-content {
+        background-color: #2f3136;
+    }
+
+    .dropdown-item {
+        color: #dcddde;
+    }
+
+    a.dropdown-item:hover {
+        background-color: #36393f;
+        color: #dcddde;
+    }
 </style>
