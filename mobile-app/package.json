@@ -1,0 +1,28 @@
+{
+  "nativescript": {
+    "id": "org.nativescript.OpenDiscard",
+    "tns-android": {
+      "version": "6.5.0"
+    },
+    "tns-ios": {
+      "version": "6.5.0"
+    }
+  },
+  "description": "OpenDiscard is a university project that aims to be a clone of Discord but open-source.",
+  "author": "Clément Dreptin <cdreptin@gmail.com>",
+  "homepage": "http://51.68.213.80",
+  "dependencies": {
+    "@nativescript/theme": "~2.3.0",
+    "nativescript-vue": "~2.4.0",
+    "tns-core-modules": "~6.5.0"
+  },
+  "devDependencies": {
+    "@babel/core": "~7.1.0",
+    "@babel/preset-env": "~7.1.0",
+    "babel-loader": "~8.0.0",
+    "nativescript-dev-webpack": "~1.5.0",
+    "nativescript-vue-template-compiler": "~2.4.0",
+    "node-sass": "^4.7.1",
+    "vue-loader": "~15.4.0"
+  }
+}
