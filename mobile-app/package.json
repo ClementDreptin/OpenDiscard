@@ -13,6 +13,7 @@
   "homepage": "http://51.68.213.80",
   "dependencies": {
     "@nativescript/theme": "~2.3.0",
+    "axios": "^0.19.2",
     "nativescript-vue": "~2.4.0",
     "tns-core-modules": "~6.5.0",
     "vuex": "^3.5.1"
