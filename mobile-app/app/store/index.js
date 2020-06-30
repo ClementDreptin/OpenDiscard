@@ -5,7 +5,10 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-
+        user: null,
+        servers: [],
+        currentServer: null,
+        currentTextChannel: null
     },
     mutations: {
 
