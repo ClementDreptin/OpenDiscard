@@ -1,5 +1,5 @@
 <template>
-    <Page>
+    <Page actionBarHidden="true">
         <BottomNavigation>
             <TabStrip>
                 <TabStripItem class="navigation__item">
