@@ -1,7 +1,7 @@
 <template>
     <Page>
         <ActionBar>
-            <Label text="Home"></Label>
+            <Label text="Servers"></Label>
         </ActionBar>
 
         <ListView for="item in items" @itemTap="onItemTap">
@@ -91,7 +91,7 @@
         methods: {
             onItemTap(args) {
                 this.$navigateTo(ItemDetails, {
-                    frame: 'items',
+                    frame: 'servers',
                     props: {item: args.item},
                     animated: true,
                     transition: {
@@ -106,10 +106,5 @@
 </script>
 
 <style scoped lang="scss">
-    // Start custom common variables
-    @import "~@nativescript/theme/scss/variables/ruby";
-    // End custom common variables
-
-    // Custom styles
 
 </style>

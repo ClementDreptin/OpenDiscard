@@ -16,20 +16,20 @@
         </TabStrip>
 
         <TabContentItem>
-            <Frame id="items">
-                <Items/>
+            <Frame id="servers">
+                <Servers/>
             </Frame>
         </TabContentItem>
 
         <TabContentItem>
-            <Frame id="browse">
-                <Browse/>
+            <Frame id="messages">
+                <Messages/>
             </Frame>
         </TabContentItem>
 
         <TabContentItem>
-            <Frame id="search">
-                <Search/>
+            <Frame id="members">
+                <Members/>
             </Frame>
         </TabContentItem>
 
@@ -37,24 +37,19 @@
 </template>
 
 <script>
-    import Items from "./Items.vue";
-    import Browse from "./Browse.vue";
-    import Search from "./Search.vue";
+    import Servers from "./Servers";
+    import Messages from "./Messages";
+    import Members from "./Members";
 
     export default {
         components: {
-            Items,
-            Browse,
-            Search
+            Servers,
+            Messages,
+            Members
         }
     };
 </script>
 
 <style lang="scss">
-    // Start custom common variables
-    @import "~@nativescript/theme/scss/variables/ruby";
-    // End custom common variables
-
-    // Custom styles
 
 </style>

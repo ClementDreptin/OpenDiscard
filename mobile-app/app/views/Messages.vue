@@ -1,7 +1,7 @@
 <template lang="html">
     <Page>
         <ActionBar>
-            <Label text="Browse"></Label>
+            <Label text="Current Channel"></Label>
         </ActionBar>
 
         <GridLayout class="page__content">
@@ -22,10 +22,5 @@
 </script>
 
 <style lang="scss" scoped>
-    // Start custom common variables
-    @import "~@nativescript/theme/scss/variables/ruby";
-    // End custom common variables
-
-    // Custom styles
 
 </style>
