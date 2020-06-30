@@ -1,6 +1,5 @@
 <template>
     <Page>
-
         <ActionBar>
             <NavigationButton @tap="$navigateBack" android.systemIcon="ic_menu_back"/>
             <Label :text="item.name"></Label>
@@ -13,14 +12,14 @@
 </template>
 
 <script>
-  export default {
-    props: ["item"],
-  };
+    export default {
+        props: ["item"],
+    };
 </script>
 
 <style scoped lang="scss">
     // Start custom common variables
-    @import "~@nativescript/theme/scss/variables/blue";
+    @import "~@nativescript/theme/scss/variables/ruby";
     // End custom common variables
 
     // Custom styles
