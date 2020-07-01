@@ -5,7 +5,6 @@
         </ActionBar>
 
         <GridLayout class="page__content">
-            <Label class="page__content-icon far" text.decode="&#xf1ea;"></Label>
             <Label class="page__content-placeholder" :text="message"></Label>
         </GridLayout>
     </Page>
@@ -15,7 +14,7 @@
     export default {
         data() {
             return {
-                message: "<!-- Browse page content goes here -->"
+                message: "<!-- Messages page content goes here -->"
             };
         }
     }
