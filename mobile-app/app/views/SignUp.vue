@@ -16,12 +16,12 @@
                 </StackLayout>
 
                 <StackLayout class="input-field" marginBottom="25">
-                    <TextField class="input" hint="Password" keyboardType="password" autocorrect="false" autocapitalizationType="none" v-model="password" returnKeyType="next" fontSize="18" />
+                    <TextField class="input" hint="Password" secure="true" autocorrect="false" autocapitalizationType="none" v-model="password" returnKeyType="next" fontSize="18" />
                     <StackLayout class="hr-light" />
                 </StackLayout>
 
                 <StackLayout class="input-field" marginBottom="25">
-                    <TextField class="input" hint="Retype password" keyboardType="password" autocorrect="false" autocapitalizationType="none" v-model="passwordVerify" fontSize="18" />
+                    <TextField class="input" hint="Retype password" secure="true" autocorrect="false" autocapitalizationType="none" v-model="passwordVerify" fontSize="18" />
                     <StackLayout class="hr-light" />
                 </StackLayout>
 
@@ -39,6 +39,8 @@
 
 <script>
     import SignIn from "~/views/SignIn";
+    import errorHandler from "~/modules/Errors";
+    import Home from "~/views/Home";
 
     export default {
         name: "SignUp",
@@ -68,11 +70,17 @@
                     });
                 }
 
-                return alert({
-                    title: "Success",
-                    message: "Success",
-                    okButtonText: "OK"
-                });
+                let params = {
+                    username: this.username,
+                    email: this.email,
+                    password: this.password
+                };
+
+                axios.post('/users/signup/', params)
+                    .then(response => {
+                        this.$store.state.user = response.data.user;
+                        this.$navigateTo(Home);
+                    }).catch(err => errorHandler(err, this));
             },
 
             goToSignIn() {
