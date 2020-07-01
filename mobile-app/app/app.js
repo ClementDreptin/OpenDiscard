@@ -20,5 +20,16 @@ global.axios = axios.create({
 
 new Vue({
     store,
-    render: h => h('frame', [h(App)])
+    render: h => h('frame', [h(App)]),
+    beforeCreate() {
+        // Adds the token in an Authorization header if it's available in the store
+        global.axios.interceptors.request.use(config => {
+            if (this.$store.state.user) {
+                config.headers = { Authorization: "Bearer "+this.$store.state.user.token }
+            }
+            return config;
+        }, error => {
+            return console.log(error);
+        });
+    }
 }).$start();
