@@ -2,6 +2,29 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>UIUserInterfaceStyle</key>
+    <string>Light</string>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSExceptionDomains</key>
+        <dict>
+            <key>51.68.213.80</key>
+            <dict>
+                <key>NSIncludesSubdomains</key>
+                <true/>
+                <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                <true/>
+                <key>NSExceptionRequiresForwardSecrecy</key>
+                <true/>
+                <key>NSThirdPartyExceptionAllowsInsecureHTTPLoads</key>
+                <false/>
+                <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+                <true/>
+                <key>NSRequiresCertificateTransparency</key>
+                <false/>
+            </dict>
+        </dict>
+    </dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
