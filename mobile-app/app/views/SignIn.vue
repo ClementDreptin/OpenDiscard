@@ -30,6 +30,7 @@
 <script>
     import Home from "~/views/Home";
     import SignUp from "~/views/SignUp";
+    import errorHandler from "~/modules/Errors";
 
     export default {
         name: "SignIn",
@@ -51,7 +52,7 @@
                     this.$store.state.user = response.data.user;
 
                     this.$navigateTo(Home).catch(err => console.log(err));
-                }).catch(err => console.log(err));
+                }).catch(err => errorHandler(err, this));
             },
 
             goToSignUp() {
