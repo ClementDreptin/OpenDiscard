@@ -32,6 +32,7 @@
                     if (child.isActive === true) child.isActive = false;
                 });
                 this.isActive = !this.isActive;
+                global.bus.$emit('currentServerChanged');
             },
 
             getServerIconText() {
