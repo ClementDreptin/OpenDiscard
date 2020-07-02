@@ -4,51 +4,22 @@
             <Label text="Servers"></Label>
         </ActionBar>
 
-        <ListView for="server in servers" @itemTap="serverClick">
-            <v-template>
-                <StackLayout orientation="horizontal">
-                    <Label :text="server.name" textWrap="true"></Label>
-                </StackLayout>
-            </v-template>
-        </ListView>
+        <FlexboxLayout>
+            <ServersBar width="20%"/>
+            <StackLayout width="80%" backgroundColor="red">
+                <Label text="random stuff"/>
+            </StackLayout>
+        </FlexboxLayout>
     </Page>
 </template>
 
 <script>
-    import ServerDetails from "./ServerDetails";
-    import errorHandler from "~/modules/Errors";
+    import ServersBar from "~/components/Server/ServersBar";
 
     export default {
-        data() {
-            return {
-                servers: []
-            };
-        },
-        methods: {
-            serverClick(args) {
-                this.$navigateTo(ServerDetails, {
-                    frame: 'servers',
-                    props: {server: args.item},
-                    animated: true,
-                    transition: {
-                        name: "slide",
-                        duration: 200,
-                        curve: "ease"
-                    }
-                }).catch(err => console.log(err));
-            },
-
-            getServers() {
-                axios.get('/servers/')
-                    .then(response => {
-                        this.$store.state.servers = response.data.servers;
-                        this.servers = this.$store.state.servers;
-                    })
-                    .catch(err => errorHandler(err, this));
-            }
-        },
-        mounted() {
-            this.getServers();
+        name: "Servers",
+        components: {
+            ServersBar
         }
     };
 </script>
