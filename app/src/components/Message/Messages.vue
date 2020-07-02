@@ -95,6 +95,7 @@
 
 <style scoped>
     .messages-container {
+        flex-grow: 1;
         overflow-x: hidden;
         overflow-y: scroll;
         scrollbar-color: rgba(32,34,37,.6) transparent;

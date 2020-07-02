@@ -58,9 +58,13 @@
 </script>
 
 <style scoped>
+    div {
+        text-align: center;
+    }
+
     #message-input {
         width: 96%;
         padding: 0.5em 0.75em 0.5em 0.75em;
-        margin: auto auto 0.7em;
+        margin-bottom: 0.7em;
     }
 </style>
