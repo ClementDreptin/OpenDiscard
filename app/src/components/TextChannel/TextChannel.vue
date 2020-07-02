@@ -3,7 +3,9 @@
         <a @click="textChannelClick" class="text-channel-name">
             <span>{{ textChannel.name }}</span>
         </a>
-        <TextChannelSettings :textChannel="textChannel" class="text-channel-options"/>
+        <TextChannelSettings v-if="$store.state.currentServer.owner_id === $store.state.user.id"
+                             :textChannel="textChannel"
+                             class="text-channel-options"/>
     </div>
 </template>
 
