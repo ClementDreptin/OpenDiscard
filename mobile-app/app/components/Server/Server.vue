@@ -63,17 +63,6 @@
         margin-bottom: 8;
     }
 
-    .active-indicator {
-        position: absolute;
-        display: block;
-        width: 30;
-        height: 40;
-        border-radius: 0 4 4 0;
-        margin-left: -5;
-        margin-top: 4;
-        background-color: $white;
-    }
-
     .server-image, .server-icon {
         width: 48;
         height: 48;
