@@ -6,20 +6,20 @@
 
         <FlexboxLayout>
             <ServersBar width="20%"/>
-            <StackLayout width="80%" backgroundColor="red">
-                <Label text="random stuff"/>
-            </StackLayout>
+            <TextChannels width="80%"/>
         </FlexboxLayout>
     </Page>
 </template>
 
 <script>
     import ServersBar from "~/components/Server/ServersBar";
+    import TextChannels from "~/components/TextChannel/TextChannels";
 
     export default {
         name: "Servers",
         components: {
-            ServersBar
+            ServersBar,
+            TextChannels
         }
     };
 </script>
