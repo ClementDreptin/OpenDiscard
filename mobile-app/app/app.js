@@ -18,6 +18,9 @@ global.axios = axios.create({
     baseURL: 'http://51.68.213.80:19180'
 });
 
+// Global bus for events
+global.bus = new Vue({});
+
 new Vue({
     store,
     render: h => h('frame', [h(App)]),
