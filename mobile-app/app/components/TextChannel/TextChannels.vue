@@ -1,7 +1,7 @@
 <template>
-    <StackLayout id="text-channels-container" v-if="$store.state.currentServer">
-        <ServerHeader/>
-        <ScrollView>
+    <StackLayout id="text-channels-container">
+        <ServerHeader v-if="$store.state.currentServer"/>
+        <ScrollView v-if="$store.state.currentServer">
             <StackLayout id="text-channels">
                 <TextChannel v-for="textChannel in textChannels" :textChannel="textChannel"/>
             </StackLayout>

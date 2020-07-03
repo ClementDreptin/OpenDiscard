@@ -91,5 +91,13 @@
 </script>
 
 <style scoped lang="scss">
+    @import "../color-variables.scss";
 
+    Page {
+        background-color: $grey-1;
+    }
+
+    .btn {
+        background-color: $grey-1;
+    }
 </style>

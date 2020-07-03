@@ -113,4 +113,8 @@
 // Common css for ActionBars
 ActionBar {
     background-color: $grey-2;
+
+    Label {
+        color: $white;
+    }
 }

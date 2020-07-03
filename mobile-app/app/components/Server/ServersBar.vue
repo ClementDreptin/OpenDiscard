@@ -37,7 +37,10 @@
 </script>
 
 <style scoped lang="scss">
+    @import "../../color-variables";
+
     #server-bar {
         padding: 12;
+        background-color: $grey-0;
     }
 </style>
