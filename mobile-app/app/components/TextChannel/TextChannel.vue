@@ -1,7 +1,13 @@
 <template>
     <FlexboxLayout justifyContent="space-between">
-        <Label :text="textChannel.name"/>
-        <Image src.decode="font://&#xf013;" stretch="none" fontSize="18" class="fas" opacity="0.5"/>
+        <Label width="80%"
+               :text="textChannel.name"/>
+        <Image v-if="$store.state.currentServer.owner_id === $store.state.user.id"
+               src.decode="font://&#xf013;"
+               stretch="none"
+               fontSize="18"
+               class="fas text-channel-settings-button"
+               opacity="0.5"/>
     </FlexboxLayout>
 </template>
 
@@ -24,5 +30,9 @@
 
     FlexboxLayout {
         margin-bottom: 12;
+    }
+
+    .text-channel-settings-button {
+        color: $white;
     }
 </style>

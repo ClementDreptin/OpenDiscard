@@ -1,8 +1,22 @@
 <template>
     <StackLayout>
         <FlexboxLayout justifyContent="space-between">
-            <Label :text="$store.state.currentServer.name"/>
-            <Image src.decode="font://&#xf013;" stretch="none" fontSize="18" class="fas" opacity="0.7"/>
+            <Label width="80%"
+                   :text="$store.state.currentServer.name"/>
+            <Image v-show="$store.state.currentServer.owner_id === $store.state.user.id"
+                   src.decode="font://&#xf013;"
+                   stretch="none"
+                   color="#dcddde"
+                   fontSize="18"
+                   class="fas"
+                   opacity="0.7"/>
+            <Image v-show="$store.state.currentServer.owner_id !== $store.state.user.id"
+                   src.decode="font://&#xf0a8;"
+                   stretch="none"
+                   color="rgb(201,33,66)"
+                   fontSize="18"
+                   class="fas"
+                   opacity="0.7"/>
         </FlexboxLayout>
         <StackLayout class="hr"/>
     </StackLayout>
