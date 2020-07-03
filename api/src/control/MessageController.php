@@ -123,7 +123,7 @@ class MessageController {
         $size = $request->getQueryParam('size', 10);
         $order = $request->getQueryParam('order', 'desc');
 
-        $order = $order !== 'asc' || $order !== 'desc' ? 'desc' : $order;
+        $order = $order !== 'asc' && $order !== 'desc' ? 'desc' : $order;
 
         $messages = Message::query()->where('channel_id', '=', $textChannel->id);
 
