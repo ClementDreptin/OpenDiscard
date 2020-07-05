@@ -1,13 +1,13 @@
 <template>
     <Page actionBarHidden="true">
-        <BottomNavigation>
+        <BottomNavigation @loaded="onLoad">
             <TabStrip>
                 <TabStripItem class="navigation__item">
                     <Label text="Servers"></Label>
                     <Image src.decode="font://&#xf022;" class="fas t-36"></Image>
                 </TabStripItem>
                 <TabStripItem class="navigation__item">
-                    <Label text="Channel"></Label>
+                    <Label text="Messages"></Label>
                     <Image src.decode="font://&#xf4ad;" class="fas t-36"></Image>
                 </TabStripItem>
                 <TabStripItem class="navigation__item">
@@ -49,6 +49,11 @@
             Servers,
             Messages,
             Members
+        },
+        methods: {
+            onLoad(args) {
+                global.bottomNav = args.object;
+            }
         }
     }
 </script>
