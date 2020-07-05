@@ -118,3 +118,28 @@ ActionBar {
         color: $white;
     }
 }
+
+// Common css for Modals
+.modal-container {
+    background-color: $grey-1;
+    padding: 10;
+
+    .modal-input {
+        color: $white;
+        font-size: 15;
+        placeholder-color: #A8A8A8;
+    }
+
+    .btn-success {
+        margin-top: 18;
+        height: 40;
+        width: 50%;
+        background-color: $grey-1;
+        color: $success;
+        border-color: $success;
+        border-width: 2;
+        border-radius: 5;
+        font-size: 17;
+        font-weight: 600;
+    }
+}

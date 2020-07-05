@@ -1,8 +1,8 @@
 <template>
     <Page>
-        <StackLayout>
-            <TextField v-model="serverLocal.name" hint="Server name"/>
-            <Button text="Update" @tap="updateServer"/>
+        <StackLayout class="modal-container">
+            <TextField class="modal-input" v-model="serverLocal.name" hint="Server name"/>
+            <Button class="btn-success" text="Update" @tap="updateServer"/>
         </StackLayout>
     </Page>
 </template>
@@ -54,28 +54,5 @@
 </script>
 
 <style scoped lang="scss">
-    @import "../../color-variables";
 
-    StackLayout {
-        background-color: $grey-1;
-        padding: 10;
-    }
-
-    TextField {
-        color: $white;
-        font-size: 15;
-    }
-
-    Button {
-        margin-top: 18;
-        height: 40;
-        width: 50%;
-        background-color: $grey-1;
-        color: $success;
-        border-color: $success;
-        border-width: 2;
-        border-radius: 5;
-        font-size: 17;
-        font-weight: 600;
-    }
 </style>
