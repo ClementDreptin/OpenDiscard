@@ -15,6 +15,7 @@
 
 <script>
     import TextChannelSettingsModal from "~/components/TextChannel/TextChannelSettingsModal";
+    import { messagesIndex } from "~/modules/NavIndexes";
 
     export default {
         name: "TextChannel",
@@ -39,6 +40,7 @@
                 }*/
 
                 this.$store.state.currentTextChannel = this.textChannel;
+                global.bottomNav.selectedIndex = messagesIndex;
 
                 /*global.socket.send(JSON.stringify({
                     action: 'join',
