@@ -142,6 +142,18 @@ ActionBar {
         font-size: 17;
         font-weight: 600;
     }
+
+    .btn-danger {
+        margin-top: 18;
+        height: 40;
+        background-color: $grey-1;
+        color: $danger;
+        border-color: $danger;
+        border-width: 2;
+        border-radius: 5;
+        font-size: 17;
+        font-weight: 600;
+    }
 }
 
 .hr {
