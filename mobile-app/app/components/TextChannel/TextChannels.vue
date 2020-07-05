@@ -3,6 +3,18 @@
         <ServerHeader v-if="$store.state.currentServer"/>
         <ScrollView v-if="$store.state.currentServer">
             <StackLayout id="text-channels">
+                <FlexboxLayout class="text-channels-header" justifyContent="space-between">
+                    <Label width="80%"
+                           text="Text Channels"
+                           class="text-channels-header-text"/>
+                    <Image v-if="$store.state.currentServer.owner_id === $store.state.user.id"
+                           @tap="showSettingsModal"
+                           src.decode="font://&#xf067;"
+                           class="fas text-channels-header-button"
+                           stretch="none"
+                           fontSize="18"
+                           opacity="0.5"/>
+                </FlexboxLayout>
                 <TextChannel v-for="textChannel in textChannels" :textChannel="textChannel"/>
             </StackLayout>
         </ScrollView>
@@ -11,8 +23,9 @@
 
 <script>
     import TextChannel from "~/components/TextChannel/TextChannel";
-    import errorHandler from "~/modules/Errors";
     import ServerHeader from "~/components/Server/ServerHeader";
+    import CreateTextChannelModal from "~/components/TextChannel/CreateTextChannelModal";
+    import errorHandler from "~/modules/Errors";
 
     export default {
         name: "TextChannels",
@@ -27,7 +40,7 @@
         },
         methods: {
             getTextChannels() {
-                axios.get(`/servers/${this.$store.state.currentServer.id}/channels/`)
+                global.axios.get(`/servers/${this.$store.state.currentServer.id}/channels/`)
                     .then(response => {
                         this.$store.state.currentServer.textChannels = response.data.text_channels;
                         this.textChannels = this.$store.state.currentServer.textChannels;
@@ -46,6 +59,10 @@
 
             leaveTextChannel() {
 
+            },
+
+            showSettingsModal() {
+                this.$showModal(CreateTextChannelModal).catch(err => console.log(err));
             }
         },
         mounted() {
@@ -72,6 +89,21 @@
 
         &-container {
             background-color: $grey-1;
+        }
+    }
+
+    .text-channels-header {
+        margin-bottom: 18;
+
+        &-text {
+            color: #7a7a7a;
+            font-size: 13.5;
+            letter-spacing: 0.2;
+            text-transform: uppercase;
+        }
+
+        &-button {
+            color: $white;
         }
     }
 </style>
