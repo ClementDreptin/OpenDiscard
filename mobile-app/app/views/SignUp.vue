@@ -76,7 +76,7 @@
                     password: this.password
                 };
 
-                axios.post('/users/signup/', params)
+                global.axios.post('/users/signup/', params)
                     .then(response => {
                         this.$store.state.user = response.data.user;
                         this.$navigateTo(Home);

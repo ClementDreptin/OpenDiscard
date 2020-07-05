@@ -29,7 +29,7 @@
                 }
 
                 if (this.fileData) {
-                    axios.post('/images/', {image: this.fileData})
+                    global.axios.post('/images/', {image: this.fileData})
                         .then(response => this.createServerApi(response.data.url))
                         .catch(err => errorHandler(err, this))
                 } else {
@@ -40,7 +40,7 @@
             createServerApi(imageUrl) {
                 let params = { name: this.serverName };
                 if (imageUrl) params.image_url = imageUrl;
-                axios.post('/servers/', params)
+                global.axios.post('/servers/', params)
                     .then(response => {
                         this.$store.state.servers.push(response.data.server);
                         global.bus.$emit('serverAdded');

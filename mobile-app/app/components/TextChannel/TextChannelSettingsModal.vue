@@ -34,7 +34,7 @@
                     name: this.textChannelLocal.name
                 }
 
-                axios.patch(`/channels/${this.textChannelLocal.id}`, params)
+                global.axios.patch(`/channels/${this.textChannelLocal.id}`, params)
                     .then(response => {
                         let textChannels = this.$store.state.currentServer.textChannels;
                         let currentTextChannel = this.$store.state.currentTextChannel;
