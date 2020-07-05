@@ -1,6 +1,7 @@
 <template>
     <FlexboxLayout justifyContent="space-between">
         <Label width="80%"
+               @tap="textChannelClick"
                :text="textChannel.name"/>
         <Image v-if="$store.state.currentServer.owner_id === $store.state.user.id"
                @tap="showSettingsModal"
@@ -27,6 +28,24 @@
                         textChannel: this.textChannel
                     }
                 }).catch(err => console.log(err));
+            },
+
+            textChannelClick() {
+               /* if (this.$store.state.currentTextChannel) {
+                    global.socket.send(JSON.stringify({
+                        action: 'leave',
+                        roomId: this.$store.state.currentTextChannel.id
+                    }));
+                }*/
+
+                this.$store.state.currentTextChannel = this.textChannel;
+
+                /*global.socket.send(JSON.stringify({
+                    action: 'join',
+                    roomId: this.$store.state.currentTextChannel.id
+                }));*/
+
+                global.bus.$emit('currentTextChannelChanged');
             }
         }
     }
