@@ -3,6 +3,7 @@
         <Label width="80%"
                :text="textChannel.name"/>
         <Image v-if="$store.state.currentServer.owner_id === $store.state.user.id"
+               @tap="showSettingsModal"
                src.decode="font://&#xf013;"
                stretch="none"
                fontSize="18"
@@ -12,11 +13,18 @@
 </template>
 
 <script>
+    import TextChannelSettingsModal from "~/components/TextChannel/TextChannelSettingsModal";
+
     export default {
         name: "TextChannel",
         props: [
             'textChannel'
-        ]
+        ],
+        methods: {
+            showSettingsModal() {
+                this.$showModal(TextChannelSettingsModal, { props: { textChannel: this.textChannel } });
+            }
+        }
     }
 </script>
 
