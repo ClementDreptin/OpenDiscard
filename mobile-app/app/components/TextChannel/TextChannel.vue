@@ -22,7 +22,11 @@
         ],
         methods: {
             showSettingsModal() {
-                this.$showModal(TextChannelSettingsModal, { props: { textChannel: this.textChannel } });
+                this.$showModal(TextChannelSettingsModal, {
+                    props: {
+                        textChannel: this.textChannel
+                    }
+                }).catch(err => console.log(err));
             }
         }
     }
