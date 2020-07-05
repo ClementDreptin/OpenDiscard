@@ -3,7 +3,7 @@
         <StackLayout>
             <Label :text="`Are you sure you want to ${actionTitle.toLowerCase()} this ${element}? This cannot be undone.`"
                    textWrap="true"/>
-            <Button :text="actionTitle" @tap="deleteFunction" class="btn"/>
+            <Button :text="actionTitle" @tap="deleteFunction();$modal.close()" class="btn"/>
         </StackLayout>
     </Page>
 </template>
