@@ -1,7 +1,7 @@
 <template>
     <Page>
         <StackLayout class="modal-container">
-            <TextField class="modal-input" v-model="textChannelLocal.name" hint="Server name"/>
+            <TextField class="modal-input" v-model="textChannelLocal.name" hint="Text Channel name"/>
             <Button class="btn-success" text="Update" @tap="updateTextChannel"/>
         </StackLayout>
     </Page>
