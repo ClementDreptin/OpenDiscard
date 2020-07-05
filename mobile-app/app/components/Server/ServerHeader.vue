@@ -27,6 +27,7 @@
 <script>
     import ServerSettingsModal from "~/components/Server/ServerSettingsModal";
     import ConfirmDeleteModal from "~/components/General/ConfirmDeleteModal";
+    import errorHandler from "~/modules/Errors";
 
     export default {
         name: "ServerHeader",
@@ -46,7 +47,24 @@
             },
 
             leaveServer() {
+                global.axios.delete(`/servers/${this.$store.state.currentServer.id}/users/${this.$store.state.user.id}`)
+                    .then(response => {
+                        let servers = this.$store.state.servers;
+                        let currentServer = this.$store.state.currentServer;
+                        let currentTextChannel = this.$store.state.currentTextChannel;
+                        let index = servers.findIndex(tc => tc.id === response.data.server.id);
 
+                        servers.splice(index, 1);
+
+                        if (currentServer.id === response.data.server.id) {
+                            this.$store.state.currentServer = null;
+                            global.bus.$emit('currentServerWasDeleted');
+                            if (currentTextChannel && currentTextChannel.server_id === response.data.server.id) {
+                                this.$store.state.currentTextChannel = null;
+                                global.bus.$emit('currentTextChannelWasDeleted');
+                            }
+                        }
+                    }).catch(err => errorHandler(err, this));
             }
         }
     }
