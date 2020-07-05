@@ -1,7 +1,7 @@
 <template lang="html">
     <Page>
         <ActionBar>
-            <Label text="Current Channel"></Label>
+            <Label text="Messages"></Label>
         </ActionBar>
 
         <GridLayout class="page__content">
