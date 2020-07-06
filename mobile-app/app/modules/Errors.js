@@ -1,3 +1,5 @@
+import SignIn from "~/views/SignIn";
+
 export default function errorHandler(err, context) {
     if (err.response.data) {
         switch(err.response.data.error) {
@@ -12,7 +14,15 @@ export default function errorHandler(err, context) {
                 break;
             case 401:
                 if (err.response.data.message.toLowerCase().includes('token')) {
-                    context.$router.push('/signIn');
+                    context.$navigateTo(SignIn, {
+                        animated: true,
+                        clearHistory: true,
+                        transition: {
+                            name: 'slideLeft',
+                            duration: 400,
+                            curve: 'ease'
+                        }
+                    }).catch(err => console.log(err));
                 } else {
                     alert({
                         title: "Error",
