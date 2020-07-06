@@ -6,26 +6,28 @@
                 <Label class="header" text="OpenDiscard" />
 
                 <StackLayout class="input-field" marginBottom="25">
-                    <TextField class="input" hint="Username" autocorrect="false" autocapitalizationType="none" v-model="username" returnKeyType="next" fontSize="18" />
+                    <TextField :isEnabled="!busy" class="input" hint="Username" autocorrect="false" autocapitalizationType="none" v-model="username" returnKeyType="next" fontSize="18" />
                     <StackLayout class="hr-light" />
                 </StackLayout>
 
                 <StackLayout class="input-field" marginBottom="25">
-                    <TextField class="input" hint="Email" keyboardType="email" autocorrect="false" autocapitalizationType="none" v-model="email" returnKeyType="next" fontSize="18" />
+                    <TextField :isEnabled="!busy" class="input" hint="Email" keyboardType="email" autocorrect="false" autocapitalizationType="none" v-model="email" returnKeyType="next" fontSize="18" />
                     <StackLayout class="hr-light" />
                 </StackLayout>
 
                 <StackLayout class="input-field" marginBottom="25">
-                    <TextField class="input" hint="Password" secure="true" autocorrect="false" autocapitalizationType="none" v-model="password" returnKeyType="next" fontSize="18" />
+                    <TextField :isEnabled="!busy" class="input" hint="Password" secure="true" autocorrect="false" autocapitalizationType="none" v-model="password" returnKeyType="next" fontSize="18" />
                     <StackLayout class="hr-light" />
                 </StackLayout>
 
                 <StackLayout class="input-field" marginBottom="25">
-                    <TextField class="input" hint="Retype password" secure="true" autocorrect="false" autocapitalizationType="none" v-model="passwordVerify" fontSize="18" />
+                    <TextField :isEnabled="!busy" class="input" hint="Retype password" secure="true" autocorrect="false" autocapitalizationType="none" v-model="passwordVerify" fontSize="18" />
                     <StackLayout class="hr-light" />
                 </StackLayout>
 
-                <Button text="Sign Up" @tap="signUp" class="btn" />
+                <Button :isEnabled="!busy" text="Sign Up" @tap="signUp" class="btn" />
+
+                <ActivityIndicator color="#dcddde" :busy="busy"/>
             </StackLayout>
 
             <Label class="switch-page-label" @tap="goToSignIn">
@@ -49,7 +51,8 @@
                 username: "",
                 email: "",
                 password: "",
-                passwordVerify: ""
+                passwordVerify: "",
+                busy: false
             }
         },
         methods: {
@@ -76,15 +79,33 @@
                     password: this.password
                 };
 
+                this.busy = true;
+
                 global.axios.post('/users/signup/', params)
                     .then(response => {
+                        this.busy = false;
                         this.$store.state.user = response.data.user;
-                        this.$navigateTo(Home);
+                        this.$navigateTo(Home, {
+                            animated: true,
+                            transition: {
+                                name: 'slide',
+                                duration: 400,
+                                curve: 'ease'
+                            }
+                        });
                     }).catch(err => errorHandler(err, this));
             },
 
             goToSignIn() {
-                this.$navigateTo(SignIn).catch(err => console.log(err));
+                this.$navigateTo(SignIn, {
+                    animated: true,
+                    clearHistory: true,
+                    transition: {
+                        name: 'slide',
+                        duration: 400,
+                        curve: 'ease'
+                    }
+                }).catch(err => console.log(err));
             }
         }
     }
@@ -99,5 +120,9 @@
 
     .btn {
         background-color: $grey-1;
+    }
+
+    :disabled {
+        opacity: 0.5;
     }
 </style>
