@@ -8,6 +8,7 @@
                class="member-avatar"/>
         <Label :text="member.username" flexGrow="1"/>
         <Image v-if="$store.state.currentServer && $store.state.currentServer.owner_id === $store.state.user.id && $store.state.currentServer.owner_id !== member.id"
+               @tap="showLeaveModal"
                src.decode="font://&#xf00d;"
                stretch="none"
                fontSize="18"
@@ -16,6 +17,9 @@
 </template>
 
 <script>
+    import ConfirmDeleteModal from "~/components/General/ConfirmDeleteModal";
+    import errorHandler from "~/modules/Errors";
+
     export default {
         name: "Member",
         props: [
@@ -24,6 +28,27 @@
         data() {
             return {
                 axios: global.axios
+            }
+        },
+        methods: {
+            showLeaveModal() {
+                this.$showModal(ConfirmDeleteModal, {
+                    props: {
+                        element: 'User',
+                        actionTitle: 'Remove',
+                        deleteFunction: this.removeUser
+                    }
+                }).catch(err => console.log(err));
+            },
+
+            removeUser() {
+                global.axios.delete(`/servers/${this.$store.state.currentServer.id}/users/${this.member.id}`)
+                    .then(response => {
+                        let members = this.$store.state.currentServer.members;
+                        let index = members.findIndex(member => member.id === response.data.user.id);
+
+                        members.splice(index, 1);
+                    }).catch(err => errorHandler(err, this));
             }
         }
     }
