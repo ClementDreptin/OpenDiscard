@@ -8,7 +8,7 @@
                            text="Text Channels"
                            class="text-channels-header-text"/>
                     <Image v-if="$store.state.currentServer.owner_id === $store.state.user.id"
-                           @tap="showSettingsModal"
+                           @tap="showCreateModal"
                            src.decode="font://&#xf067;"
                            class="fas text-channels-header-button"
                            stretch="none"
@@ -61,7 +61,7 @@
 
             },
 
-            showSettingsModal() {
+            showCreateModal() {
                 this.$showModal(CreateTextChannelModal).catch(err => console.log(err));
             }
         },
