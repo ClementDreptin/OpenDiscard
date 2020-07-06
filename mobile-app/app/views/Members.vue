@@ -28,6 +28,7 @@
 
 <script>
     import Member from "~/components/User/Member";
+    import AddMemberModal from "~/components/User/AddMemberModal";
     import errorHandler from "~/modules/Errors";
 
     export default {
@@ -53,7 +54,7 @@
             },
 
             showAddModal() {
-
+                this.$showModal(AddMemberModal).catch(err => console.log(err));
             }
         },
         mounted() {
