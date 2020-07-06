@@ -1,5 +1,5 @@
 <template>
-    <FlexboxLayout>
+    <FlexboxLayout alignItems="center">
         <Image v-if="member.avatar_url"
                :src="`${axios.defaults.baseURL}${member.avatar_url}`"
                class="member-avatar"/>
@@ -57,23 +57,24 @@
 <style scoped lang="scss">
     @import "../../color-variables";
 
+    FlexboxLayout {
+        margin-bottom: 10;
+    }
+
     Label {
         font-size: 18;
         color: $white;
-        margin-top: 12;
         margin-left: 18;
     }
 
     .kick-button {
         color: #c92142;
         opacity: 0.4;
-        margin-top: 12;
     }
 
     .member-avatar {
         width: 48;
         height: 48;
         margin-right: 10;
-        margin-bottom: 10;
     }
 </style>
