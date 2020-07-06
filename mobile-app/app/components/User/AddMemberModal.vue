@@ -2,6 +2,7 @@
     <Page>
         <StackLayout class="modal-container">
             <TextField class="modal-input" v-model="username" hint="Username"/>
+            <ActivityIndicator v-if="busy" color="#dcddde" :busy="busy"/>
             <ScrollView>
                 <StackLayout v-if="filteredUsers.length > 0" class="modal-content">
                     <UserToAdd v-for="user in filteredUsers" :key="user.id" :user="user"/>
@@ -28,7 +29,8 @@
             return {
                 username: "",
                 users: [],
-                filteredUsers: []
+                filteredUsers: [],
+                busy: false
             }
         },
         methods: {
@@ -39,8 +41,10 @@
                         this.filteredUsers = [];
                         break;
                     case 1:
+                        this.busy = true;
                         global.axios.get(`/users?elem=${this.username.trim()}`)
                             .then(response => {
+                                this.busy = false;
                                 this.users = response.data.users;
                                 this.filteredUsers = this.users;
                             }).catch(err => errorHandler(err, this));
