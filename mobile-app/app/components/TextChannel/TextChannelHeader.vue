@@ -21,6 +21,9 @@
 
     #text-channel-header {
         padding-top: 8;
-        padding-bottom: 8;
+    }
+
+    .hr {
+        margin-bottom: 0;
     }
 </style>
