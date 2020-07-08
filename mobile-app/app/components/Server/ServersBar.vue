@@ -1,5 +1,5 @@
 <template>
-    <ScrollView>
+    <ScrollView height="100%">
         <StackLayout id="server-bar">
             <Server v-for="server in servers" :server="server"/>
             <StackLayout class="plus-sign" @tap="showCreateModal">

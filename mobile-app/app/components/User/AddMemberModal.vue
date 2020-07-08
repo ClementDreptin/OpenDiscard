@@ -3,7 +3,7 @@
         <StackLayout class="modal-container">
             <TextField class="modal-input" v-model="username" hint="Username"/>
             <ActivityIndicator v-if="busy" color="#dcddde" :busy="busy"/>
-            <ScrollView>
+            <ScrollView height="60%">
                 <StackLayout v-if="filteredUsers.length > 0" class="modal-content">
                     <UserToAdd v-for="user in filteredUsers" :key="user.id" :user="user"/>
                 </StackLayout>

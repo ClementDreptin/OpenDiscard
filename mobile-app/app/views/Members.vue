@@ -5,7 +5,7 @@
         </ActionBar>
 
         <StackLayout id="members-container">
-            <ScrollView v-if="$store.state.currentServer">
+            <ScrollView v-if="$store.state.currentServer" height="90%">
                 <StackLayout id="members">
                     <FlexboxLayout class="members-header" justifyContent="space-between">
                         <Label width="80%"
