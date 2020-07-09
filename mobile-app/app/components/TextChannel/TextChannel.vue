@@ -32,20 +32,20 @@
             },
 
             textChannelClick() {
-               /* if (this.$store.state.currentTextChannel) {
+               if (this.$store.state.currentTextChannel) {
                     global.socket.send(JSON.stringify({
                         action: 'leave',
                         roomId: this.$store.state.currentTextChannel.id
                     }));
-                }*/
+                }
 
                 this.$store.state.currentTextChannel = this.textChannel;
                 global.bottomNav.selectedIndex = messagesIndex;
 
-                /*global.socket.send(JSON.stringify({
+                global.socket.send(JSON.stringify({
                     action: 'join',
                     roomId: this.$store.state.currentTextChannel.id
-                }));*/
+                }));
 
                 global.bus.$emit('currentTextChannelChanged');
             }

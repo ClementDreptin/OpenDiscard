@@ -3,6 +3,7 @@ import store from "./store";
 import axios from "axios";
 import App from "./views/App";
 import {decode, encode} from 'base-64';
+const WebSocket = require("nativescript-websockets");
 
 // Base 64
 if (!global.btoa) {
@@ -20,6 +21,9 @@ global.axios = axios.create({
 
 // Global bus for events
 global.bus = new Vue({});
+
+global.socket = new WebSocket('ws://51.68.213.80:19300', []);
+global.socket.open();
 
 new Vue({
     store,

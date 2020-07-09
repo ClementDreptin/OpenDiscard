@@ -46,7 +46,6 @@
                         this.textChannels = this.$store.state.currentServer.textChannels;
                         if (this.textChannels.length !== 0) {
                             this.$store.state.currentTextChannel = this.textChannels[0];
-                            global.bus.$emit('currentTextChannelChanged');
                             this.joinTextChannel();
                         } else {
                             this.leaveTextChannel();
@@ -55,11 +54,22 @@
             },
 
             joinTextChannel() {
-
+                global.socket.send(JSON.stringify({
+                    action: 'join',
+                    roomId: this.$store.state.currentTextChannel.id
+                }));
+                global.bus.$emit('currentTextChannelChanged');
             },
 
             leaveTextChannel() {
-
+                if (this.$store.state.currentTextChannel) {
+                    global.socket.send(JSON.stringify({
+                        action: 'leave',
+                        roomId: this.$store.state.currentTextChannel.id
+                    }));
+                }
+                this.$store.state.currentTextChannel = null;
+                global.bus.$emit('currentTextChannelWasDeleted');
             },
 
             showCreateModal() {

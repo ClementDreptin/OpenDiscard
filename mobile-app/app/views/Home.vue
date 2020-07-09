@@ -53,6 +53,9 @@
         methods: {
             onLoad(args) {
                 global.bottomNav = args.object;
+                global.socket.on('message', (socket, message) => {
+                    global.bus.$emit('messageReceived', message);
+                });
             }
         }
     }
