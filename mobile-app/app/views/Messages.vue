@@ -12,7 +12,7 @@
                     <Message v-for="(message, index) in messages" :message="message" :ref="'msg' + index"/>
                 </StackLayout>
             </ScrollView>
-            <MessageInput/>
+            <MessageInput v-if="$store.state.currentTextChannel"/>
         </StackLayout>
     </Page>
 </template>
