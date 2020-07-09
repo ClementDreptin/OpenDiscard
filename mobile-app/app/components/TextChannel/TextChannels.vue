@@ -1,7 +1,7 @@
 <template>
     <StackLayout id="text-channels-container">
         <ServerHeader v-if="$store.state.currentServer"/>
-        <ScrollView v-if="$store.state.currentServer" height="90%">
+        <ScrollView v-if="$store.state.currentServer" height="76%">
             <StackLayout id="text-channels">
                 <FlexboxLayout class="text-channels-header" justifyContent="space-between">
                     <Label width="80%"
@@ -18,6 +18,22 @@
                 <TextChannel v-for="textChannel in textChannels" :textChannel="textChannel"/>
             </StackLayout>
         </ScrollView>
+        <FlexboxLayout id="user-info" alignItems="center" width="100%" justifyContent="space-around">
+            <Image v-if="$store.state.user.avatar_url"
+                   :src="`${axios.defaults.baseURL}${$store.state.user.avatar_url}`"
+                   class="user-avatar"/>
+            <Image v-else
+                   src="~/assets/default-profile-picture.png"
+                   class="user-avatar"/>
+            <Label :text="$store.state.user.username" class="user-name" flexGrow="1"/>
+            <Image @tap="showUserInfoModal"
+                   src.decode="font://&#xf013;"
+                   stretch="none"
+                   color="#dcddde"
+                   fontSize="18"
+                   class="fas"
+                   opacity="0.7"/>
+        </FlexboxLayout>
     </StackLayout>
 </template>
 
@@ -25,6 +41,7 @@
     import TextChannel from "~/components/TextChannel/TextChannel";
     import ServerHeader from "~/components/Server/ServerHeader";
     import CreateTextChannelModal from "~/components/TextChannel/CreateTextChannelModal";
+    import UserInfoModal from "~/components/User/UserInfoModal";
     import errorHandler from "~/modules/Errors";
 
     export default {
@@ -35,7 +52,8 @@
         },
         data() {
             return {
-                textChannels: []
+                textChannels: [],
+                axios: global.axios
             }
         },
         methods: {
@@ -74,6 +92,10 @@
 
             showCreateModal() {
                 this.$showModal(CreateTextChannelModal).catch(err => console.log(err));
+            },
+
+            showUserInfoModal() {
+                this.$showModal(UserInfoModal).catch(err => console.log(err));
             }
         },
         mounted() {
@@ -116,5 +138,21 @@
         &-button {
             color: $white;
         }
+    }
+
+    #user-info {
+        background-color: #292b2f;
+        padding: 10;
+    }
+
+    .user-avatar {
+        height: 48;
+        width: 48;
+    }
+
+    .user-name {
+        font-size: 16;
+        color: $white;
+        margin-left: 20;
     }
 </style>
