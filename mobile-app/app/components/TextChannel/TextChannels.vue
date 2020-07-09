@@ -1,6 +1,6 @@
 <template>
     <StackLayout id="text-channels-container">
-        <ServerHeader v-if="$store.state.currentServer" height="10%"/>
+        <ServerHeader v-if="$store.state.currentServer"/>
         <ScrollView v-if="$store.state.currentServer" height="90%">
             <StackLayout id="text-channels">
                 <FlexboxLayout class="text-channels-header" justifyContent="space-between">
