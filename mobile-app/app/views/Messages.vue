@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <Page>
         <ActionBar>
             <Label text="Messages"></Label>
@@ -7,11 +7,12 @@
         <StackLayout id="messages-container">
             <TextChannelHeader v-if="$store.state.currentTextChannel"/>
             <ActivityIndicator v-if="busy" color="#dcddde" :busy="busy"/>
-            <ScrollView ref="messages" @scroll="onScroll">
+            <ScrollView ref="messages" @scroll="onScroll" height="82%">
                 <StackLayout id="messages">
                     <Message v-for="(message, index) in messages" :message="message" :ref="'msg' + index"/>
                 </StackLayout>
             </ScrollView>
+            <MessageInput/>
         </StackLayout>
     </Page>
 </template>
@@ -19,10 +20,12 @@
 <script>
     import TextChannelHeader from "~/components/TextChannel/TextChannelHeader";
     import Message from "~/components/Message/Message";
+    import MessageInput from "~/components/Message/MessageInput";
     import errorHandler from "~/modules/Errors";
 
     export default {
         components: {
+            MessageInput,
             Message,
             TextChannelHeader
         },
