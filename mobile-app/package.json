@@ -1,11 +1,11 @@
 {
   "nativescript": {
     "id": "org.nativescript.OpenDiscard",
-    "tns-android": {
-      "version": "6.5.0"
-    },
     "tns-ios": {
       "version": "6.5.0"
+    },
+    "tns-android": {
+      "version": "6.5.3"
     }
   },
   "description": "OpenDiscard is a university project that aims to be a clone of Discord but open-source.",
