@@ -16,6 +16,7 @@
     "axios": "^0.19.2",
     "base-64": "^0.1.0",
     "nativescript-vue": "~2.4.0",
+    "nativescript-websockets": "^1.5.5",
     "tns-core-modules": "~6.5.0",
     "vuex": "^3.5.1"
   },
