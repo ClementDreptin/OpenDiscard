@@ -46,6 +46,7 @@
                         this.textChannels = this.$store.state.currentServer.textChannels;
                         if (this.textChannels.length !== 0) {
                             this.$store.state.currentTextChannel = this.textChannels[0];
+                            global.bus.$emit('currentTextChannelChanged');
                             this.joinTextChannel();
                         } else {
                             this.leaveTextChannel();
