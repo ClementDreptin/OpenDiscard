@@ -68,8 +68,10 @@
             },
 
             scrollToEnd() {
-                const scrollView = this.$refs.messages.nativeView;
-                scrollView.scrollToVerticalOffset(scrollView.scrollableHeight, true);
+                setTimeout(() => {
+                    const scrollView = this.$refs.messages.nativeView;
+                    scrollView.scrollToVerticalOffset(scrollView.scrollableHeight, true);
+                }, 100);
             },
 
             resetData() {
@@ -83,7 +85,7 @@
             messages: function(newVal, oldVal) {
                 this.$nextTick(() => {
                     if (oldVal.length === 0 && newVal.length !== 0) {
-                        setTimeout(() => this.scrollToEnd(), 100);
+                        this.scrollToEnd();
                     } else if (this.nbMessagesFetched && this.$refs.messages.firstChild.childNodes[this.nbMessagesFetched - 1]) {
                         // Apparently refs are arrays with only one element instead of a simple
                         // object when they're created in a v-for. It makes no sense, I know...
@@ -111,7 +113,9 @@
 
             global.bus.$on('messageReceived', message => {
                 this.messages.push(JSON.parse(message));
-                this.scrollToEnd();
+                this.$nextTick(() => {
+                    this.scrollToEnd();
+                });
             });
         }
     }
