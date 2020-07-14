@@ -13,7 +13,8 @@ define({ "api": [
             "type": "String",
             "allowedValues": [
               "win",
-              "linux"
+              "linux",
+              "android"
             ],
             "optional": false,
             "field": "platform",
@@ -25,7 +26,8 @@ define({ "api": [
             "allowedValues": [
               "msi",
               "deb",
-              "tar.gz"
+              "tar.gz",
+              "apk"
             ],
             "optional": false,
             "field": "format",
