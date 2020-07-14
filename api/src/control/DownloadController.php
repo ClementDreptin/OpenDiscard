@@ -18,8 +18,8 @@ class DownloadController {
      *
      * @apiDescription Gets a File.
      *
-     * @apiParam {String=win,linux} platform The platform.
-     * @apiParam {String=msi,deb,tar.gz} format The format.
+     * @apiParam {String=win,linux,android} platform The platform.
+     * @apiParam {String=msi,deb,tar.gz,apk} format The format.
      *
      * @apiSuccess {File} file The File.
      *
@@ -58,6 +58,12 @@ class DownloadController {
                 $extension = "deb";
             } else if ($format === "tar.gz") {
                 $extension = "tar.gz";
+            } else {
+                return JSON::errorResponse($response, 400, "Incorrect value in at least one parameter. Please check the docs for the possible values.");
+            }
+        } else if ($platform === "android") {
+            if ($format === "apk") {
+                $extension = "apk";
             } else {
                 return JSON::errorResponse($response, 400, "Incorrect value in at least one parameter. Please check the docs for the possible values.");
             }
