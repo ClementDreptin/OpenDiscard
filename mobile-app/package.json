@@ -10,7 +10,7 @@
   },
   "description": "OpenDiscard is a university project that aims to be a clone of Discord but open-source.",
   "author": "Clément Dreptin <cdreptin@gmail.com>",
-  "homepage": "http://51.68.213.80",
+  "homepage": "https://opendiscard.com",
   "dependencies": {
     "@nativescript/theme": "~2.3.0",
     "axios": "^0.19.2",
