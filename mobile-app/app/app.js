@@ -16,13 +16,13 @@ if (!global.atob) {
 
 // Global instance of axios
 global.axios = axios.create({
-    baseURL: 'http://51.68.213.80:19180'
+    baseURL: 'https://opendiscard.com:19143'
 });
 
 // Global bus for events
 global.bus = new Vue({});
 
-global.socket = new WebSocket('ws://51.68.213.80:19300', []);
+global.socket = new WebSocket('wss://opendiscard.com:19300/ws', []);
 global.socket.open();
 
 new Vue({

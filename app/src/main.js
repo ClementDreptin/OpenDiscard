@@ -6,7 +6,7 @@ import axios from 'axios'
 import 'bulma/css/bulma.css'
 
 window.axios = axios.create({
-    baseURL: process.env.NODE_ENV !== 'production' ? 'http://api.opendiscard.local:19180' : 'http://51.68.213.80:19180'
+    baseURL: process.env.NODE_ENV !== 'production' ? 'http://api.opendiscard.local:19180' : 'https://opendiscard.com:19143'
 });
 
 document.addEventListener('contextmenu', event => {
@@ -21,7 +21,7 @@ Vue.config.productionTip = false;
 Vue.prototype.$bus = new Vue();
 
 Vue.prototype.$socket = new WebSocket(
-    process.env.NODE_ENV !== 'production' ? 'ws://localhost:19300' : 'ws://51.68.213.80:19300'
+    process.env.NODE_ENV !== 'production' ? 'ws://localhost:19300' : 'wss://opendiscard.com:19300/ws'
 );
 
 new Vue({
