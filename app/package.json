@@ -14,7 +14,7 @@
   },
   "main": "background.js",
   "author": "Clément Dreptin <cdreptin@gmail.com>",
-  "homepage": "http://51.68.213.80",
+  "homepage": "https://opendiscard.com",
   "dependencies": {
     "axios": "^0.19.2",
     "bulma": "^0.8.2",
