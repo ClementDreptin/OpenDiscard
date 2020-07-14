@@ -27,10 +27,6 @@
             }
         },
         methods: {
-            test() {
-                console.log('test');
-            },
-
             sendMessage() {
                 if (this.messageContent === "") return;
 
