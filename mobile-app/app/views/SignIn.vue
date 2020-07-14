@@ -38,8 +38,8 @@
         name: "SignIn",
         data() {
             return {
-                email: "caden@test.com",
-                password: "1234",
+                email: "",
+                password: "",
                 busy: false
             }
         },
