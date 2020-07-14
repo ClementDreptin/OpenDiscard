@@ -9,7 +9,7 @@
             <ActivityIndicator v-if="busy" color="#dcddde" :busy="busy"/>
             <ScrollView ref="messages" @scroll="onScroll" height="82%">
                 <StackLayout id="messages">
-                    <Message v-for="(message, index) in messages" :message="message" :ref="'msg' + index"/>
+                    <Message v-for="(message, index) in messages" :message="message" :ref="'msg' + index" :key="message.id"/>
                 </StackLayout>
             </ScrollView>
             <MessageInput v-if="$store.state.currentTextChannel"/>

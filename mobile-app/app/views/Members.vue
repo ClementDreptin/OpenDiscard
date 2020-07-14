@@ -19,7 +19,7 @@
                                fontSize="18"
                                opacity="0.5"/>
                     </FlexboxLayout>
-                    <Member v-for="member in members" :member="member"/>
+                    <Member v-for="member in members" :member="member" :key="member.id"/>
                 </StackLayout>
             </ScrollView>
         </StackLayout>

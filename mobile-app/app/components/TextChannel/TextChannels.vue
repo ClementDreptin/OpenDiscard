@@ -15,7 +15,7 @@
                            fontSize="18"
                            opacity="0.5"/>
                 </FlexboxLayout>
-                <TextChannel v-for="textChannel in textChannels" :textChannel="textChannel"/>
+                <TextChannel v-for="textChannel in textChannels" :textChannel="textChannel" :key="textChannel.id"/>
             </StackLayout>
         </ScrollView>
         <FlexboxLayout id="user-info" alignItems="center" width="100%" justifyContent="space-around">
