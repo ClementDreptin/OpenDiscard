@@ -32,7 +32,7 @@
                             <i class="fab fa-windows"></i>
                         </a>
                     </div>
-                    <div class="dropdown is-active">
+                    <div class="dropdown is-active control">
                         <div class="dropdown-trigger">
                             <a class="icons" @click="dropdownActive = !dropdownActive">
                                 <i class="fab fa-linux"></i>
@@ -49,7 +49,16 @@
                             </div>
                         </div>
                     </div>
+                    <div id="android-button" class="control">
+                        <a download :href="`${axios.defaults.baseURL}/download?platform=android&format=apk`" class="icons">
+                            <i class="fab fa-android"></i>
+                        </a>
+                    </div>
                 </div>
+            </div>
+
+            <div v-if="!isElectron" class="github-repo">
+                The entire source code of OpenDiscard is available on <a href="https://github.com/ClementDreptin/OpenDiscard/" target="_blank">GitHub</a>.
             </div>
         </div>
 
@@ -123,7 +132,7 @@
         font-size: 1.8em;
     }
 
-    .download-section {
+    .download-section, .github-repo {
         margin-top: 10%;
     }
 
@@ -137,7 +146,19 @@
         margin-bottom: 1em;
     }
 
-    #windows-button {
+    .field.is-grouped > .control:not(:last-child) {
         margin-right: 1.5em;
+    }
+
+    .github-repo {
+        color: #dcddde;
+    }
+
+    .github-repo > a {
+        color: #3273dc;
+    }
+
+    .github-repo > a:hover {
+        color: #5090f8;
     }
 </style>
