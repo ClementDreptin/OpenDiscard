@@ -1,7 +1,9 @@
 # OpenDiscard
-[OpenDiscard](https://opendiscard.com/) is a university project that aims to be a clone of [Discord](https://discord.com/) but open-source.  
-In its first version, OpenDiscard will only be a text chat app, audio might come later.    
+OpenDiscard is a university project that aims to be a clone of [Discord](https://discord.com/) but open-source.  
 &nbsp;
+
+## Notes
+**OpenDiscard will be shut down on June 23^(rd) of 2021 and the domain name opendiscard.com will become available on July 9^(th) of 2021.**
 
 #### OpenDiscard is available as a:
 - [Web and Desktop app](https://github.com/ClementDreptin/OpenDiscard/tree/master/app/)
